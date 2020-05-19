@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 // Commit the transaction
         transaction.commit();
     }
+    /*
     public void register(TextView email , TextView password) {
         mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -107,4 +108,5 @@ public class MainActivity extends AppCompatActivity {
                 });
         loadRegister();
     }
+     */
 }

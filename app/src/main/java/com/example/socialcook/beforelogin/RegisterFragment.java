@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.socialcook.R;
+import com.example.socialcook.firebase.FireBase;
 
 public class RegisterFragment extends Fragment {
     @Override
@@ -25,7 +26,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.register(emailSignUp , passwordSignUp);
+                FireBase.register(emailSignUp , passwordSignUp , mainActivity);
             }
         });
         return view;
