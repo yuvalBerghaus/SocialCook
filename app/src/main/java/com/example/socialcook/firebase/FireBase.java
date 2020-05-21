@@ -68,5 +68,10 @@ public class FireBase {
         return mAuth;
     }
     interface IFB{
+        void login(TextView email , TextView password);
+        void register(TextView email , TextView password);
+    }
+    public interface IMainPage {
+        void signOut();
     }
 }

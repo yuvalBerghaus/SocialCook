@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_fragPage"
     android:layout_width="match_parent"
@@ -9,16 +10,49 @@
     tools:context=".afterlogin.MainPageFrag">
 
     <!-- TODO: Update blank fragment layout -->
-    <Button
-        android:id="@+id/signOutButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sign out" />
 
-    <TextView
-        android:id="@+id/welcome"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="259dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/accountOption"
+            android:layout_width="151dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Account Option" />
+
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="Hello" />
+
+        <Button
+            android:id="@+id/signOutButton"
+            android:layout_width="154dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sign out" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/imageButton2"
+            android:layout_width="match_parent"
+            android:layout_height="433dp"
+            android:layout_weight="1"
+            android:background="@drawable/pot" />
+    </LinearLayout>
 
 </LinearLayout>
