@@ -7,8 +7,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.socialcook.R;
+import com.example.socialcook.afterlogin.admin.AdminPage;
+import com.example.socialcook.beforelogin.LoginFragment;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -69,5 +72,16 @@ public class MainPage extends AppCompatActivity {
         auth.signOut();
         Intent i = new Intent(MainPage.this, MainActivity.class);
         startActivity(i);
+    }
+    public void loadAdminPage() {
+        // Create fragment and give it an argument specifying the article it should show
+        Fragment newFragment = new AdminPage();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_mainPage, newFragment);
+        transaction.addToBackStack(null);
+// Commit the transaction
+        transaction.commit();
     }
 }

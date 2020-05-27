@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import com.example.socialcook.diet.*;
 import com.example.socialcook.R;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
@@ -52,6 +51,14 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                 }
             });
             welcome.setText("Welcome Back " + email);
+            Button admin = view.findViewById(R.id.accountOption);
+            admin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainPage mainPage = (MainPage) getActivity();
+                    mainPage.loadAdminPage();
+                }
+            });
         }
         else {
             //Pass to the MainPage Activity in order to go to MainActivity

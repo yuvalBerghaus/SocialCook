@@ -29,6 +29,13 @@
             android:ems="10"
             android:hint="Type here..."
             android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/addButtonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,6 +58,13 @@
             android:ems="10"
             android:hint="Type here..."
             android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/addButtonType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add" />
     </LinearLayout>
 
     <LinearLayout
@@ -75,7 +89,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Type amount here..."
-            android:inputType="numberDecimal" />
+            android:inputType="number" />
 
         <Button
             android:id="@+id/buttonAddAmount"
@@ -107,7 +121,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Type ml here..."
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
 
         <Button
             android:id="@+id/buttonAddMl"
@@ -140,7 +154,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Type mg here..."
-            android:inputType="textPersonName" />
+            android:inputType="numberDecimal" />
 
         <Button
             android:id="@+id/buttonAddMg"
@@ -151,16 +165,23 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buttonSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:text="Send" />
 
-    <ListView
-        android:id="@+id/listView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0" />
+        android:layout_weight="0"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+    </LinearLayout>
 
 </LinearLayout>
