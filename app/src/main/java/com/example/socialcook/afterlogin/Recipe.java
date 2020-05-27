@@ -62,7 +62,7 @@ public class Recipe {
         Map<String,Integer> map = this.getRecipeML();
         StringBuilder mapAsString = new StringBuilder("{");
         for (String key : map.keySet()) {
-            mapAsString.append(key + "In mL is " + map.get(key).toString() + ", ");
+            mapAsString.append(key + " = " + map.get(key).toString() + ", ");
         }
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
         return mapAsString.toString();
