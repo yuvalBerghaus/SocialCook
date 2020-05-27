@@ -6,8 +6,8 @@ public class Recipe {
     private String recipeName;
     private String recipeType;
     private Map<String , Integer> recipeAmount;
-    private Map<String , Float>recipeMl;
-    private Map<String , Float>recipeMg;
+    private HashMap<String, Integer> recipeMl;
+    private HashMap<String, Integer> recipeG;
     public Recipe() {
     }
     public void setName(String recipeName) {
@@ -19,11 +19,11 @@ public class Recipe {
     public void setAmount(HashMap<String,Integer>amount) {
         this.recipeAmount = amount;
     }
-    public void setML(HashMap<String,Float>recipeMl) {
+    public void setML(HashMap<String,Integer>recipeMl) {
         this.recipeMl = recipeMl;
     }
-    public void setMG(HashMap<String,Float>recipeMg) {
-        this.recipeMg = recipeMg;
+    public void setG(HashMap<String,Integer>recipeMg) {
+        this.recipeG = recipeMg;
     }
     public String getRecipeName() {
         return recipeName;
@@ -37,20 +37,20 @@ public class Recipe {
     public Map getRecipeML() {
         return recipeMl;
     }
-    public Map getRecipeMG() {
-        return recipeMg;
+    public Map getRecipeG() {
+        return recipeG;
     }
     public String convertRecipeAmountIteration() {
         Map<String,Integer> map = this.getRecipeAmount();
         StringBuilder mapAsString = new StringBuilder("{");
         for (String key : map.keySet()) {
-            mapAsString.append(key + "=" + map.get(key).toString() + ", ");
+            mapAsString.append(key + " : " + map.get(key).toString() + ", ");
         }
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
         return mapAsString.toString();
     }
     public String convertRecipeMGIteration() {
-        Map<String,Integer> map = this.getRecipeMG();
+        Map<String,Integer> map = this.getRecipeG();
         StringBuilder mapAsString = new StringBuilder("{");
         for (String key : map.keySet()) {
             mapAsString.append(key + "=" + map.get(key).toString() + ", ");
@@ -62,7 +62,7 @@ public class Recipe {
         Map<String,Integer> map = this.getRecipeML();
         StringBuilder mapAsString = new StringBuilder("{");
         for (String key : map.keySet()) {
-            mapAsString.append(key + "=" + map.get(key).toString() + ", ");
+            mapAsString.append(key + "In mL is " + map.get(key).toString() + ", ");
         }
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
         return mapAsString.toString();

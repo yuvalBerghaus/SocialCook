@@ -38,20 +38,20 @@ public class AdminPage extends Fragment {
         MainPage mainPage = (MainPage) getActivity();
         final ListView listView = view.findViewById(R.id.listView);
         final HashMap<String , Integer>localAmount = new HashMap<>();
-        final HashMap<String , Float>localMG = new HashMap<>();
-        final HashMap<String , Float>localML = new HashMap<>();
+        final HashMap<String , Integer>localG = new HashMap<>();
+        final HashMap<String , Integer>localML = new HashMap<>();
         Button addName = (Button)view.findViewById(R.id.addButtonName);
         Button addType = (Button)view.findViewById(R.id.addButtonType);
         Button addAmount = (Button)view.findViewById(R.id.buttonAddAmount);
         Button addMl = (Button)view.findViewById(R.id.buttonAddMl);
-        Button addMg = (Button)view.findViewById(R.id.buttonAddMg);
+        Button addG = (Button)view.findViewById(R.id.buttonAddMg);
         Button saveButton = (Button)view.findViewById(R.id.buttonSend);
         final EditText recipeName = (EditText)view.findViewById(R.id.recipeNameInput);
         final EditText recipeType = (EditText)view.findViewById(R.id.recipeTypeInput);
         final EditText recipeAmountKey = (EditText)view.findViewById(R.id.keyAmount);
         final EditText recipeAmountValue = (EditText)view.findViewById(R.id.valueAmount);
-        final EditText recipeMgKey = (EditText)view.findViewById(R.id.keyMg);
-        final EditText recipeMgValue = (EditText)view.findViewById(R.id.valueMg);
+        final EditText recipeGKey = (EditText)view.findViewById(R.id.keyMg);
+        final EditText recipeGValue = (EditText)view.findViewById(R.id.valueMg);
         final EditText recipeMlKey = (EditText)view.findViewById(R.id.keyMl);
         final EditText recipeMlValue = (EditText)view.findViewById(R.id.valueMl);
         final Recipe recipe = new Recipe();
@@ -79,24 +79,24 @@ public class AdminPage extends Fragment {
                 recipe.setAmount(localAmount);
             }
         });
-        addMg.setOnClickListener(new View.OnClickListener() {
+        addG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                localMG.put(recipeMgKey.getText().toString() , Float.valueOf(recipeMgValue.getText().toString().trim()).floatValue());
-                recipe.setMG(localMG);
+                localG.put(recipeGKey.getText().toString() , Integer.parseInt(recipeGValue.getText().toString()));
+                recipe.setG(localG);
             }
         });
         addMl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                localML.put(recipeMlKey.getText().toString() , Float.valueOf(recipeMlValue.getText().toString().trim()).floatValue());
+                localML.put(recipeMlKey.getText().toString() , Integer.parseInt(recipeMlValue.getText().toString()));
                 recipe.setML(localML);
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String result = "recipe name: "+recipe.getRecipeName();//"\n recipe Type : "+recipe.getRecipeType()+"\n"+recipe.convertRecipeAmountIteration();
+                String result = "recipe name: "+recipe.getRecipeName()+"\n recipe Type : "+recipe.getRecipeType()+"\n"+recipe.convertRecipeAmountIteration();
                 arrayList.add(result);
                 myRef.setValue(recipe);
             }
