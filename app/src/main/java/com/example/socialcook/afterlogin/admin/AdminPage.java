@@ -42,8 +42,6 @@ public class AdminPage extends Fragment {
         final HashMap<String , Integer>localAmount = new HashMap<>();
         final HashMap<String , Integer>localG = new HashMap<>();
         final HashMap<String , Integer>localML = new HashMap<>();
-        Button addName = (Button)view.findViewById(R.id.addButtonName);
-        Button addType = (Button)view.findViewById(R.id.addButtonType);
         Button addAmount = (Button)view.findViewById(R.id.buttonAddAmount);
         Button addMl = (Button)view.findViewById(R.id.buttonAddMl);
         Button addG = (Button)view.findViewById(R.id.buttonAddMg);
@@ -62,20 +60,6 @@ public class AdminPage extends Fragment {
         arrayList = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(getActivity() , android.R.layout.simple_list_item_1 , arrayList);
         listView.setAdapter(adapter);
-        addName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recipe.setName(recipeName.getText().toString());
-                recipeName.getText().clear();
-            }
-        });
-        addType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recipe.setType(recipeType.getText().toString());
-                recipeType.getText().clear();
-            }
-        });
         addAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,14 +83,18 @@ public class AdminPage extends Fragment {
             public void onClick(View v) {
                 localML.put(recipeMlKey.getText().toString() , Integer.parseInt(recipeMlValue.getText().toString()));
                 recipe.setML(localML);
+                recipeMlKey.getText().clear();
+                recipeMlValue.getText().clear();
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recipe.setName(recipeName.getText().toString());
+                recipe.setType(recipeType.getText().toString());
                 String result = "recipe name: "+recipe.getRecipeName()+"\n recipe Type : "+recipe.getRecipeType()+"\nRecipeAmount : "+recipe.convertRecipeAmountIteration()+"\nRecipe ML : "+recipe.convertRecipeMLIteration()+"\nRecipe Grams : "+recipe.convertRecipeMGIteration();
                 arrayList.add(result);
-                myRef.child(recipe.getRecipeName()).push().setValue(recipe);
+                myRef.child(recipe.getRecipeName()).setValue(recipe);
                 recipeName.getText().clear();
                 recipeType.getText().clear();
                 recipeAmountKey.getText().clear();

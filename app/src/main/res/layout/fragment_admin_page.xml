@@ -30,12 +30,6 @@
             android:hint="Type here..."
             android:inputType="textPersonName" />
 
-        <Button
-            android:id="@+id/addButtonName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,12 +53,6 @@
             android:hint="Type here..."
             android:inputType="textPersonName" />
 
-        <Button
-            android:id="@+id/addButtonType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add" />
     </LinearLayout>
 
     <LinearLayout
