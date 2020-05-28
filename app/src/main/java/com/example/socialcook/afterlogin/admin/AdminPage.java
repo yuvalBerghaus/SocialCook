@@ -32,6 +32,8 @@ public class AdminPage extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // Write a message to the database
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        ArrayList<DatabaseReference>a;
+        //final DatabaseReference myRef = database.getReference("recipes");
         final DatabaseReference myRef = database.getReference("recipes");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_admin_page, container, false);
@@ -58,18 +60,20 @@ public class AdminPage extends Fragment {
         final ArrayList<String>arrayList;
         ArrayAdapter<String>adapter;
         arrayList = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(getContext() , android.R.layout.simple_list_item_1 , arrayList);
+        adapter = new ArrayAdapter<String>(getActivity() , android.R.layout.simple_list_item_1 , arrayList);
         listView.setAdapter(adapter);
         addName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recipe.setName(recipeName.getText().toString());
+                recipeName.getText().clear();
             }
         });
         addType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recipe.setType(recipeType.getText().toString());
+                recipeType.getText().clear();
             }
         });
         addAmount.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +81,8 @@ public class AdminPage extends Fragment {
             public void onClick(View v) {
                 localAmount.put(recipeAmountKey.getText().toString() , Integer.parseInt(recipeAmountValue.getText().toString()));
                 recipe.setAmount(localAmount);
+                recipeAmountKey.getText().clear();
+                recipeAmountValue.getText().clear();
             }
         });
         addG.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +90,8 @@ public class AdminPage extends Fragment {
             public void onClick(View v) {
                 localG.put(recipeGKey.getText().toString() , Integer.parseInt(recipeGValue.getText().toString()));
                 recipe.setG(localG);
+                recipeGKey.getText().clear();
+                recipeGValue.getText().clear();
             }
         });
         addMl.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +106,16 @@ public class AdminPage extends Fragment {
             public void onClick(View v) {
                 String result = "recipe name: "+recipe.getRecipeName()+"\n recipe Type : "+recipe.getRecipeType()+"\nRecipeAmount : "+recipe.convertRecipeAmountIteration()+"\nRecipe ML : "+recipe.convertRecipeMLIteration()+"\nRecipe Grams : "+recipe.convertRecipeMGIteration();
                 arrayList.add(result);
-                myRef.setValue(recipe);
+                myRef.child(recipe.getRecipeName()).push().setValue(recipe);
+                recipeName.getText().clear();
+                recipeType.getText().clear();
+                recipeAmountKey.getText().clear();
+                recipeAmountValue.getText().clear();
+                recipeGKey.getText().clear();
+                recipeGValue.getText().clear();
+                recipeMlKey.getText().clear();
+                recipeMlValue.getText().clear();
+                recipe.clear();
             }
         });
         return view;

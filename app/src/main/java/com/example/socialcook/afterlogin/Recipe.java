@@ -67,4 +67,11 @@ public class Recipe {
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
         return mapAsString.toString();
     }
+    public void clear() {
+        this.recipeAmount.clear();
+        this.recipeName = null;
+        this.recipeMl.clear();
+        this.recipeType = null;
+        this.recipeG.clear();
+    }
 }
