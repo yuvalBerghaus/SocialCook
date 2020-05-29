@@ -7,7 +7,7 @@ public class Recipe {
     private String recipeType;
     private Map<String , Integer> recipeAmount;
     private HashMap<String, Integer> recipeMl;
-    private HashMap<String, Integer> recipeG;
+    private HashMap<String, Integer> recipeGrams;
     public Recipe() {
     }
     public void setName(String recipeName) {
@@ -23,7 +23,7 @@ public class Recipe {
         this.recipeMl = recipeMl;
     }
     public void setG(HashMap<String,Integer>recipeMg) {
-        this.recipeG = recipeMg;
+        this.recipeGrams = recipeMg;
     }
     public String getRecipeName() {
         return recipeName;
@@ -38,7 +38,7 @@ public class Recipe {
         return recipeMl;
     }
     public Map getRecipeG() {
-        return recipeG;
+        return recipeGrams;
     }
     public String convertRecipeAmountIteration() {
         Map<String,Integer> map = this.getRecipeAmount();
@@ -72,6 +72,6 @@ public class Recipe {
         this.recipeName = null;
         this.recipeMl.clear();
         this.recipeType = null;
-        this.recipeG.clear();
+        this.recipeGrams.clear();
     }
 }
