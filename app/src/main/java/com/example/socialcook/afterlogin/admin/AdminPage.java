@@ -39,9 +39,6 @@ public class AdminPage extends Fragment {
         View view = inflater.inflate(R.layout.fragment_admin_page, container, false);
         MainPage mainPage = (MainPage) getActivity();
         final ListView listView = view.findViewById(R.id.listView);
-        final HashMap<String , Integer>localAmount = new HashMap<>();
-        final HashMap<String , Integer>localG = new HashMap<>();
-        final HashMap<String , Integer>localML = new HashMap<>();
         Button addAmount = view.findViewById(R.id.buttonAddAmount);
         Button addMl = view.findViewById(R.id.buttonAddMl);
         Button addG = view.findViewById(R.id.buttonAddMg);
@@ -63,10 +60,7 @@ public class AdminPage extends Fragment {
         addAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(recipeAmountKey.getText() != null && recipeAmountValue.getText()!= null) {
-                    localAmount.put(recipeAmountKey.getText().toString() , Integer.parseInt(recipeAmountValue.getText().toString()));
-                    recipe.setAmount(localAmount);
-                }
+                recipe.setAmount(recipeAmountKey.getText().toString() , Integer.parseInt(recipeAmountValue.getText().toString()));
                 recipeAmountKey.getText().clear();
                 recipeAmountValue.getText().clear();
             }
@@ -74,10 +68,7 @@ public class AdminPage extends Fragment {
         addG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(recipeGKey.getText().toString() != "" && recipeGValue.getText().toString() != "") {
-                    localG.put(recipeGKey.getText().toString() , Integer.parseInt(recipeGValue.getText().toString()));
-                    recipe.setG(localG);
-                }
+                recipe.setG(recipeGKey.getText().toString() , Integer.parseInt(recipeGValue.getText().toString()));
                 recipeGKey.getText().clear();
                 recipeGValue.getText().clear();
             }
@@ -85,10 +76,7 @@ public class AdminPage extends Fragment {
         addMl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(recipeMlKey.getText() != null && recipeMlValue.getText() != null) {
-                    localML.put(recipeMlKey.getText().toString() , Integer.parseInt(recipeMlValue.getText().toString()));
-                    recipe.setML(localML);
-                }
+                recipe.setML(recipeMlKey.getText().toString() , Integer.parseInt(recipeMlValue.getText().toString()));
                 recipeMlKey.getText().clear();
                 recipeMlValue.getText().clear();
             }

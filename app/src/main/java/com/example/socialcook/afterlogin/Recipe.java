@@ -5,9 +5,9 @@ import java.util.Map;
 public class Recipe {
     private String recipeName;
     private String recipeType;
-    private Map<String , Integer> recipeAmount;
-    private HashMap<String, Integer> recipeMl;
-    private HashMap<String, Integer> recipeGrams;
+    private Map<String , Integer> recipeAmount = new HashMap<>();
+    private Map<String, Integer> recipeMl = new HashMap<>();
+    private Map<String, Integer> recipeGrams = new HashMap<>();
     public Recipe() {
     }
     public void setName(String recipeName) {
@@ -16,14 +16,29 @@ public class Recipe {
     public void setType(String recipeType) {
         this.recipeType = recipeType;
     }
-    public void setAmount(HashMap<String,Integer>amount) {
-        this.recipeAmount = amount;
+    public void setAmount(String recipeAmountKey , int recipeAmountValue) {
+        if(this.recipeAmount.containsKey(recipeAmountKey)) {
+            this.recipeAmount.put(recipeAmountKey , recipeAmountValue + this.recipeAmount.get(recipeAmountKey));
+        }
+        else {
+            this.recipeAmount.put(recipeAmountKey , recipeAmountValue);
+        }
     }
-    public void setML(HashMap<String,Integer>recipeMl) {
-        this.recipeMl = recipeMl;
+    public void setML(String recipeMlKey , int recipeMlValue) {
+        if(this.recipeMl.containsKey(recipeMlKey)) {
+            this.recipeMl.put(recipeMlKey , recipeMlValue + this.recipeMl.get(recipeMlKey));
+        }
+        else {
+            this.recipeMl.put(recipeMlKey , recipeMlValue);
+        }
     }
-    public void setG(HashMap<String,Integer>recipeMg) {
-        this.recipeGrams = recipeMg;
+    public void setG(String recipeGramsKey , int recipeGramsValue) {
+        if(this.recipeGrams.containsKey(recipeGramsKey)) {
+            this.recipeGrams.put(recipeGramsKey , recipeGramsValue + this.recipeGrams.get(recipeGramsKey));
+        }
+        else {
+            this.recipeGrams.put(recipeGramsKey , recipeGramsValue);
+        }
     }
     public String getRecipeName() {
         return recipeName;
