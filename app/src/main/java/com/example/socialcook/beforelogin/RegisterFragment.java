@@ -7,7 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.socialcook.R;
@@ -26,17 +29,27 @@ public class RegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         Button registerButton = view.findViewById(R.id.signUpButton);
+        MainActivity main = (MainActivity)getActivity();
         /*
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //String userID = user.getUid();
          */
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("users");
-        final TextView nameSignUp = view.findViewById(R.id.nameReg);
-        final TextView emailSignUp = view.findViewById(R.id.emailReg);
+        final EditText nameSignUp = view.findViewById(R.id.nameReg);
+        final EditText emailSignUp = view.findViewById(R.id.emailReg);
+        // Get a reference to the AutoCompleteTextView in the layout
+        AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.autocomplete_country);
+// Get the string array
+        String[] countries = getResources().getStringArray(R.array.countries_array);
+// Create the adapter and set it to the AutoCompleteTextView
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(main, android.R.layout.simple_list_item_1, countries);
+        textView.setAdapter(adapter);
+
         final TextView passwordSignUp = view.findViewById(R.id.passwordReg);
-        final TextView addressSignUp = view.findViewById(R.id.addressReg);
-        final TextView birthdaySignUp = view.findViewById(R.id.birthdayReg);
+        final EditText addressSignUp = view.findViewById(R.id.addressReg);
+        final EditText birthdaySignUp = view.findViewById(R.id.birthdayReg);
         final User userSignUp = new User();
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override

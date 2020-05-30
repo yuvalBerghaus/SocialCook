@@ -54,6 +54,11 @@
         android:hint="enter birthday"
         android:inputType="date" />
 
+    <AutoCompleteTextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/autocomplete_country"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/signUpButton"
         android:layout_width="match_parent"
