@@ -6,6 +6,7 @@ public class User {
     public String name;
     public String email;
     public String address;
+    public String birthday;
     public void setName(String name) {
         this.name = name;
     }
@@ -14,6 +15,9 @@ public class User {
     }
     public void setAddress(String address) {
         this.address = address;
+    }
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
     public String getName() {
         return this.name;

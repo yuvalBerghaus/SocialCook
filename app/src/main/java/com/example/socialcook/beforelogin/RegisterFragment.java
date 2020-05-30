@@ -57,6 +57,7 @@ public class RegisterFragment extends Fragment {
                 userSignUp.setAddress(addressSignUp.getText().toString());
                 userSignUp.setEmail(emailSignUp.getText().toString());
                 userSignUp.setName(nameSignUp.getText().toString());
+                userSignUp.setBirthday(birthdaySignUp.getText().toString());
                 myRef.child(userSignUp.getName()).setValue(userSignUp);
                 FireBase.register(emailSignUp , passwordSignUp , (MainActivity) getActivity());
             }
