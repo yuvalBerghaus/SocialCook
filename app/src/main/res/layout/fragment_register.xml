@@ -4,76 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9DD0D1"
+    android:background="#2196F3"
     android:orientation="vertical"
     tools:context=".beforelogin.RegisterFragment">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/label" />
-
-    <EditText
-        android:id="@+id/nameReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter your name"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/emailReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter email"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/passwordReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter password"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/addressReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Address"
-        android:inputType="textPostalAddress" />
-
-    <EditText
-        android:id="@+id/birthdayReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter birthday"
-        android:inputType="date" />
-
-    <AutoCompleteTextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/autocomplete_country"
-        android:layout_width="fill_parent"
-        android:hint="Enter country here.."
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/signUpButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sign up" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/label" />
+
+        <EditText
+            android:id="@+id/nameReg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Enter your name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/emailReg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Enter email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/passwordReg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Enter password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/addressReg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Enter Address"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/birthdayReg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="enter birthday"
+            android:inputType="date" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autocomplete_country"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="Enter country here.." />
+
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Sign up" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView10"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="left"
             android:layout_weight="1"
