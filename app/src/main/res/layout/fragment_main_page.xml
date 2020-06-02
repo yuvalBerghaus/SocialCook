@@ -47,8 +47,8 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <ListView
+            android:id="@+id/listviewmain"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

@@ -2,24 +2,21 @@ package com.example.socialcook.afterlogin;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.example.socialcook.R;
 import com.example.socialcook.beforelogin.MainActivity;
-import com.example.socialcook.firebase.FireBase;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,11 +25,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
 
 public class MainPageFrag extends Fragment implements FireBase.IMainPage {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -46,11 +40,15 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
         if (user != null) {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference myRef = database.getReference().child("recipes");
+            final ArrayList<String>arrayList = new ArrayList<>();
+            final ListView listView = view.findViewById(R.id.listviewmain);
+            final ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, arrayList);
             myRef.orderByValue().addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                    Recipe recipe = dataSnapshot.getValue(Recipe.class);
-                    System.out.println(dataSnapshot.getKey());
+                    Recipe recipeIteration = dataSnapshot.getValue(Recipe.class);
+                    arrayList.add(recipeIteration.getRecipeName());
+                    listView.setAdapter(adapter);
                 }
 
                 @Override

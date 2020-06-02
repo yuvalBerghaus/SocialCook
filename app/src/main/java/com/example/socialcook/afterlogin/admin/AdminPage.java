@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +16,12 @@ import android.widget.Toast;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.MainPage;
 import com.example.socialcook.afterlogin.Recipe;
-import com.example.socialcook.beforelogin.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AdminPage extends Fragment {
     @Override
@@ -40,7 +36,7 @@ public class AdminPage extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_admin_page, container, false);
         MainPage mainPage = (MainPage) getActivity();
-        final ListView listView = view.findViewById(R.id.listView);
+        final ListView listView = view.findViewById(R.id.listviewmain);
         Button addAmount = view.findViewById(R.id.buttonAddAmount);
         Button addMl = view.findViewById(R.id.buttonAddMl);
         Button addG = view.findViewById(R.id.buttonAddMg);
