@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.MainPage;
 import com.example.socialcook.afterlogin.Recipe;
@@ -57,18 +59,32 @@ public class AdminPage extends Fragment {
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(getActivity() , android.R.layout.simple_list_item_1 , arrayList);
         listView.setAdapter(adapter);
+        //Button add for the amount - if it is empty it wont add to the object type Recipe otherwise everything will be added and a toast will confirm so
         addAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recipe.setAmount(recipeAmountKey.getText().toString() , Integer.parseInt(recipeAmountValue.getText().toString()));
-                recipeAmountKey.getText().clear();
-                recipeAmountValue.getText().clear();
+                if (recipeAmountKey.getText().toString().equals("") || recipeAmountValue.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "Please enter item and amount!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    recipe.setAmount(recipeAmountKey.getText().toString() , Integer.parseInt(recipeAmountValue.getText().toString()));
+                    Toast.makeText(getContext(), recipeAmountValue.getText().toString()+" "+recipeAmountKey.getText().toString()+" was added to the list", Toast.LENGTH_SHORT).show();
+                    recipeAmountKey.getText().clear();
+                    recipeAmountValue.getText().clear();
+                }
             }
         });
+        //Adding grams
         addG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(recipeGKey.getText().toString().equals("") || recipeGValue.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "Please enter item and Grams", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 recipe.setG(recipeGKey.getText().toString() , Integer.parseInt(recipeGValue.getText().toString()));
+                Toast.makeText(getContext(), recipeGValue.getText().toString()+" grams of "+recipeGKey.getText().toString()+" was added to the list", Toast.LENGTH_SHORT).show();
                 recipeGKey.getText().clear();
                 recipeGValue.getText().clear();
             }
@@ -76,28 +92,41 @@ public class AdminPage extends Fragment {
         addMl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recipe.setML(recipeMlKey.getText().toString() , Integer.parseInt(recipeMlValue.getText().toString()));
-                recipeMlKey.getText().clear();
-                recipeMlValue.getText().clear();
+                if(recipeMlKey.getText().toString().equals("") || recipeMlValue.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "Please enter item and ML", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    recipe.setML(recipeMlKey.getText().toString() , Integer.parseInt(recipeMlValue.getText().toString()));
+                    Toast.makeText(getContext(), recipeMlValue.getText().toString()+" ML of "+recipeMlKey.getText().toString()+" was added to the list", Toast.LENGTH_SHORT).show();
+                    recipeMlKey.getText().clear();
+                    recipeMlValue.getText().clear();
+                }
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recipe.setName(recipeName.getText().toString());
-                recipe.setType(recipeType.getText().toString());
-                String result = "recipe name: "+recipe.getRecipeName()+"\n recipe Type : "+recipe.getRecipeType()+"\nRecipeAmount : "+recipe.convertRecipeAmountIteration()+"\nRecipe ML : "+recipe.convertRecipeMLIteration()+"\nRecipe Grams : "+recipe.convertRecipeMGIteration();
-                arrayList.add(result);
-                myRef.child(recipe.getRecipeName()).setValue(recipe);
-                recipeName.getText().clear();
-                recipeType.getText().clear();
-                recipeAmountKey.getText().clear();
-                recipeAmountValue.getText().clear();
-                recipeGKey.getText().clear();
-                recipeGValue.getText().clear();
-                recipeMlKey.getText().clear();
-                recipeMlValue.getText().clear();
-                recipe.clear();
+                try {
+                    recipe.setName(recipeName.getText().toString());
+                    recipe.setType(recipeType.getText().toString());
+                    String result = "recipe name: "+recipe.getRecipeName()+"\n recipe Type : "+recipe.getRecipeType()+"\nRecipeAmount : "+recipe.convertRecipeAmountIteration()+"\nRecipe ML : "+recipe.convertRecipeMLIteration()+"\nRecipe Grams : "+recipe.convertRecipeMGIteration();
+                    arrayList.add(result);
+                    myRef.child(recipe.getRecipeName()).setValue(recipe);
+                    recipeName.getText().clear();
+                    recipeType.getText().clear();
+                    recipeAmountKey.getText().clear();
+                    recipeAmountValue.getText().clear();
+                    recipeGKey.getText().clear();
+                    recipeGValue.getText().clear();
+                    recipeMlKey.getText().clear();
+                    recipeMlValue.getText().clear();
+                    recipe.clear();
+                }
+                catch (Exception NullPointerException) {
+                    Toast.makeText(getContext(), "you need to fill everything!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
         return view;
