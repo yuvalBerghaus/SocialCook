@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1036940462455",
+    "firebase_url": "https://socialcookdb-9f25b.firebaseio.com",
+    "project_id": "socialcookdb-9f25b",
+    "storage_bucket": "socialcookdb-9f25b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036940462455:android:7d6dc08ce589159a763972",
+        "android_client_info": {
+          "package_name": "com.example.socialcook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036940462455-43bsbjrrutj2v3ji7rbpjcpqtg26cri2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.socialcook",
+            "certificate_hash": "0d4f5210e0b0c4e2c0f8091d296f5d9c54698d8f"
+          }
+        },
+        {
+          "client_id": "1036940462455-e8rr8ru7ka6j1udjm4ljh45omcq0c2er.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1afCqV7OdoFvvraJKP9NRSDzhTY-EWL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036940462455-e8rr8ru7ka6j1udjm4ljh45omcq0c2er.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
