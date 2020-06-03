@@ -71,6 +71,7 @@ public class MainPage extends AppCompatActivity {
         auth.signOut();
         Intent i = new Intent(MainPage.this, MainActivity.class);
         startActivity(i);
+        //:)
     }
     public void loadAdminPage() {
         // Create fragment and give it an argument specifying the article it should show
