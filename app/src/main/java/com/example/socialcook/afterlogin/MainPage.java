@@ -61,8 +61,7 @@ public class MainPage extends AppCompatActivity {
             Toast.makeText(MainPage.this, "User not logged In",
                     Toast.LENGTH_SHORT).show();
         }
-    }
-
+    }   //:)
     public void signout() {
 //        Toast.makeText(this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
 //        mAuth.signOut();
