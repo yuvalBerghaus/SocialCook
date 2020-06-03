@@ -36,7 +36,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
-        //:)
+        ///Hello Stranger :)
         ///////////////////////////////////////////////////////////////////////
         if (user != null) {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
