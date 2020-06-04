@@ -36,7 +36,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
-        ///////////////////////////////////////////////////////////////////////
+        //:)
         if (user != null) {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference myRef = database.getReference().child("recipes");
@@ -50,7 +50,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                     arrayList.add(recipeIteration.getRecipeName());
                     listView.setAdapter(adapter);
                 }
-
+            //:)
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
