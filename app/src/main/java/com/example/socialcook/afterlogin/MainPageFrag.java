@@ -38,6 +38,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
     private static ArrayList<Recipe> data;
     private static CustomAdapter adapter;
     static View.OnTouchListener myOnClickListener;
+    //:)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
