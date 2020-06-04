@@ -7,6 +7,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,27 +33,47 @@ import java.util.ArrayList;
 
 public class MainPageFrag extends Fragment implements FireBase.IMainPage {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+    private static RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private static ArrayList<Recipe> data;
+    private static CustomAdapter adapter;
+    static View.OnTouchListener myOnClickListener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
-        //:)
+
+        ///////////////////////////////////////////////////////////////////////
         if (user != null) {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference myRef = database.getReference().child("recipes");
-            final ArrayList<String>arrayList = new ArrayList<>();
-            final ListView listView = view.findViewById(R.id.listviewmain);
-            final ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, arrayList);
+            //final ArrayList<String>arrayList = new ArrayList<>();
+            //final ListView listView = view.findViewById(R.id.listviewmain);
+            //final ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, arrayList);
+
+            recyclerView = view.findViewById(R.id.recyclerView);
+            recyclerView.setHasFixedSize(true);
+            layoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(layoutManager);
+
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+
+
             myRef.orderByValue().addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     Recipe recipeIteration = dataSnapshot.getValue(Recipe.class);
-                    arrayList.add(recipeIteration.getRecipeName());
-                    listView.setAdapter(adapter);
+                    data = new ArrayList<Recipe>();
+                    data.add(recipeIteration);
+                    adapter = new CustomAdapter(data);
+                    recyclerView.setAdapter(adapter);
+                    //arrayList.add(recipeIteration.getRecipeName());
+                    //listView.setAdapter(adapter);
                 }
-            //:)
+
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
