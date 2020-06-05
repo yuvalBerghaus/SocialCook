@@ -71,7 +71,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                     //arrayList.add(recipeIteration.getRecipeName());
                     //listView.setAdapter(adapter);
                 }
-
+                //:)
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
