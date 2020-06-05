@@ -59,15 +59,12 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
             recyclerView.setLayoutManager(layoutManager);
 
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
-
+            data = new ArrayList<Recipe>();
 
             myRef.orderByValue().addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     Recipe recipeIteration = dataSnapshot.getValue(Recipe.class);
-                    data = new ArrayList<Recipe>();
                     data.add(recipeIteration);
                     adapter = new CustomAdapter(data);
                     recyclerView.setAdapter(adapter);
