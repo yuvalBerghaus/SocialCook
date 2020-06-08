@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,7 +67,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     Recipe recipeIteration = dataSnapshot.getValue(Recipe.class);
                     data.add(recipeIteration);
-                    adapter = new CustomAdapter(data);
+                    adapter = new CustomAdapter(data , (MainPage) getActivity());
                     recyclerView.setAdapter(adapter);
                     //arrayList.add(recipeIteration.getRecipeName());
                     //listView.setAdapter(adapter);
@@ -134,7 +135,6 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
         }
         return view;
     }
-
 
     @Override
     public void signOut() {

@@ -1,26 +1,32 @@
 package com.example.socialcook.afterlogin;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialcook.R;
+import com.example.socialcook.beforelogin.MainActivity;
+import com.example.socialcook.beforelogin.RegisterFragment;
 
 import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder>{
 
     private ArrayList<Recipe> dataSet;
-
+    MainPage mainPage;
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
         TextView textViewName;
-
         public MyViewHolder(View itemView) {
             super(itemView);
 
@@ -32,8 +38,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     }
 
-    public CustomAdapter(ArrayList<Recipe> data) {
+    public CustomAdapter(ArrayList<Recipe> data , MainPage mainPage) {
         this.dataSet = data;
+        this.mainPage = mainPage;
     }
 
     @Override
@@ -53,23 +60,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         TextView textViewName = holder.textViewName;
         CardView cardView = holder.cardView;
-
         textViewName.setText(dataSet.get(listPosition).getRecipeName());
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                System.out.println(dataSet.get(listPosition).getRecipeName());
+                mainPage.loadRecipePage(dataSet.get(listPosition));
             }
         });
-        /*cardView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-
-
-                return false;
-            }
-        }); */
     }
     @Override
     public int getItemCount() {

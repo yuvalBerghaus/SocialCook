@@ -1,8 +1,9 @@
 package com.example.socialcook.afterlogin;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Recipe {
+public class Recipe implements Serializable {
     private String recipeName;
     private String recipeType;
     private Map<String , Integer> recipeAmount = new HashMap<>();

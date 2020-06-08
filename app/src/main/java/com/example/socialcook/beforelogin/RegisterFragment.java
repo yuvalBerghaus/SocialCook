@@ -12,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.socialcook.R;
 import com.example.socialcook.firebase.FireBase;
@@ -54,12 +55,18 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userSignUp.setAddress(addressSignUp.getText().toString());
-                userSignUp.setEmail(emailSignUp.getText().toString());
-                userSignUp.setName(nameSignUp.getText().toString());
-                userSignUp.setBirthday(birthdaySignUp.getText().toString());
-                myRef.child(userSignUp.getName()).setValue(userSignUp);
-                FireBase.register(emailSignUp , passwordSignUp , (MainActivity) getActivity());
+                try {
+                    userSignUp.setAddress(addressSignUp.getText().toString());
+                    userSignUp.setEmail(emailSignUp.getText().toString());
+                    userSignUp.setName(nameSignUp.getText().toString());
+                    userSignUp.setBirthday(birthdaySignUp.getText().toString());
+                    myRef.child(userSignUp.getName()).setValue(userSignUp);
+                    FireBase.register(emailSignUp , passwordSignUp , (MainActivity) getActivity());
+                }
+                catch (Exception NullPointerException) {
+                    Toast.makeText(getContext(), "you need to fill everything!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
         return view;

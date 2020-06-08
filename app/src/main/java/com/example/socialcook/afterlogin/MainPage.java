@@ -3,6 +3,7 @@ package com.example.socialcook.afterlogin;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import com.example.socialcook.beforelogin.LoginFragment;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.io.Serializable;
 
 public class MainPage extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -75,6 +78,21 @@ public class MainPage extends AppCompatActivity {
     public void loadAdminPage() {
         // Create fragment and give it an argument specifying the article it should show
         Fragment newFragment = new AdminPage();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_mainPage, newFragment);
+        transaction.addToBackStack(null);
+// Commit the transaction
+        transaction.commit();
+    }
+    public void loadRecipePage(Recipe recipe) {
+        // Create fragment and give it an argument specifying the article it should show
+        Fragment newFragment = new RecipeInfo();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("recipe" , recipe);
+        bundle.putString("hello",recipe.getRecipeName());
+        newFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack so the user can navigate back
