@@ -30,21 +30,9 @@ public class RecipeInfo extends Fragment {
             Log.d(TAG, "1: "+currentRecipe.getRecipeAmount().keySet().size());
             TextView recipeInfoView = view.findViewById(R.id.recipeInfo);
             //TextView recipeIngrediantsView = view.findViewById(R.id.recipeIngrediants);
-            recipeInfoView.setText(currentRecipe.getRecipeName() + "\n\n" + currentRecipe.getRecipeType() + "\n\nIngrediants:\n"+currentRecipe.convertRecipeAmountIteration()+"\nMl:\n"+currentRecipe.convertRecipeMLIteration());
+            recipeInfoView.setText(currentRecipe.getRecipeName() + "\n\n" + currentRecipe.getRecipeType() + "\n\n"+currentRecipe.convertRecipeAmountIteration()+"\n\n"+currentRecipe.convertRecipeMLIteration()+"\n\n"+currentRecipe.convertRecipeGIteration());
             //System.out.println(currentRecipe.convertRecipeMLIteration());
             //recipeIngrediantsView.setText(currentRecipe.convertRecipeMLIteration());
-            /*
-            TextView recipeTypeView = view.findViewById(R.id.recipeType);
-            TextView recipeAmountView = view.findViewById(R.id.recipeAmount);
-            TextView recipeGView = view.findViewById(R.id.recipeG);
-            TextView recipeMlView = view.findViewById(R.id.recipeMl);
-            recipeNameView.setText(currentRecipe.getRecipeName());
-            System.out.println(currentRecipe.convertRecipeAmountIteration());
-            recipeTypeView.setText(currentRecipe.getRecipeType());
-            recipeAmountView.setText(currentRecipe.convertRecipeAmountIteration());
-            recipeGView.setText(currentRecipe.convertRecipeMGIteration());
-            recipeMlView.setText(currentRecipe.convertRecipeMLIteration());
-            */
         }
         // Inflate the layout for this fragment
         return view;
