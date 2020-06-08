@@ -28,7 +28,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="@android:drawable/btn_star" />
 
                 <Button
                     android:id="@+id/buttonInfo"
@@ -37,6 +38,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:backgroundTint="@android:color/holo_blue_bright"
                     android:text="Button" />
             </LinearLayout>
 
