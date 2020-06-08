@@ -34,7 +34,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
             this.cardView = (CardView) itemView.findViewById(R.id.cardView);
             this.textViewName = (TextView) itemView.findViewById(R.id.textView2);
-            this.infoButton = itemView.findViewById(R.id.buttonInfo);
+            this.infoButton = (Button) itemView.findViewById(R.id.buttonInfo);
         }
 
 
@@ -61,9 +61,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
 
         TextView textViewName = holder.textViewName;
-        Button button = holder.infoButton;
         CardView cardView = holder.cardView;
+        Button buttonInfo = holder.infoButton;
         textViewName.setText(dataSet.get(listPosition).getRecipeName());
+
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +72,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 mainPage.loadRecipePage(dataSet.get(listPosition));
             }
         });
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mainPage.loadRecipePage(dataSet.get(listPosition));

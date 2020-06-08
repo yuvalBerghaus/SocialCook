@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class RecipeInfo extends Fragment {
+    private static final String TAG = "<<< TESTING >>>";
     private FirebaseAuth mAuth;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,9 +27,10 @@ public class RecipeInfo extends Fragment {
         if (user != null) {
             Bundle extras = this.getArguments();
             Recipe currentRecipe= (Recipe) extras.getSerializable("recipe");
+            Log.d(TAG, "1: "+currentRecipe.getRecipeAmount().keySet().size());
             TextView recipeInfoView = view.findViewById(R.id.recipeInfo);
             //TextView recipeIngrediantsView = view.findViewById(R.id.recipeIngrediants);
-            recipeInfoView.setText(currentRecipe.getRecipeName() + "\n\n" + currentRecipe.getRecipeType() + "\n\nIngrediants:\n"+currentRecipe.convertRecipeGIteration());
+            recipeInfoView.setText(currentRecipe.getRecipeName() + "\n\n" + currentRecipe.getRecipeType() + "\n\nIngrediants:\n"+currentRecipe.convertRecipeAmountIteration()+"\nMl:\n"+currentRecipe.convertRecipeMLIteration());
             //System.out.println(currentRecipe.convertRecipeMLIteration());
             //recipeIngrediantsView.setText(currentRecipe.convertRecipeMLIteration());
             /*

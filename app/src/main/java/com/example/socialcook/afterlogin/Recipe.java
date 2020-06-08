@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Recipe implements Serializable {
+    private static final String TAG = "<<< TESTING >>>";
     private String recipeName;
     private String recipeType;
     private Map<String , Integer> recipeAmount = new HashMap<>();
-    private Map<String, Integer> recipeMl = new HashMap<>();
-    private Map<String, Integer> recipeGrams = new HashMap<>();
+
+    private Map<String, Integer> recipeML = new HashMap<>();
+    private Map<String, Integer> recipeG = new HashMap<>();
     public Recipe() {
     }
     public void setName(String recipeName) {
@@ -28,19 +30,19 @@ public class Recipe implements Serializable {
         }
     }
     public void setML(String recipeMlKey , int recipeMlValue) {
-        if(this.recipeMl.containsKey(recipeMlKey)) {
-            this.recipeMl.put(recipeMlKey , recipeMlValue + this.recipeMl.get(recipeMlKey));
+        if(this.recipeML.containsKey(recipeMlKey)) {
+            this.recipeML.put(recipeMlKey , recipeMlValue + this.recipeML.get(recipeMlKey));
         }
         else {
-            this.recipeMl.put(recipeMlKey , recipeMlValue);
+            this.recipeML.put(recipeMlKey , recipeMlValue);
         }
     }
     public void setG(String recipeGramsKey , int recipeGramsValue) {
-        if(this.recipeGrams.containsKey(recipeGramsKey)) {
-            this.recipeGrams.put(recipeGramsKey , recipeGramsValue + this.recipeGrams.get(recipeGramsKey));
+        if(this.recipeG.containsKey(recipeGramsKey)) {
+            this.recipeG.put(recipeGramsKey , recipeGramsValue + this.recipeG.get(recipeGramsKey));
         }
         else {
-            this.recipeGrams.put(recipeGramsKey , recipeGramsValue);
+            this.recipeG.put(recipeGramsKey , recipeGramsValue);
         }
     }
     public String getRecipeName() {
@@ -53,10 +55,10 @@ public class Recipe implements Serializable {
         return recipeAmount;
     }
     public Map getRecipeML() {
-        return recipeMl;
+        return recipeML;
     }
     public Map getRecipeG() {
-        return recipeGrams;
+        return recipeG;
     }
     public String convertRecipeAmountIteration() {
         Map<String,Integer> map = this.getRecipeAmount();
@@ -73,24 +75,29 @@ public class Recipe implements Serializable {
         for (String key : map.keySet()) {
             mapAsString.append(key + " = " + map.get(key).toString() + " grams\n ");
         }
-        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");
+        //mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");
         return mapAsString.toString();
     }
     public String convertRecipeMLIteration() {
+        Log.d(TAG, "convertRecipeMLIteration 1: called");
         Map<String,Integer> map = this.getRecipeML();
+        Log.d(TAG, "convertRecipeMLIteration 2: "+map.keySet().toString());
         StringBuilder mapAsString = new StringBuilder("\n");
         for (String key : map.keySet()) {
+            Log.d(TAG, "convertRecipeMLIteration 3: key = "+key);
+            Log.d(TAG, "convertRecipeMLIteration 4: map.get =  "+map.get(key).toString());
             mapAsString.append(key + " = " + map.get(key).toString() + " Mili-Liters\n ");
         }
         System.out.println("the length is "+mapAsString.length());
-        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");
+        //mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");
+        Log.d(TAG, mapAsString.toString());
         return mapAsString.toString();
     }
     public void clear() {
         this.recipeAmount.clear();
         this.recipeName = null;
-        this.recipeMl.clear();
+        this.recipeML.clear();
         this.recipeType = null;
-        this.recipeGrams.clear();
+        this.recipeG.clear();
     }
 }

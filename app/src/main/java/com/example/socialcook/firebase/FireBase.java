@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.socialcook.afterlogin.MainPage;
+import com.example.socialcook.afterlogin.Recipe;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -74,4 +75,6 @@ public class FireBase {
     public interface IMainPage {
         void signOut();
     }
+
+
 }
