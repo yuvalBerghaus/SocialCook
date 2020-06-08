@@ -106,7 +106,7 @@ public class AdminPage extends Fragment {
                 try {
                     recipe.setName(recipeName.getText().toString());
                     recipe.setType(recipeType.getText().toString());
-                    String result = "recipe name: "+recipe.getRecipeName()+"\n recipe Type : "+recipe.getRecipeType()+"\nRecipeAmount : "+recipe.convertRecipeAmountIteration()+"\nRecipe ML : "+recipe.convertRecipeMLIteration()+"\nRecipe Grams : "+recipe.convertRecipeMGIteration();
+                    String result = "recipe name: "+recipe.getRecipeName()+"\n recipe Type : "+recipe.getRecipeType()+"\nRecipeAmount : "+recipe.convertRecipeAmountIteration()+"\nRecipe ML : "+recipe.convertRecipeMLIteration()+"\nRecipe Grams : "+recipe.convertRecipeGIteration();
                     arrayList.add(result);
                     myRef.child(recipe.getRecipeName()).setValue(recipe);
                     recipeName.getText().clear();

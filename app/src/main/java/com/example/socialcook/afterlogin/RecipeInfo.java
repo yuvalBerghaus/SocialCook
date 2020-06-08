@@ -1,6 +1,5 @@
 package com.example.socialcook.afterlogin;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,8 +13,6 @@ import com.example.socialcook.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Map;
-
 public class RecipeInfo extends Fragment {
     private FirebaseAuth mAuth;
     @Override
@@ -27,13 +24,24 @@ public class RecipeInfo extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             Bundle extras = this.getArguments();
-            Recipe obj= (Recipe) extras.getSerializable("recipe");
-            TextView firstText = view.findViewById(R.id.test);
-            TextView secondText = view.findViewById(R.id.textView3);
-            TextView thirdText = view.findViewById(R.id.textView4);
-            TextView fourthText = view.findViewById(R.id.textView5);
-            firstText.setText(obj.getRecipeName());
-            secondText.setText(obj.getRecipeType());
+            Recipe currentRecipe= (Recipe) extras.getSerializable("recipe");
+            TextView recipeInfoView = view.findViewById(R.id.recipeInfo);
+            //TextView recipeIngrediantsView = view.findViewById(R.id.recipeIngrediants);
+            recipeInfoView.setText(currentRecipe.getRecipeName() + "\n\n" + currentRecipe.getRecipeType() + "\n\nIngrediants:\n"+currentRecipe.convertRecipeGIteration());
+            //System.out.println(currentRecipe.convertRecipeMLIteration());
+            //recipeIngrediantsView.setText(currentRecipe.convertRecipeMLIteration());
+            /*
+            TextView recipeTypeView = view.findViewById(R.id.recipeType);
+            TextView recipeAmountView = view.findViewById(R.id.recipeAmount);
+            TextView recipeGView = view.findViewById(R.id.recipeG);
+            TextView recipeMlView = view.findViewById(R.id.recipeMl);
+            recipeNameView.setText(currentRecipe.getRecipeName());
+            System.out.println(currentRecipe.convertRecipeAmountIteration());
+            recipeTypeView.setText(currentRecipe.getRecipeType());
+            recipeAmountView.setText(currentRecipe.convertRecipeAmountIteration());
+            recipeGView.setText(currentRecipe.convertRecipeMGIteration());
+            recipeMlView.setText(currentRecipe.convertRecipeMLIteration());
+            */
         }
         // Inflate the layout for this fragment
         return view;

@@ -81,7 +81,7 @@ public class MainPage extends AppCompatActivity {
         Fragment newFragment = new RecipeInfo();
         Bundle bundle = new Bundle();
         bundle.putSerializable("recipe" , recipe);
-        bundle.putString("hello",recipe.getRecipeName());
+       // bundle.putString("hello",recipe.getRecipeName());
         newFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 // Replace whatever is in the fragment_container view with this fragment,

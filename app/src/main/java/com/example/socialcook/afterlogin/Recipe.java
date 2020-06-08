@@ -1,4 +1,6 @@
 package com.example.socialcook.afterlogin;
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,29 +60,30 @@ public class Recipe implements Serializable {
     }
     public String convertRecipeAmountIteration() {
         Map<String,Integer> map = this.getRecipeAmount();
-        StringBuilder mapAsString = new StringBuilder("{");
+        StringBuilder mapAsString = new StringBuilder("\n");
         for (String key : map.keySet()) {
-            mapAsString.append(key + " : " + map.get(key).toString() + ", ");
+            mapAsString.append(key + " = " + map.get(key).toString() + " Units\n ");
         }
-        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
+        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");
         return mapAsString.toString();
     }
-    public String convertRecipeMGIteration() {
+    public String convertRecipeGIteration() {
         Map<String,Integer> map = this.getRecipeG();
-        StringBuilder mapAsString = new StringBuilder("{");
+        StringBuilder mapAsString = new StringBuilder("\n");
         for (String key : map.keySet()) {
-            mapAsString.append(key + "=" + map.get(key).toString() + ", ");
+            mapAsString.append(key + " = " + map.get(key).toString() + " grams\n ");
         }
-        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
+        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");
         return mapAsString.toString();
     }
     public String convertRecipeMLIteration() {
         Map<String,Integer> map = this.getRecipeML();
-        StringBuilder mapAsString = new StringBuilder("{");
+        StringBuilder mapAsString = new StringBuilder("\n");
         for (String key : map.keySet()) {
-            mapAsString.append(key + " = " + map.get(key).toString() + ", ");
+            mapAsString.append(key + " = " + map.get(key).toString() + " Mili-Liters\n ");
         }
-        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
+        System.out.println("the length is "+mapAsString.length());
+        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");
         return mapAsString.toString();
     }
     public void clear() {

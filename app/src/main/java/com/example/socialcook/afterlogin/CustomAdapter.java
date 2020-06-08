@@ -74,7 +74,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(dataSet.get(listPosition).getRecipeName());
                 mainPage.loadRecipePage(dataSet.get(listPosition));
             }
         });

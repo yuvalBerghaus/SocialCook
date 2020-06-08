@@ -2,39 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".afterlogin.RecipeInfo">
 
     <TextView
-        android:id="@+id/test"
+        android:id="@+id/recipeInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="TextView"
-        android:textSize="36sp" />
+        android:textSize="24sp" />
+
+    <!--
+    <TextView
+        android:id="@+id/recipeType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/recipeMl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="36sp" />
+        android:text="TextView" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/recipeAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="TextView"
-        android:textSize="36sp" />
+        android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/recipeG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="TextView"
-        android:textSize="36sp" />
+        android:textSize="18sp" />
+        -->
 </LinearLayout>
