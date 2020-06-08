@@ -65,16 +65,6 @@ public class MainPage extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }   //:)
-    public void signout() {
-//        Toast.makeText(this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
-//        mAuth.signOut();
-//        new Intent(MainPage.this, MainActivity.class);
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signOut();
-        Intent i = new Intent(MainPage.this, MainActivity.class);
-        startActivity(i);
-    }
     public void loadAdminPage() {
         // Create fragment and give it an argument specifying the article it should show
         Fragment newFragment = new AdminPage();

@@ -45,7 +45,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
-
+        final MainPage main = (MainPage)getActivity();
         ///////////////////////////////////////////////////////////////////////
         if (user != null) {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -114,7 +114,6 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
             signOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    MainPage main = new MainPage();
                     signOut();
                 }
             });
@@ -129,9 +128,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
             });
         }
         else {
-            //Pass to the MainPage Activity in order to go to MainActivity
-//            MainPage main = new MainPage();
-            signOut();
+
         }
         return view;
     }
@@ -140,7 +137,10 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
     public void signOut() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
-        Intent i = new Intent(this.getContext(), MainActivity.class);
+        Intent i = new Intent(getContext(), MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 }

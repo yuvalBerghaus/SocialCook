@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -27,12 +28,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         CardView cardView;
         TextView textViewName;
+        Button infoButton;
         public MyViewHolder(View itemView) {
             super(itemView);
 
             this.cardView = (CardView) itemView.findViewById(R.id.cardView);
             this.textViewName = (TextView) itemView.findViewById(R.id.textView2);
-
+            this.infoButton = itemView.findViewById(R.id.buttonInfo);
         }
 
 
@@ -59,10 +61,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
 
         TextView textViewName = holder.textViewName;
+        Button button = holder.infoButton;
         CardView cardView = holder.cardView;
         textViewName.setText(dataSet.get(listPosition).getRecipeName());
-
         cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(dataSet.get(listPosition).getRecipeName());
+                mainPage.loadRecipePage(dataSet.get(listPosition));
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println(dataSet.get(listPosition).getRecipeName());
