@@ -12,6 +12,7 @@ import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.adminPage.AdminPage;
 import com.example.socialcook.afterlogin.recipeInfoPage.RecipeInfo;
 import com.example.socialcook.afterlogin.userListPage.UsersListFrag;
+import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -60,6 +61,7 @@ public class MainPage extends AppCompatActivity {
             Toast.makeText(MainPage.this, "User not logged In",
                     Toast.LENGTH_SHORT).show();
         }
+        FireBase.UpdateToken();
     }   //:)
     public void loadAdminPage() {
         // Create fragment and give it an argument specifying the article it should show

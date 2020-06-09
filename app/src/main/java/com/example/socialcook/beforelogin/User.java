@@ -1,14 +1,16 @@
 package com.example.socialcook.beforelogin;
 
+import com.example.socialcook.SendNotificationPack.Token;
+
 import java.util.Date;
 
 public class User {
     private String UID;
-    private String token;
     private String name;
     private String email;
     private String address;
     private String birthday;
+
     public String getToken() {
         return token;
     }
@@ -16,6 +18,8 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
+
+    private String token;
     public String getUID() {
         return UID;
     }

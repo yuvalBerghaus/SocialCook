@@ -70,10 +70,10 @@ public class FireBase {
                     }
                 });
     }
-    private void UpdateToken(){
+    public static void UpdateToken(){
         String refreshToken= FirebaseInstanceId.getInstance().getToken();
         Token token= new Token(refreshToken);
-        FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
+        FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("token").setValue(token.getToken());
     }
     public static FirebaseAuth getAuth(){
         return mAuth;

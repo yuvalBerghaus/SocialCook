@@ -1,26 +1,30 @@
 package com.example.socialcook.SendNotificationPack;
+
+import com.example.socialcook.afterlogin.recipeListPage.Recipe;
+
 // use wrap two parts of notification “Title and message” ad
 // an data object , Note you can send more data as more different parts with more
 // variables and getter setter for those in Data class
 public class Data {
-    private String Title;
-    private String Message;
+    private Recipe recipe;
+    private String title;
+    private String message;
     public Data(String title, String message) {
-        Title = title;
-        Message = message;
+        this.title = title;
+        this.message = message;
     }
     public Data() {
     }
     public String getTitle() {
-        return Title;
+        return title;
     }
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
     public String getMessage() {
-        return Message;
+        return message;
     }
     public void setMessage(String message) {
-        Message = message;
+        this.message = message;
     }
 }
