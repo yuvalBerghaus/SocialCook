@@ -1,13 +1,11 @@
-package com.example.socialcook.afterlogin;
+package com.example.socialcook.afterlogin.userListPage;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,11 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+
 import com.example.socialcook.R;
+import com.example.socialcook.afterlogin.recipeListPage.MainPage;
+import com.example.socialcook.afterlogin.recipeListPage.Recipe;
+import com.example.socialcook.beforelogin.User;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,44 +31,41 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class MainPageFrag extends Fragment implements FireBase.IMainPage {
+public class UsersListFrag extends Fragment implements FireBase.IMainPage {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private static RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private static ArrayList<Recipe> data;
-    private static CustomAdapter adapter;
+    MainPage mainPage = (MainPage)getActivity();
+    private static ArrayList<User> data;
+    private static CustomAdapterUser adapter;
     static View.OnTouchListener myOnClickListener;
-    //im surrounded by idiots;) me too!
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main_page, container, false);
 
-        ///////////////////////////////////////////////////////////////////////
+        View view = inflater.inflate(R.layout.fragment_users_list, container, false);
+
         if (user != null) {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
-            final DatabaseReference myRef = database.getReference().child("recipes");
-            //final ArrayList<String>arrayList = new ArrayList<>();
-            //final ListView listView = view.findViewById(R.id.listviewmain);
-            //final ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, arrayList);
-
-            recyclerView = view.findViewById(R.id.recyclerView);
+            final DatabaseReference myRef = database.getReference().child("users");
+            Bundle extras = this.getArguments();
+            final Recipe currentRecipe= (Recipe) extras.getSerializable("recipe");
+            recyclerView = view.findViewById(R.id.recyclerViewUser);
             recyclerView.setHasFixedSize(true);
             layoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(layoutManager);
 
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            data = new ArrayList<Recipe>();
+            data = new ArrayList<User>();
 
             myRef.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                    Recipe recipeIteration = dataSnapshot.getValue(Recipe.class);
-                    Log.d("<<< TESTING >>>", "onChildAdded: "+recipeIteration.getRecipeName());
-                    data.add(recipeIteration);
+                    User userIteration = dataSnapshot.getValue(User.class);
+                    Log.d("<<< TESTING >>>", "onChildAdded: "+userIteration.getName());
+                    data.add(userIteration);
                     Log.d("TESTING", "onChildAdded: data size = "+data.size());
-                    adapter = new CustomAdapter(data , (MainPage) getActivity());
+                    adapter = new CustomAdapterUser(data , mainPage);
                     recyclerView.setAdapter(adapter);
                     //arrayList.add(recipeIteration.getRecipeName());
                     //listView.setAdapter(adapter);
@@ -98,37 +93,8 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
 
                 // ...
             });
-            MainPage currentActivity = (MainPage)getActivity();
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
+            // Inflate the layout for this fragment
 
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
-            String uid = user.getUid();
-            //////////////////////////////////////////////////
-            TextView welcome = view.findViewById(R.id.welcome);
-            Button signOut = view.findViewById(R.id.signOutButton);
-            signOut.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    signOut();
-                }
-            });
-            welcome.setText("Welcome Back " + email);
-            Button adminPageButton = view.findViewById(R.id.accountOption);
-            adminPageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MainPage mainPage = (MainPage) getActivity();
-                    mainPage.loadAdminPage();
-                }
-            });
         }
         else {
             //Pass to the MainPage Activity in order to go to MainActivity
@@ -137,7 +103,6 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
         }
         return view;
     }
-
     @Override
     public void signOut() {
         FirebaseAuth auth = FirebaseAuth.getInstance();

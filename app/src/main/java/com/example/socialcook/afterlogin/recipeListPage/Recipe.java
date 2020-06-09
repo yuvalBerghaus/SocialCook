@@ -1,4 +1,4 @@
-package com.example.socialcook.afterlogin;
+package com.example.socialcook.afterlogin.recipeListPage;
 import android.util.Log;
 
 import java.io.Serializable;

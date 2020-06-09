@@ -4,45 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".afterlogin.RecipeInfo">
+    tools:context=".afterlogin.recipeInfoPage.RecipeInfo">
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|right"
+        android:layout_weight="15"
+        android:text="Next" />
 
     <TextView
         android:id="@+id/recipeInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:text="TextView"
         android:textSize="24sp" />
 
-    <!--
-    <TextView
-        android:id="@+id/recipeType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/recipeMl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/recipeAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/recipeG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="18sp" />
-        -->
 </LinearLayout>

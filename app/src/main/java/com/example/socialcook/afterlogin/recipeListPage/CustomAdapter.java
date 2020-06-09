@@ -1,8 +1,5 @@
-package com.example.socialcook.afterlogin;
+package com.example.socialcook.afterlogin.recipeListPage;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +7,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialcook.R;
-import com.example.socialcook.beforelogin.MainActivity;
-import com.example.socialcook.beforelogin.RegisterFragment;
 
 import java.util.ArrayList;
 
@@ -34,7 +27,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
             this.cardView = (CardView) itemView.findViewById(R.id.cardView);
             this.textViewName = (TextView) itemView.findViewById(R.id.textView2);
-            this.infoButton = (Button) itemView.findViewById(R.id.buttonInfo);
+            this.infoButton = (Button) itemView.findViewById(R.id.buttonSendTo);
         }
 
 

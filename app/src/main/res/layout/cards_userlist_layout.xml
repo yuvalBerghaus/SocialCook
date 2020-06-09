@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:background="@android:color/holo_blue_dark"
+                android:background="@android:color/holo_purple"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -38,10 +38,9 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Open"
                     android:background="@android:drawable/btn_default_small"
-                    />
+                    android:gravity="center"
+                    android:text="send" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

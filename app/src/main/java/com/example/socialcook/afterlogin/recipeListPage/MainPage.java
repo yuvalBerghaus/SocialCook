@@ -1,9 +1,7 @@
-package com.example.socialcook.afterlogin;
+package com.example.socialcook.afterlogin.recipeListPage;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,13 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.socialcook.R;
-import com.example.socialcook.afterlogin.admin.AdminPage;
-import com.example.socialcook.beforelogin.LoginFragment;
-import com.example.socialcook.beforelogin.MainActivity;
+import com.example.socialcook.afterlogin.adminPage.AdminPage;
+import com.example.socialcook.afterlogin.recipeInfoPage.RecipeInfo;
+import com.example.socialcook.afterlogin.userListPage.UsersListFrag;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.io.Serializable;
 
 public class MainPage extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -79,6 +75,20 @@ public class MainPage extends AppCompatActivity {
     public void loadRecipePage(Recipe recipe) {
         // Create fragment and give it an argument specifying the article it should show
         Fragment newFragment = new RecipeInfo();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("recipe" , recipe);
+        newFragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_mainPage, newFragment);
+        transaction.addToBackStack(null);
+// Commit the transaction
+        transaction.commit();
+    }
+    public void loadUsersPage(Recipe recipe) {
+        // Create fragment and give it an argument specifying the article it should show
+        Fragment newFragment = new UsersListFrag();
         Bundle bundle = new Bundle();
         bundle.putSerializable("recipe" , recipe);
         newFragment.setArguments(bundle);

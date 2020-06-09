@@ -5,4 +5,4 @@
     android:layout_width="match_parent"
     android:id="@+id/fragment_mainPage"
     android:layout_height="match_parent"
-    tools:context=".afterlogin.MainPage"/>
+    tools:context=".afterlogin.recipeListPage.MainPage"/>
