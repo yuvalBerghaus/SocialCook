@@ -3,10 +3,26 @@ package com.example.socialcook.beforelogin;
 import java.util.Date;
 
 public class User {
-    public String name;
-    public String email;
-    public String address;
-    public String birthday;
+    private String UID;
+    private String token;
+    private String name;
+    private String email;
+    private String address;
+    private String birthday;
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
     public void setName(String name) {
         this.name = name;
     }
@@ -28,5 +44,6 @@ public class User {
     public String getAddress() {
         return this.address;
     }
+
 
 }

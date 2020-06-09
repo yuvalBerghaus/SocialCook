@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.socialcook.R;
+import com.example.socialcook.SendNotificationPack.APIService;
+import com.example.socialcook.SendNotificationPack.Client;
 import com.example.socialcook.afterlogin.recipeListPage.MainPage;
 import com.example.socialcook.afterlogin.recipeListPage.Recipe;
 import com.example.socialcook.beforelogin.User;
@@ -28,7 +30,22 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.ArrayList;
 
 public class UsersListFrag extends Fragment implements FireBase.IMainPage {
@@ -39,6 +56,7 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
     private static ArrayList<User> data;
     private static CustomAdapterUser adapter;
     static View.OnTouchListener myOnClickListener;
+    private APIService apiService;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +64,7 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
         View view = inflater.inflate(R.layout.fragment_users_list, container, false);
 
         if (user != null) {
+            apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference myRef = database.getReference().child("users");
             Bundle extras = this.getArguments();

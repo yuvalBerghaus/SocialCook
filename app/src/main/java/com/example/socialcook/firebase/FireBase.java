@@ -6,20 +6,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.socialcook.SendNotificationPack.Token;
 import com.example.socialcook.afterlogin.recipeListPage.MainPage;
 import com.example.socialcook.beforelogin.MainActivity;
+import com.example.socialcook.beforelogin.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class FireBase {
 
     private FireBase(){};
-
+    private static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
     public static void login(TextView email , TextView password , final MainActivity before) {
         mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(before, new OnCompleteListener<AuthResult>() {
@@ -41,7 +45,7 @@ public class FireBase {
                     }
                 });
     }
-    public static void register(TextView email , TextView password,final MainActivity before) {
+    public static void register(TextView email , TextView password, final MainActivity before , final DatabaseReference myRef , final User userSignUp) {
         mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(before, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -51,6 +55,9 @@ public class FireBase {
                             Toast.makeText(before, "Register Succeed.",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
+                            assert user != null;
+                            userSignUp.setUID(user.getUid());
+                            myRef.child(userSignUp.getUID()).setValue(userSignUp);
                             before.loadLoginFrag();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -63,7 +70,11 @@ public class FireBase {
                     }
                 });
     }
-
+    private void UpdateToken(){
+        String refreshToken= FirebaseInstanceId.getInstance().getToken();
+        Token token= new Token(refreshToken);
+        FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
+    }
     public static FirebaseAuth getAuth(){
         return mAuth;
     }

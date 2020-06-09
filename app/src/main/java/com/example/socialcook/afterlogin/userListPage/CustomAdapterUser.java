@@ -6,12 +6,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.recipeListPage.MainPage;
 import com.example.socialcook.beforelogin.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -69,7 +74,6 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
         buttonInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
     }

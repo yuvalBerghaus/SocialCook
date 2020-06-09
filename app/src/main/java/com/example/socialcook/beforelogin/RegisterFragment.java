@@ -30,7 +30,7 @@ public class RegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         Button registerButton = view.findViewById(R.id.signUpButton);
-        MainActivity main = (MainActivity)getActivity();
+        final MainActivity main = (MainActivity)getActivity();
         /*
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //String userID = user.getUid();
@@ -60,8 +60,7 @@ public class RegisterFragment extends Fragment {
                     userSignUp.setEmail(emailSignUp.getText().toString());
                     userSignUp.setName(nameSignUp.getText().toString());
                     userSignUp.setBirthday(birthdaySignUp.getText().toString());
-                    myRef.child(userSignUp.getName()).setValue(userSignUp);
-                    FireBase.register(emailSignUp , passwordSignUp , (MainActivity) getActivity());
+                    FireBase.register(emailSignUp , passwordSignUp , main , myRef , userSignUp);
                 }
                 catch (Exception NullPointerException) {
                     Toast.makeText(getContext(), "you need to fill everything!", Toast.LENGTH_SHORT).show();
