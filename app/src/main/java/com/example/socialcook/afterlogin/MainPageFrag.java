@@ -143,6 +143,9 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
         Intent i = new Intent(this.getContext(), MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }
 }
