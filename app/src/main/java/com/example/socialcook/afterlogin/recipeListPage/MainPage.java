@@ -9,6 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.socialcook.R;
+import com.example.socialcook.SendNotificationPack.APIService;
+import com.example.socialcook.SendNotificationPack.Client;
+import com.example.socialcook.SendNotificationPack.Data;
+import com.example.socialcook.SendNotificationPack.MyResponse;
+import com.example.socialcook.SendNotificationPack.NotificationSender;
 import com.example.socialcook.afterlogin.adminPage.AdminPage;
 import com.example.socialcook.afterlogin.recipeInfoPage.RecipeInfo;
 import com.example.socialcook.afterlogin.userListPage.UsersListFrag;
@@ -16,10 +21,14 @@ import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainPage extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
+    private static APIService apiService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

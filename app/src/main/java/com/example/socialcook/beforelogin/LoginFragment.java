@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.socialcook.firebase.FireBase;
 import com.example.socialcook.R;
@@ -39,8 +40,14 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                FireBase.login(email , password , mainActivity);
+                try {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    FireBase.login(email , password , mainActivity);
+                }
+                catch (Exception NullPointerException) {
+                    Toast.makeText(getContext(), "you need to fill everything!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
         return view;

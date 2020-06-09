@@ -52,14 +52,14 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.ArrayList;
 
 public class UsersListFrag extends Fragment implements FireBase.IMainPage {
+    private static APIService apiService;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private static RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    MainPage mainPage = (MainPage)getActivity();
+    final MainPage mainPage = (MainPage)getActivity();
     private static ArrayList<User> data;
     private static CustomAdapterUser adapter;
     static View.OnTouchListener myOnClickListener;
-    private APIService apiService;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

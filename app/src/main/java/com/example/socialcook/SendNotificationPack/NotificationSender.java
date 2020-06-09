@@ -5,9 +5,8 @@ public class NotificationSender {
     public Data data;
     public String to;
     public NotificationSender(Data data, String to) {
+        System.out.println("the message in notification sender is "+data.getMessage()+" and token is"+to);
         this.data = data;
         this.to = to;
-    }
-    public NotificationSender() {
     }
 }
