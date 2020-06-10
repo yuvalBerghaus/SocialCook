@@ -40,7 +40,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //String userID = user.getUid();
          */
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FireBase.getDataBase();
         final DatabaseReference myRef = database.getReference("users");
         final EditText nameSignUp = view.findViewById(R.id.nameReg);
         final EditText emailSignUp = view.findViewById(R.id.emailReg);
@@ -65,8 +65,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister {
                     userSignUp.setEmail(emailSignUp.getText().toString());
                     userSignUp.setName(nameSignUp.getText().toString());
                     userSignUp.setBirthday(birthdaySignUp.getText().toString());
-                    myRef.child(userSignUp.getName()).setValue(userSignUp);
-                    register(emailSignUp , passwordSignUp);
+                    register(emailSignUp , passwordSignUp , myRef, userSignUp);
                 }
                 catch (Exception NullPointerException) {
                     Toast.makeText(getContext(), "you need to fill everything!", Toast.LENGTH_SHORT).show();
@@ -78,7 +77,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister {
     }
 
     @Override
-    public void register(TextView email , TextView password) {
+    public void register(TextView email , TextView password , final DatabaseReference myRef, final User userSignUp) {
         final MainActivity main = (MainActivity)getActivity();
         FireBase.getAuth().createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(main, new OnCompleteListener<AuthResult>() {
@@ -89,6 +88,8 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister {
                             Toast.makeText(getContext(), "Register Succeed.",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = FireBase.getAuth().getCurrentUser();
+                            userSignUp.setUID(user.getUid());
+                            myRef.child(user.getUid()).setValue(userSignUp);
                             main.loadLoginFrag();
                         } else {
                             // If sign in fails, display a message to the user.

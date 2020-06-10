@@ -8,6 +8,15 @@ public class User {
     public String address;
     public String birthday;
     public String uid;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String token;
     public String getUID() {
         return uid;

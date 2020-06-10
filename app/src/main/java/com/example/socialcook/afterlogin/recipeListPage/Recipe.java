@@ -9,6 +9,16 @@ public class Recipe implements Serializable {
     private static final String TAG = "<<< TESTING >>>";
     private String recipeName;
     private String recipeType;
+
+    public String getRecipeDescription() {
+        return recipeDescription;
+    }
+
+    public void setRecipeDescription(String recipeDescription) {
+        this.recipeDescription = recipeDescription;
+    }
+
+    private String recipeDescription;
     private Map<String , Integer> recipeAmount = new HashMap<>();
 
     private Map<String, Integer> recipeML = new HashMap<>();

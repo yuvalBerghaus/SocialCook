@@ -8,11 +8,13 @@ import androidx.annotation.NonNull;
 
 import com.example.socialcook.afterlogin.recipeListPage.MainPage;
 import com.example.socialcook.beforelogin.MainActivity;
+import com.example.socialcook.beforelogin.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class FireBase {
@@ -21,7 +23,6 @@ public class FireBase {
 
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();
-
     public static FirebaseAuth getAuth(){
         return mAuth;
     }
@@ -32,7 +33,7 @@ public class FireBase {
         void signOut();
     }
     public interface IRegister {
-        void register(TextView email , TextView password);
+        void register(TextView email , TextView password, DatabaseReference myRef , User newUser);
     }
     public interface ILogin {
         void login(TextView email , TextView password);
