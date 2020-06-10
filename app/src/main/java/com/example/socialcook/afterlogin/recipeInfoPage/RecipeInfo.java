@@ -33,7 +33,7 @@ public class RecipeInfo extends Fragment {
             Log.d(TAG, "1: "+currentRecipe.getRecipeAmount().keySet().size());
             TextView recipeInfoView = view.findViewById(R.id.recipeInfo);
             //TextView recipeIngrediantsView = view.findViewById(R.id.recipeIngrediants);
-            recipeInfoView.setText("Recipe name : "+currentRecipe.getRecipeName() + "\n\nRecipe type : " + currentRecipe.getRecipeType() + "\n\nRequirements\n"+currentRecipe.convertRecipeAmountIteration()+""+currentRecipe.convertRecipeMLIteration()+""+currentRecipe.convertRecipeGIteration());
+            recipeInfoView.setText("Recipe name : "+currentRecipe.getRecipeName() + "\n\nRecipe type : " + currentRecipe.getRecipeType() + "\n\nRequirements\n"+currentRecipe.convertRecipeAmountIteration()+""+currentRecipe.convertRecipeMLIteration()+""+currentRecipe.convertRecipeGIteration()+"\nDescription\n"+currentRecipe.getRecipeDescription());
             //System.out.println(currentRecipe.convertRecipeMLIteration());
             //recipeIngrediantsView.setText(currentRecipe.convertRecipeMLIteration());
             Button nextButton = view.findViewById(R.id.nextButton);

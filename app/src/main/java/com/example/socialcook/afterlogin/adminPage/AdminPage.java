@@ -40,6 +40,7 @@ public class AdminPage extends Fragment {
         Button addG = view.findViewById(R.id.buttonAddMg);
         Button saveButton = view.findViewById(R.id.buttonSend);
         final EditText recipeName = view.findViewById(R.id.recipeNameInput);
+        final EditText recipeDescription = view.findViewById(R.id.descriptionID);
         final EditText recipeType = view.findViewById(R.id.recipeTypeInput);
         final EditText recipeAmountKey = view.findViewById(R.id.keyAmount);
         final EditText recipeAmountValue = view.findViewById(R.id.valueAmount);
@@ -104,6 +105,7 @@ public class AdminPage extends Fragment {
                 try {
                     recipe.setName(recipeName.getText().toString());
                     recipe.setType(recipeType.getText().toString());
+                    recipe.setRecipeDescription(recipeDescription.getText().toString());
                     String result = "recipe name: "+recipe.getRecipeName()+"\n recipe Type : "+recipe.getRecipeType()+"\nRecipeAmount : "+recipe.convertRecipeAmountIteration()+"\nRecipe ML : "+recipe.convertRecipeMLIteration()+"\nRecipe Grams : "+recipe.convertRecipeGIteration();
                     arrayList.add(result);
                     myRef.child(recipe.getRecipeName()).setValue(recipe);
