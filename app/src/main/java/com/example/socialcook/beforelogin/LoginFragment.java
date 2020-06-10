@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +34,8 @@ public class LoginFragment extends Fragment implements FireBase.ILogin {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        final Animation myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
+        final Animation myAnimTwo = AnimationUtils.loadAnimation(getContext(), R.anim.bounce);
         Button registerButton = (Button)view.findViewById(R.id.registerButton);
         Button loginButton = (Button)view.findViewById(R.id.loginButton);
         final TextView email = (TextView)view.findViewById(R.id.emailText);
@@ -39,6 +43,7 @@ public class LoginFragment extends Fragment implements FireBase.ILogin {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(myAnim);
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.loadRegister();
             }
@@ -46,8 +51,15 @@ public class LoginFragment extends Fragment implements FireBase.ILogin {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                login(email , password);
+                try {
+                    v.startAnimation(myAnim);
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    login(email , password);
+                }
+                catch (Exception NullPointer) {
+                    Toast.makeText(getContext(), "Login Failed",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
