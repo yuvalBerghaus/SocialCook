@@ -18,6 +18,7 @@
 
     <EditText
         android:id="@+id/emailText"
+        android:drawableLeft="@android:drawable/btn_star_big_off"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -26,6 +27,7 @@
 
     <EditText
         android:id="@+id/passwordText"
+        android:drawableLeft="@android:drawable/btn_star_big_off"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
