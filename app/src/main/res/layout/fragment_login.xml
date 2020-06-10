@@ -61,7 +61,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/brocolli"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -69,7 +69,7 @@
                 android:src="@drawable/brocoli" />
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/mushroom"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -83,21 +83,21 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/tomato"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/tomato" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/chicken"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/chicken" />
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/eggs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

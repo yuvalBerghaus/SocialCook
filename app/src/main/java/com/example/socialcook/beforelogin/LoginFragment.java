@@ -38,7 +38,17 @@ public class LoginFragment extends Fragment implements FireBase.ILogin {
         final Animation myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
         final Animation myAnimTwo = AnimationUtils.loadAnimation(getContext(), R.anim.bounce);
         ImageView logo = (ImageView)view.findViewById(R.id.logo);
+        ImageView mushroom = (ImageView)view.findViewById(R.id.mushroom);
+        ImageView brocolli = (ImageView)view.findViewById(R.id.brocolli);
+        ImageView chicken = (ImageView)view.findViewById(R.id.chicken);
+        ImageView tomato = (ImageView)view.findViewById(R.id.tomato);
+        ImageView eggs = (ImageView)view.findViewById(R.id.eggs);
         logo.animate().rotationBy(-10);
+        eggs.animate().rotationBy(50);
+        mushroom.animate().rotationBy(100);
+        brocolli.animate().rotationBy(110);
+        tomato.animate().rotationBy(-80);
+        chicken.animate().rotationBy(-180);
         Button registerButton = (Button)view.findViewById(R.id.registerButton);
         Button loginButton = (Button)view.findViewById(R.id.loginButton);
         final TextView email = (TextView)view.findViewById(R.id.emailText);
