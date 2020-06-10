@@ -27,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
 
         ///////////////////////////////////////////////////////////////////////
         if (user != null) {
-            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final FirebaseDatabase database = FireBase.getDataBase();
             final DatabaseReference myRef = database.getReference().child("recipes");
             recyclerView = view.findViewById(R.id.recyclerView);
             recyclerView.setHasFixedSize(true);
@@ -101,7 +102,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
-            String uid = user.getUid();
+            final String uid = user.getUid();
             //////////////////////////////////////////////////
             TextView welcome = view.findViewById(R.id.welcome);
             Button signOut = view.findViewById(R.id.signOutButton);
@@ -111,7 +112,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                     signOut();
                 }
             });
-            welcome.setText("Welcome Back " + email);
+            welcome.setText("Welcome Back "+user.getDisplayName()+"!!!");
             Button adminPageButton = view.findViewById(R.id.accountOption);
             adminPageButton.setOnClickListener(new View.OnClickListener() {
                 @Override

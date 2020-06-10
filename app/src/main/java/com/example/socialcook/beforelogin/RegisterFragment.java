@@ -23,10 +23,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 public class RegisterFragment extends Fragment implements FireBase.IRegister {
     @Override
@@ -88,10 +90,13 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister {
                             Toast.makeText(getContext(), "Register Succeed.",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = FireBase.getAuth().getCurrentUser();
+                            user.updateProfile(new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(userSignUp.name).build());
                             userSignUp.setUID(user.getUid());
                             myRef.child(user.getUid()).setValue(userSignUp);
                             main.loadLoginFrag();
-                        } else {
+                        }
+                         else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(main, "Register failed.",
                                     Toast.LENGTH_SHORT).show();
