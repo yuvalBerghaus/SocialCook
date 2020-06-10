@@ -32,7 +32,6 @@ public class AdminPage extends Fragment {
         // Write a message to the database
         final FirebaseDatabase database = FireBase.getDataBase();
         ArrayList<DatabaseReference>a;
-        //final DatabaseReference myRef = database.getReference("recipes");
         final DatabaseReference myRef = database.getReference("recipes");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_admin_page, container, false);
