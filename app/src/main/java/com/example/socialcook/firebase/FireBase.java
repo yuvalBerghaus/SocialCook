@@ -39,7 +39,7 @@ public class FireBase {
                             Toast.makeText(before, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                        // ...
+                        // ...:)
                     }
                 });
     }
