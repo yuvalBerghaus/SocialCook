@@ -1,5 +1,6 @@
 package com.example.socialcook.afterlogin.recipeListPage;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -12,10 +13,12 @@ import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.adminPage.AdminPage;
 import com.example.socialcook.afterlogin.recipeInfoPage.RecipeInfo;
 import com.example.socialcook.afterlogin.userListPage.UsersListFrag;
+import com.example.socialcook.beforelogin.MainActivity;
+import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainPage extends AppCompatActivity {
+public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -99,5 +102,15 @@ public class MainPage extends AppCompatActivity {
         transaction.addToBackStack(null);
 // Commit the transaction
         transaction.commit();
+    }
+
+    @Override
+    public void signOut() {
+        mAuth.signOut();
+        Intent i = new Intent(this, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 }

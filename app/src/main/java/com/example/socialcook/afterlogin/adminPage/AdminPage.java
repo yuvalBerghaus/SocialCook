@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.recipeListPage.MainPage;
 import com.example.socialcook.afterlogin.recipeListPage.Recipe;
+import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +30,7 @@ public class AdminPage extends Fragment {
                              Bundle savedInstanceState) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // Write a message to the database
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FireBase.getDataBase();
         ArrayList<DatabaseReference>a;
         //final DatabaseReference myRef = database.getReference("recipes");
         final DatabaseReference myRef = database.getReference("recipes");

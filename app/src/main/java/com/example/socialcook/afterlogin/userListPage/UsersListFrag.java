@@ -32,7 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class UsersListFrag extends Fragment implements FireBase.IMainPage {
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser user = FireBase.getAuth().getCurrentUser();
+    FirebaseAuth userAuth = FireBase.getAuth();
     private static RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     MainPage mainPage = (MainPage)getActivity();
@@ -46,7 +47,7 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
         View view = inflater.inflate(R.layout.fragment_users_list, container, false);
 
         if (user != null) {
-            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final FirebaseDatabase database = FireBase.getDataBase();
             final DatabaseReference myRef = database.getReference().child("users");
             Bundle extras = this.getArguments();
             final Recipe currentRecipe= (Recipe) extras.getSerializable("recipe");
@@ -67,10 +68,7 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
                     Log.d("TESTING", "onChildAdded: data size = "+data.size());
                     adapter = new CustomAdapterUser(data , mainPage);
                     recyclerView.setAdapter(adapter);
-                    //arrayList.add(recipeIteration.getRecipeName());
-                    //listView.setAdapter(adapter);
                 }
-                //:)
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -103,10 +101,10 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
         }
         return view;
     }
+
     @Override
     public void signOut() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signOut();
+        userAuth.signOut();
         Intent i = new Intent(this.getContext(), MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK |
