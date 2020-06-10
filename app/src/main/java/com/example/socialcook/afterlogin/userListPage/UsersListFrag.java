@@ -50,7 +50,6 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
             final FirebaseDatabase database = FireBase.getDataBase();
             final DatabaseReference myRef = database.getReference().child("users");
             Bundle extras = this.getArguments();
-            final Recipe currentRecipe= (Recipe) extras.getSerializable("recipe");
             recyclerView = view.findViewById(R.id.recyclerViewUser);
             recyclerView.setHasFixedSize(true);
             layoutManager = new LinearLayoutManager(getActivity());

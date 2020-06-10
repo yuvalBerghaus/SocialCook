@@ -7,6 +7,14 @@ public class User {
     public String email;
     public String address;
     public String birthday;
+    public String uid;
+    public String token;
+    public String getUID() {
+        return uid;
+    }
+    public void setUID(String uid) {
+        this.uid = uid;
+    }
     public void setName(String name) {
         this.name = name;
     }
