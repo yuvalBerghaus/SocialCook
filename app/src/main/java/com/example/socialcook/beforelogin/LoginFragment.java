@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ public class LoginFragment extends Fragment implements FireBase.ILogin {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         final Animation myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
         final Animation myAnimTwo = AnimationUtils.loadAnimation(getContext(), R.anim.bounce);
+        ImageView logo = (ImageView)view.findViewById(R.id.logo);
+        logo.animate().rotationBy(-10);
         Button registerButton = (Button)view.findViewById(R.id.registerButton);
         Button loginButton = (Button)view.findViewById(R.id.loginButton);
         final TextView email = (TextView)view.findViewById(R.id.emailText);
