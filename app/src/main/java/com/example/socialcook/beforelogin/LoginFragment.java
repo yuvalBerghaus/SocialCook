@@ -43,7 +43,6 @@ public class LoginFragment extends Fragment implements FireBase.ILogin {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.startAnimation(myAnim);
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.loadRegister();
             }
