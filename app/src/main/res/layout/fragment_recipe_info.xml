@@ -10,9 +10,9 @@
         android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center|right"
+        android:layout_gravity="center|end"
         android:layout_weight="15"
-        android:text="Next" />
+        android:text="@string/next" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,9 +27,9 @@
             <TextView
                 android:id="@+id/recipeInfo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:text="@string/textview"
                 android:textSize="24sp" />
         </LinearLayout>
     </ScrollView>

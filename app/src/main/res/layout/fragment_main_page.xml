@@ -22,14 +22,14 @@
             android:layout_width="151dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Account Option" />
+            android:text="@string/admin_page" />
 
         <Button
             android:id="@+id/signOutButton"
             android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Sign out" />
+            android:text="@string/sign_out" />
 
     </LinearLayout>
 
@@ -47,7 +47,7 @@
             android:layout_weight="12"
             android:gravity="center"
             android:text="Hello"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

@@ -12,5 +12,29 @@
         <item>Anguilla</item>
         <item>Antarctica</item>
     </string-array>
+    <string name="add">add</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="enter_email">Enter email</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="enter_birthday">enter birthday</string>
+    <string name="enter_country_here">Enter country here..</string>
+    <string name="sign_up">Sign up</string>
+    <string name="textview">TextView</string>
+    <string name="next">Next</string>
+    <string name="type_name_here">Type name here..</string>
+    <string name="recipe_type">Recipe type</string>
+    <string name="type_method">Type method here...</string>
+    <string name="recipe_method">Recipe method</string>
+    <string name="recipe_name">Recipe Name</string>
+    <string name="type_amount_here">Type amount here...</string>
+    <string name="type_ml_here">Type ml here...</string>
+    <string name="type_item_here">Type item here</string>
+    <string name="insert_recipe_type">insert recipe type..</string>
+    <string name="todo">TODO</string>
+    <string name="admin_page">Admin page</string>
+    <string name="sign_out">Sign out</string>
+    <string name="login">Login</string>
+    <string name="register_page">Register page</string>
 
 </resources>

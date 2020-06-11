@@ -1,6 +1,10 @@
 package com.example.socialcook.afterlogin.adminPage;
 
+import android.app.Notification;
 import android.os.Bundle;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import static com.example.socialcook.afterlogin.NotificationApp.CHANNEL_1_ID;
+import static com.example.socialcook.afterlogin.NotificationApp.CHANNEL_2_ID;
 import com.example.socialcook.R;
+import com.example.socialcook.afterlogin.NotificationApp;
 import com.example.socialcook.afterlogin.recipeListPage.MainPage;
 import com.example.socialcook.afterlogin.recipeListPage.Recipe;
 import com.example.socialcook.firebase.FireBase;
@@ -23,9 +29,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class AdminPage extends Fragment {
+    EditText recipeName;
+    private NotificationManagerCompat notificationManager;//this class shows the actual notification
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        notificationManager = NotificationManagerCompat.from(getContext());
+        final Recipe recipe = new Recipe();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // Write a message to the database
         final FirebaseDatabase database = FireBase.getDataBase();
@@ -37,9 +47,10 @@ public class AdminPage extends Fragment {
         final ListView listView = view.findViewById(R.id.listviewmain);
         Button addAmount = view.findViewById(R.id.buttonAddAmount);
         Button addMl = view.findViewById(R.id.buttonAddMl);
+
         Button addG = view.findViewById(R.id.buttonAddMg);
         Button saveButton = view.findViewById(R.id.buttonSend);
-        final EditText recipeName = view.findViewById(R.id.recipeNameInput);
+        recipeName = view.findViewById(R.id.recipeNameInput);
         final EditText recipeDescription = view.findViewById(R.id.descriptionID);
         final EditText recipeType = view.findViewById(R.id.recipeTypeInput);
         final EditText recipeAmountKey = view.findViewById(R.id.keyAmount);
@@ -48,7 +59,6 @@ public class AdminPage extends Fragment {
         final EditText recipeGValue = view.findViewById(R.id.valueMg);
         final EditText recipeMlKey = view.findViewById(R.id.keyMl);
         final EditText recipeMlValue = view.findViewById(R.id.valueMl);
-        final Recipe recipe = new Recipe();
         final ArrayList<String>arrayList;
         ArrayAdapter<String>adapter;
         arrayList = new ArrayList<>();
@@ -109,6 +119,7 @@ public class AdminPage extends Fragment {
                     String result = "recipe name: "+recipe.getRecipeName()+"\n recipe Type : "+recipe.getRecipeType()+"\nRecipeAmount : "+recipe.convertRecipeAmountIteration()+"\nRecipe ML : "+recipe.convertRecipeMLIteration()+"\nRecipe Grams : "+recipe.convertRecipeGIteration();
                     arrayList.add(result);
                     myRef.child(recipe.getRecipeName()).setValue(recipe);
+                    sendOnChannel1();
                     recipeName.getText().clear();
                     recipeType.getText().clear();
                     recipeAmountKey.getText().clear();
@@ -126,5 +137,26 @@ public class AdminPage extends Fragment {
             }
         });
         return view;
+    }
+    public void sendOnChannel1() {
+        String title = recipeName.getText().toString();
+        Notification notification = new NotificationCompat.Builder(getContext(), CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_one)
+                .setContentTitle(title)
+                .setContentText(title+" was added to the list!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        notificationManager.notify(1, notification);
+    }
+    public void sendOnChannel2(View v) {
+        String title = recipeName.getText().toString();
+        Notification notification = new NotificationCompat.Builder(getContext(), CHANNEL_2_ID)
+                .setSmallIcon(R.drawable.ic_two)
+                .setContentTitle(title)
+                .setContentText(title+" was added to the list!")
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .build();
+        notificationManager.notify(2, notification);
     }
 }

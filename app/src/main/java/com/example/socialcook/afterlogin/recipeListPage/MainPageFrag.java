@@ -140,4 +140,5 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }
+
 }

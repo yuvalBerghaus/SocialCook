@@ -19,8 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="Recipe Name"
+            android:gravity="center|start"
+            android:text="@string/recipe_name"
             android:textColor="#403E3E"
             android:textSize="30sp" />
 
@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Type name here.."
+            android:hint="@string/type_name_here"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 
@@ -46,8 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="Recipe type"
+            android:gravity="center|start"
+            android:text="@string/recipe_type"
             android:textSize="30sp" />
 
         <EditText
@@ -56,7 +56,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Type here..."
+            android:hint="@string/insert_recipe_type"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 
@@ -73,8 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="Recipe Description"
+            android:gravity="center|start"
+            android:text="@string/recipe_method"
             android:textSize="30sp" />
 
         <EditText
@@ -83,7 +83,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Type description here.."
+            android:hint="@string/type_method"
             android:inputType="textPersonName" />
     </LinearLayout>
 
@@ -99,7 +99,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Type item name"
+            android:hint="@string/type_item_here"
             android:inputType="textPersonName" />
 
         <EditText
@@ -108,7 +108,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Type amount here..."
+            android:hint="@string/type_amount_here"
             android:inputType="number" />
 
         <Button
@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Add" />
+            android:text="@string/add" />
     </LinearLayout>
 
     <LinearLayout
@@ -131,7 +131,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Type name here..."
+            android:hint="@string/type_item_here"
             android:inputType="textPersonName" />
 
         <EditText
@@ -140,7 +140,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Type ml here..."
+            android:hint="@string/type_ml_here"
             android:inputType="numberDecimal" />
 
         <Button
@@ -164,7 +164,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Type name here..."
+            android:hint="@string/type_item_here"
             android:inputType="textPersonName" />
 
         <EditText
@@ -181,18 +181,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="ADD" />
+            android:text="@string/add" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.2"
+        android:layout_weight="1.150"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/buttonSend"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Send" />
