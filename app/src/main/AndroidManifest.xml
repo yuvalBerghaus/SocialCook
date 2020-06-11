@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.socialcook">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,13 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
+            android:name=".services.MyService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
             android:name=".services.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".ReceiveNotificationActivity"></activity>
+
+        <activity android:name=".ReceiveNotificationActivity" />
         <activity android:name=".afterlogin.activities.MainPage" />
         <activity android:name=".beforelogin.MainActivity">
             <intent-filter>

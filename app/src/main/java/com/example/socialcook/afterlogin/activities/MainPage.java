@@ -87,6 +87,7 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
             Toast.makeText(MainPage.this, "User not logged In",
                     Toast.LENGTH_SHORT).show();
         }
+        FireBase.updateToken();
     }   //:)
     public void loadAdminPage() {
         // Create fragment and give it an argument specifying the article it should show
@@ -126,11 +127,6 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
         transaction.addToBackStack(null);
 // Commit the transaction
         transaction.commit();
-    }
-
-    @Override
-    public void updateToken() {
-        FirebaseUser user = FireBase.getAuth().getCurrentUser();
     }
 
     @Override

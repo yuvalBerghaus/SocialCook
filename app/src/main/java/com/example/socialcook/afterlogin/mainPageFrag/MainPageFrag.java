@@ -134,11 +134,6 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
     }
 
     @Override
-    public void updateToken() {
-        System.out.println("dd");
-    }
-
-    @Override
     public void signOut() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();

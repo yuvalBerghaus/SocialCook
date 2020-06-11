@@ -101,11 +101,6 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
     }
 
     @Override
-    public void updateToken() {
-        System.out.println("fdsfds");
-    }
-
-    @Override
     public void signOut() {
         userAuth.signOut();
         Intent i = new Intent(this.getContext(), MainActivity.class);

@@ -1,20 +1,27 @@
 package com.example.socialcook.firebase;
 
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.socialcook.classes.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
-public class FireBase {
+public class FireBase extends FirebaseMessagingService {
+
+    private static final String TAG = "debugIT";
 
     private FireBase(){};
 
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    public static String refreshedToken = FirebaseInstanceId.getInstance().getToken();
     public static String POST = "https://fcm.googleapis.com/fcm/send";
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public static DatabaseReference usersDir = database.getReference("users");
     public static FirebaseAuth getAuth(){
         return mAuth;
     }
@@ -23,7 +30,6 @@ public class FireBase {
     }
     public static FirebaseMessaging firebaseMessaging = FirebaseMessaging.getInstance();
     public interface IMainPage {
-        void updateToken();
         void signOut();
     }
     public interface IRegister {
@@ -32,5 +38,15 @@ public class FireBase {
     public interface ILogin {
         void login(TextView email , TextView password);
     }
-
+    @Override
+    public void onNewToken(String token) {
+        Log.d(TAG, "Refreshed token: " + token);
+        FireBase.usersDir.child(FireBase.getAuth().getUid()).child("token").setValue(token);
+        // If you want to send messages to this application instance or
+        // manage this apps subscriptions on the server side, send the
+        // Instance ID token to your app server.
+    }
+    public static void updateToken() {
+        usersDir.child(FireBase.getAuth().getUid()).child("token").setValue(refreshedToken);
+    }
 }
