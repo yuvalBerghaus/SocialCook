@@ -17,6 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.socialcook.R;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
@@ -29,7 +35,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainPageFrag extends Fragment implements FireBase.IMainPage {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -131,6 +142,11 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
     }
 
     @Override
+    public void updateToken() {
+        System.out.println("dd");
+    }
+
+    @Override
     public void signOut() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
@@ -140,5 +156,4 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }
-
 }

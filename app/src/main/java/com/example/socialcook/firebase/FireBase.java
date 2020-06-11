@@ -30,6 +30,7 @@ public class FireBase {
         return database;
     }
     public interface IMainPage {
+        void updateToken();
         void signOut();
     }
     public interface IRegister {

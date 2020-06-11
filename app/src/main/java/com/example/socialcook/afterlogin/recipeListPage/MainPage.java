@@ -1,14 +1,27 @@
 package com.example.socialcook.afterlogin.recipeListPage;
-
+import static com.example.socialcook.afterlogin.NotificationApp.CHANNEL_1_ID;
+import static com.example.socialcook.afterlogin.NotificationApp.CHANNEL_2_ID;
+import android.app.Notification;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.socialcook.R;
+import com.example.socialcook.afterlogin.NotificationApp;
 import com.example.socialcook.afterlogin.adminPage.AdminPage;
 import com.example.socialcook.afterlogin.recipeInfoPage.RecipeInfo;
 import com.example.socialcook.afterlogin.userListPage.UsersListFrag;
@@ -16,15 +29,27 @@ import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
+    private NotificationManagerCompat notificationManager;
+    private RequestQueue mRequestQue;
+    private String URL = "https://fcm.googleapis.com/fcm/send";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+        notificationManager = NotificationManagerCompat.from(this);
+        mRequestQue = Volley.newRequestQueue(this);
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
         mAuth = FireBase.getAuth();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -104,6 +129,11 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     }
 
     @Override
+    public void updateToken() {
+        FirebaseUser user = FireBase.getAuth().getCurrentUser();
+    }
+
+    @Override
     public void signOut() {
         mAuth.signOut();
         Intent i = new Intent(this, MainActivity.class);
@@ -111,5 +141,64 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
+    }
+    public void sendNotification(String uid) {
+
+        JSONObject json = new JSONObject();
+        try {
+            json.put("to","/topics/"+"news");
+            JSONObject notificationObj = new JSONObject();
+            notificationObj.put("title","New request!");
+            notificationObj.put("body","i just sent a notification to "+uid);
+
+            JSONObject extraData = new JSONObject();
+            extraData.put("brandId","puma");
+            extraData.put("category","Shoes");
+
+
+
+            json.put("notification",notificationObj);
+            json.put("data",extraData);
+
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URL,
+                    json,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("MUR", "onResponse: ");
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("MUR", "onError: "+error.networkResponse);
+                }
+            }
+            ){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> header = new HashMap<>();
+                    header.put("content-type","application/json");
+                    header.put("authorization","key=AAAA8W53yXc:APA91bHXoE3oXyuCG1GixUIOoy9A8M3EiBbXIF5QH-nrHRTTgZ8l-RSExlX4ALFVnFWFXfGg7YWKZZzPQ9IR_kxksiLDguhRoTBmUfEHGC6qD1UfBTAMalL3WU-MCarVxh36EDCTNG3u");
+                    return header;
+                }
+            };
+            mRequestQue.add(request);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    public void sendOnChannel1(String Uid) {
+        String title = "hello";
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_one)
+                .setContentTitle(title)
+                .setContentText(title+" was added to the list!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        notificationManager.notify(1, notification);
     }
 }

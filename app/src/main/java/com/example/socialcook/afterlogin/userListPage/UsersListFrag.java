@@ -15,6 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.recipeListPage.MainPage;
 import com.example.socialcook.afterlogin.recipeListPage.Recipe;
@@ -29,24 +36,29 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UsersListFrag extends Fragment implements FireBase.IMainPage {
     FirebaseUser user = FireBase.getAuth().getCurrentUser();
     FirebaseAuth userAuth = FireBase.getAuth();
     private static RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    MainPage mainPage = (MainPage)getActivity();
+    MainPage mainPage;
     private static ArrayList<User> data;
     private static CustomAdapterUser adapter;
     static View.OnTouchListener myOnClickListener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_users_list, container, false);
 
         if (user != null) {
+            mainPage = (MainPage)getContext();
             final FirebaseDatabase database = FireBase.getDataBase();
             final DatabaseReference myRef = database.getReference().child("users");
             Bundle extras = this.getArguments();
@@ -99,6 +111,11 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
             signOut();
         }
         return view;
+    }
+
+    @Override
+    public void updateToken() {
+        System.out.println("fdsfds");
     }
 
     @Override
