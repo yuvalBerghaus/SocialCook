@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.socialcook.afterlogin.recipeListPage.MainPage;
+import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.firebase.FireBase;
 import com.example.socialcook.R;
 import com.google.android.gms.tasks.OnCompleteListener;

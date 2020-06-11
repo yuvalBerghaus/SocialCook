@@ -1,6 +1,6 @@
-package com.example.socialcook.afterlogin.recipeListPage;
+package com.example.socialcook.afterlogin.activities;
 import static com.example.socialcook.afterlogin.NotificationApp.CHANNEL_1_ID;
-import static com.example.socialcook.afterlogin.NotificationApp.CHANNEL_2_ID;
+
 import android.app.Notification;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,15 +21,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.socialcook.R;
-import com.example.socialcook.afterlogin.NotificationApp;
-import com.example.socialcook.afterlogin.adminPage.AdminPage;
-import com.example.socialcook.afterlogin.recipeInfoPage.RecipeInfo;
-import com.example.socialcook.afterlogin.userListPage.UsersListFrag;
+import com.example.socialcook.afterlogin.adminFrag.AdminPage;
+import com.example.socialcook.afterlogin.mainPageFrag.MainPageFrag;
+import com.example.socialcook.afterlogin.recipeInfoFrag.RecipeInfo;
+import com.example.socialcook.afterlogin.userListFrag.UsersListFrag;
+import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,14 +42,14 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private NotificationManagerCompat notificationManager;
     private RequestQueue mRequestQue;
-    private String URL = "https://fcm.googleapis.com/fcm/send";
+    private String URL = FireBase.POST;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         notificationManager = NotificationManagerCompat.from(this);
         mRequestQue = Volley.newRequestQueue(this);
-        FirebaseMessaging.getInstance().subscribeToTopic("news");
+        FireBase.firebaseMessaging.subscribeToTopic("news");
         mAuth = FireBase.getAuth();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {

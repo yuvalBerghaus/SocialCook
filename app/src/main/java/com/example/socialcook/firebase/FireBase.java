@@ -1,27 +1,19 @@
 package com.example.socialcook.firebase;
 
-import android.content.Intent;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.example.socialcook.afterlogin.recipeListPage.MainPage;
-import com.example.socialcook.beforelogin.MainActivity;
-import com.example.socialcook.beforelogin.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.socialcook.classes.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class FireBase {
 
     private FireBase(){};
 
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    public static String POST = "https://fcm.googleapis.com/fcm/send";
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();
     public static FirebaseAuth getAuth(){
         return mAuth;
@@ -29,6 +21,7 @@ public class FireBase {
     public static FirebaseDatabase getDataBase(){
         return database;
     }
+    public static FirebaseMessaging firebaseMessaging = FirebaseMessaging.getInstance();
     public interface IMainPage {
         void updateToken();
         void signOut();

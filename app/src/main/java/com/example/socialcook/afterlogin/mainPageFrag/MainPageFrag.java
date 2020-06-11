@@ -1,4 +1,4 @@
-package com.example.socialcook.afterlogin.recipeListPage;
+package com.example.socialcook.afterlogin.mainPageFrag;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -18,12 +18,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.socialcook.R;
+import com.example.socialcook.afterlogin.mainPageFrag.CustomAdapter;
+import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,14 +31,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainPageFrag extends Fragment implements FireBase.IMainPage {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -48,7 +40,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
     private RecyclerView.LayoutManager layoutManager;
     private static ArrayList<Recipe> data;
     private static CustomAdapter adapter;
-    static View.OnTouchListener myOnClickListener;
+    public static View.OnTouchListener myOnClickListener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

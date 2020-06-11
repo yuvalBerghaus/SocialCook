@@ -1,4 +1,4 @@
-package com.example.socialcook.beforelogin;
+package com.example.socialcook.classes;
 
 import java.util.Date;
 

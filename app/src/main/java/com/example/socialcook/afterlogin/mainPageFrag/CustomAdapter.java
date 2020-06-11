@@ -1,4 +1,4 @@
-package com.example.socialcook.afterlogin.recipeListPage;
+package com.example.socialcook.afterlogin.mainPageFrag;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialcook.R;
-import com.example.socialcook.afterlogin.userListPage.UsersListFrag;
+import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.classes.Recipe;
 
 import java.util.ArrayList;
 

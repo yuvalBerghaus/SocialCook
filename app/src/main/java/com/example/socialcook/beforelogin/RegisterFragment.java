@@ -16,19 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialcook.R;
-import com.example.socialcook.afterlogin.recipeListPage.MainPage;
+import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.text.SimpleDateFormat;
-import java.util.Map;
 
 public class RegisterFragment extends Fragment implements FireBase.IRegister {
     @Override

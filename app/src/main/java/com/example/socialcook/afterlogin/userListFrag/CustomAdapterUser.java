@@ -1,24 +1,19 @@
-package com.example.socialcook.afterlogin.userListPage;
+package com.example.socialcook.afterlogin.userListFrag;
 
-import android.app.Notification;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.app.Notification;
+
 import androidx.cardview.widget.CardView;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.socialcook.R;
-import com.example.socialcook.afterlogin.recipeListPage.MainPage;
-import com.example.socialcook.beforelogin.User;
+import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.classes.User;
 
 import java.util.ArrayList;
-
-import static com.example.socialcook.afterlogin.NotificationApp.CHANNEL_1_ID;
 
 public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.MyViewHolder>{
 

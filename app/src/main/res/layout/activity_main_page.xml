@@ -6,4 +6,4 @@
     android:id="@+id/fragment_mainPage"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".afterlogin.recipeListPage.MainPage"/>
+    tools:context=".afterlogin.activities.MainPage"/>

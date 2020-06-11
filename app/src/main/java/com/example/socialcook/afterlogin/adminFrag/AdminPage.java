@@ -1,4 +1,4 @@
-package com.example.socialcook.afterlogin.adminPage;
+package com.example.socialcook.afterlogin.adminFrag;
 
 import android.app.Notification;
 import android.os.Bundle;
@@ -17,9 +17,8 @@ import android.widget.Toast;
 import static com.example.socialcook.afterlogin.NotificationApp.CHANNEL_1_ID;
 import static com.example.socialcook.afterlogin.NotificationApp.CHANNEL_2_ID;
 import com.example.socialcook.R;
-import com.example.socialcook.afterlogin.NotificationApp;
-import com.example.socialcook.afterlogin.recipeListPage.MainPage;
-import com.example.socialcook.afterlogin.recipeListPage.Recipe;
+import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

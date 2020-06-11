@@ -1,4 +1,4 @@
-package com.example.socialcook.afterlogin.userListPage;
+package com.example.socialcook.afterlogin.userListFrag;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,17 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.socialcook.R;
-import com.example.socialcook.afterlogin.recipeListPage.MainPage;
-import com.example.socialcook.afterlogin.recipeListPage.Recipe;
-import com.example.socialcook.beforelogin.User;
+import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.classes.User;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,12 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class UsersListFrag extends Fragment implements FireBase.IMainPage {
     FirebaseUser user = FireBase.getAuth().getCurrentUser();

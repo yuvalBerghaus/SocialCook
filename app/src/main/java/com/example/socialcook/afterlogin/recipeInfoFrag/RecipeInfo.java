@@ -1,4 +1,4 @@
-package com.example.socialcook.afterlogin.recipeInfoPage;
+package com.example.socialcook.afterlogin.recipeInfoFrag;
 
 import android.os.Bundle;
 
@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.socialcook.R;
-import com.example.socialcook.afterlogin.recipeListPage.MainPage;
-import com.example.socialcook.afterlogin.recipeListPage.Recipe;
+import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.classes.Recipe;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

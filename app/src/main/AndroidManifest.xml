@@ -13,14 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".services.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <activity android:name=".ReceiveNotificationActivity"></activity>
-        <activity android:name=".afterlogin.recipeListPage.MainPage" />
+        <activity android:name=".afterlogin.activities.MainPage" />
         <activity android:name=".beforelogin.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

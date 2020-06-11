@@ -1,4 +1,4 @@
-package com.example.socialcook;
+package com.example.socialcook.services;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,6 +9,8 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.example.socialcook.R;
+import com.example.socialcook.ReceiveNotificationActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -32,7 +34,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 new NotificationCompat.Builder(this, "TAC")
                         .setContentTitle(title)
                         .setContentText(body)
-                        .setSmallIcon(R.drawable.ic_launcher_background);
+                        .setSmallIcon(R.drawable.ic_one);
 
         Intent intent;
         if (category.equals("shoes")) {

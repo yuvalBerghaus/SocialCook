@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#47CD6D"
     android:orientation="vertical"
-    tools:context=".afterlogin.adminPage.AdminPage">
+    tools:context=".afterlogin.adminFrag.AdminPage">
 
     <LinearLayout
         android:layout_width="match_parent"
