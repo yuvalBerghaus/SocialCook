@@ -50,6 +50,7 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
         notificationManager = NotificationManagerCompat.from(this);
         mRequestQue = Volley.newRequestQueue(this);
         FireBase.firebaseMessaging.subscribeToTopic("news");
+        FireBase.firebaseMessaging.subscribeToTopic(FireBase.getAuth().getUid());
         mAuth = FireBase.getAuth();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
