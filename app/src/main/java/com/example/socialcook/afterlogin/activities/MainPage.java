@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -28,8 +30,12 @@ import com.example.socialcook.afterlogin.userListFrag.UsersListFrag;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,6 +89,12 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
                     */
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_mainPage, firstFragment).commit();
+                FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        FireBase.usersDir.child(FireBase.getAuth().getUid()).child("token").setValue(task.getResult().getToken());
+                    }
+                });
             }
         } else {
             Toast.makeText(MainPage.this, "User not logged In",
@@ -175,6 +187,8 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d("MUR", "onResponse: ");
+                            Toast.makeText(MainPage.this, "The message was sent successfully",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }, new Response.ErrorListener() {
                 @Override

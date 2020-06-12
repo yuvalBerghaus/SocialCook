@@ -27,7 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class AdminPage extends Fragment {
+public class AdminPage extends Fragment {//:)
     EditText recipeName;
     private NotificationManagerCompat notificationManager;//this class shows the actual notification
     @Override
