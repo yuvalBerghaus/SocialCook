@@ -1,7 +1,5 @@
 package com.example.socialcook.afterlogin.activities;
-import static com.example.socialcook.afterlogin.NotificationApp.CHANNEL_1_ID;
 
-import android.app.Notification;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -150,17 +147,6 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
-    }
-    public void sendOnChannel1(String Uid) {
-        String title = "hello";
-        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle(title)
-                .setContentText(title+" was added to the list!")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
-        notificationManager.notify(1, notification);
     }
     public void sendNotificationUID(String name , String uid) {
 

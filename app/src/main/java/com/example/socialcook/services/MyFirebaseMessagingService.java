@@ -1,27 +1,32 @@
 package com.example.socialcook.services;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
-
+import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_1_ID;
+import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_2_ID;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.socialcook.R;
 import com.example.socialcook.ReceiveNotificationActivity;
+import com.example.socialcook.afterlogin.adminFrag.NotificationApp;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
+    private NotificationManagerCompat notificationManager;
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-
+        notificationManager = NotificationManagerCompat.from(this);
         String title = remoteMessage.getNotification().getTitle();
         String body = remoteMessage.getNotification().getBody();
 
@@ -31,9 +36,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String category = extraData.get("category");
 
         NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this, "TAC")
+                new NotificationCompat.Builder(this, CHANNEL_2_ID)
                         .setContentTitle(title)
                         .setContentText(body)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true)
+                        .setOnlyAlertOnce(true)
                         .setSmallIcon(R.drawable.ic_one);
 
         Intent intent;
@@ -51,16 +59,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         notificationBuilder.setContentIntent(pendingIntent);
 
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-
         int id =  (int) System.currentTimeMillis();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("TAC","demo",NotificationManager.IMPORTANCE_HIGH);
-            notificationManager.createNotificationChannel(channel);
-        }
         notificationManager.notify(id,notificationBuilder.build());
 
     }
