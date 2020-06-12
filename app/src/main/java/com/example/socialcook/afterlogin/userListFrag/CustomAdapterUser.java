@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.User;
+import com.example.socialcook.firebase.FireBase;
 
 import java.util.ArrayList;
 
@@ -71,7 +72,8 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
         buttonInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainPage.sendNotification(dataSet.get(listPosition).getName());
+                //mainPage.sendNotification(dataSet.get(listPosition).getName());
+                mainPage.sendNotificationUID(FireBase.getAuth().getCurrentUser().getDisplayName(), dataSet.get(listPosition).getUID());
             }
         });
     }

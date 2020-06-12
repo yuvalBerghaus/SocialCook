@@ -50,7 +50,7 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
         notificationManager = NotificationManagerCompat.from(this);
         mRequestQue = Volley.newRequestQueue(this);
         FireBase.firebaseMessaging.subscribeToTopic("news");
-        FireBase.firebaseMessaging.subscribeToTopic(FireBase.getAuth().getUid());
+        FireBase.firebaseMessaging.subscribeToTopic(FireBase.getAuth().getUid().toString());
         mAuth = FireBase.getAuth();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -139,14 +139,25 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }
-    public void sendNotification(String uid) {
+    public void sendOnChannel1(String Uid) {
+        String title = "hello";
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_one)
+                .setContentTitle(title)
+                .setContentText(title+" was added to the list!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        notificationManager.notify(1, notification);
+    }
+    public void sendNotificationUID(String name , String uid) {
 
         JSONObject json = new JSONObject();
         try {
-            json.put("to","/topics/"+"news");
+            json.put("to","/topics/"+uid);
             JSONObject notificationObj = new JSONObject();
             notificationObj.put("title","New request!");
-            notificationObj.put("body","i just sent a notification to "+uid);
+            notificationObj.put("body",name+" just sent a notification to you!");
 
             JSONObject extraData = new JSONObject();
             extraData.put("brandId","puma");
@@ -186,16 +197,5 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
         {
             e.printStackTrace();
         }
-    }
-    public void sendOnChannel1(String Uid) {
-        String title = "hello";
-        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle(title)
-                .setContentText(title+" was added to the list!")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
-        notificationManager.notify(1, notification);
     }
 }
