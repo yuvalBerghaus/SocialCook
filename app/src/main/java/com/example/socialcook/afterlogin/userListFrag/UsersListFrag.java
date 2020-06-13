@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.classes.User;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;

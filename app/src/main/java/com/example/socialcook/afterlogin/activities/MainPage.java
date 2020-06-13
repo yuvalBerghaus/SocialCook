@@ -49,14 +49,22 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main_page);
-        notificationManager = NotificationManagerCompat.from(this);
-        mRequestQue = Volley.newRequestQueue(this);
-        FireBase.firebaseMessaging.subscribeToTopic("news");
-        FireBase.firebaseMessaging.subscribeToTopic(FireBase.getAuth().getUid().toString());
-        mAuth = FireBase.getAuth();
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = FireBase.getAuth().getCurrentUser();
         if (user != null) {
+            mAuth = FireBase.getAuth();
+            System.out.println("This is "+user.getDisplayName());
+            notificationManager = NotificationManagerCompat.from(this);
+            mRequestQue = Volley.newRequestQueue(this);
+            if(FireBase.getAuth().getCurrentUser() != null) {
+                FireBase.firebaseMessaging.subscribeToTopic("news");
+                FireBase.firebaseMessaging.subscribeToTopic(user.getUid());
+            }
+            else {
+                FireBase.firebaseMessaging.unsubscribeFromTopic("news");
+                FireBase.firebaseMessaging.unsubscribeFromTopic(mAuth.getUid());
+            }
             // Name, email address, and profile photo Url
             String name = user.getDisplayName();
             String email = user.getEmail();
@@ -94,6 +102,8 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
                 });
             }
         } else {
+            FireBase.firebaseMessaging.unsubscribeFromTopic("news");
+            FireBase.firebaseMessaging.unsubscribeFromTopic(mAuth.getUid());
             Toast.makeText(MainPage.this, "User not logged In",
                     Toast.LENGTH_SHORT).show();
         }
@@ -141,12 +151,13 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
 
     @Override
     public void signOut() {
-        mAuth.signOut();
+        FireBase.getAuth().signOut();
         Intent i = new Intent(this, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
+        finish();
     }
     public void sendNotificationUID(String name , String uid) {
 

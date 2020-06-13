@@ -1,8 +1,9 @@
 package com.example.socialcook.firebase;
 
+import android.media.MediaDrm;
 import android.util.Log;
 import android.widget.TextView;
-
+import com.google.firebase.auth.FirebaseAuth;
 import com.example.socialcook.classes.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -15,8 +16,7 @@ public class FireBase extends FirebaseMessagingService {
 
     private static final String TAG = "debugIT";
 
-    private FireBase(){};
-
+    public FireBase(){};
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     public static String refreshedToken = FirebaseInstanceId.getInstance().getToken();
     public static String POST = "https://fcm.googleapis.com/fcm/send";
@@ -41,7 +41,7 @@ public class FireBase extends FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
         Log.d(TAG, "Refreshed token: " + token);
-        FireBase.usersDir.child(FireBase.getAuth().getUid()).child("token").setValue(token);
+        usersDir.child(FireBase.getAuth().getUid()).child("token").setValue(token);
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.

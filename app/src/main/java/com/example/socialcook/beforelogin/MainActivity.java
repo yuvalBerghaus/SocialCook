@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +19,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "auth";
     private TextView emailText;
     private TextView passwordText;
-    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState != null) {
                 return;
             }
+            FirebaseAuth mAuth = FireBase.getAuth();
+            FireBase.firebaseMessaging.unsubscribeFromTopic("news");
+            FireBase.firebaseMessaging.unsubscribeFromTopic(mAuth.getUid());
+            Log.d(TAG, "uid before logging in is "+mAuth.getCurrentUser());
             // Create a new Fragment to be placed in the activity layout
             Fragment firstFragment = new LoginFragment();
             // In case this activity was started with special instructions from an
@@ -36,9 +41,8 @@ public class MainActivity extends AppCompatActivity {
             firstFragment.setArguments(getIntent().getExtras());
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
+
         }
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
     }
     public void loadLoginFrag() {
         // Create fragment and give it an argument specifying the article it should show

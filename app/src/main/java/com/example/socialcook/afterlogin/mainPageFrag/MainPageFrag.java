@@ -128,6 +128,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
         else {
             //Pass to the MainPage Activity in order to go to MainActivity
 //            MainPage main = new MainPage();
+
             signOut();
         }
         return view;
@@ -135,12 +136,15 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
 
     @Override
     public void signOut() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FireBase.getAuth();
+        FireBase.firebaseMessaging.unsubscribeFromTopic(auth.getUid());
         auth.signOut();
         Intent i = new Intent(this.getContext(), MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
+        FireBase.firebaseMessaging.unsubscribeFromTopic("news");
+        FireBase.firebaseMessaging.unsubscribeFromTopic(auth.getUid());
         startActivity(i);
     }
 }

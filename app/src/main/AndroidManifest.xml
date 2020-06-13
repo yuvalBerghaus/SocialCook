@@ -18,6 +18,10 @@
             android:enabled="true"
             android:exported="true"></service>
         <service
+            android:name=".firebase.FireBase"
+            android:enabled="false"
+            android:exported="false"></service>
+        <service
             android:name=".services.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>

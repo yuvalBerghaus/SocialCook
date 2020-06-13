@@ -2,7 +2,7 @@ package com.example.socialcook.beforelogin;
 
 import android.content.Intent;
 import android.os.Bundle;
-
+import com.google.firebase.auth.FirebaseAuth;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -22,6 +22,7 @@ import com.example.socialcook.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment implements FireBase.ILogin {
 
@@ -65,7 +66,6 @@ public class LoginFragment extends Fragment implements FireBase.ILogin {
             public void onClick(View v) {
                 try {
                     v.startAnimation(myAnim);
-                    MainActivity mainActivity = (MainActivity) getActivity();
                     login(email , password);
                 }
                 catch (Exception NullPointer) {
@@ -91,6 +91,7 @@ public class LoginFragment extends Fragment implements FireBase.ILogin {
                             //**********Intent i = new Intent(MainActivity.this , MainPage.class);
                             Intent i = new Intent(main , MainPage.class);
                             main.startActivity(i);
+                            main.finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(main, "Authentication failed.",
