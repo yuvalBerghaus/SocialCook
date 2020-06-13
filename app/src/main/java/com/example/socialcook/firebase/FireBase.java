@@ -2,15 +2,19 @@ package com.example.socialcook.firebase;
 
 import android.media.MediaDrm;
 import android.util.Log;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.socialcook.classes.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.OnDisconnect;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
+
+import java.util.logging.Handler;
 
 public class FireBase extends FirebaseMessagingService {
 

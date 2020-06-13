@@ -27,6 +27,7 @@ import com.example.socialcook.afterlogin.userListFrag.UsersListFrag;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
+import com.example.socialcook.services.MyFirebaseMessagingService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,6 +61,7 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
             if(FireBase.getAuth().getCurrentUser() != null) {
                 FireBase.firebaseMessaging.subscribeToTopic("news");
                 FireBase.firebaseMessaging.subscribeToTopic(user.getUid());
+
             }
             else {
                 FireBase.firebaseMessaging.unsubscribeFromTopic("news");
@@ -72,7 +74,6 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
 
             // Check if user's email is verified
             boolean emailVerified = user.isEmailVerified();
-
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.

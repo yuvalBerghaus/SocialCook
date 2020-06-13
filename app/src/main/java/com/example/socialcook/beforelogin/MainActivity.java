@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             FirebaseAuth mAuth = FireBase.getAuth();
-            FireBase.firebaseMessaging.unsubscribeFromTopic("news");
-            FireBase.firebaseMessaging.unsubscribeFromTopic(mAuth.getUid());
             Log.d(TAG, "uid before logging in is "+mAuth.getCurrentUser());
             // Create a new Fragment to be placed in the activity layout
             Fragment firstFragment = new LoginFragment();

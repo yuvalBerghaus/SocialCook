@@ -24,6 +24,7 @@ import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
+import com.example.socialcook.services.MyFirebaseMessagingService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -58,7 +59,6 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
 
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             data = new ArrayList<Recipe>();
-
             myRef.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
