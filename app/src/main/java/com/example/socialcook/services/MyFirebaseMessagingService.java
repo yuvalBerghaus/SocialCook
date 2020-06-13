@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.Build;
 import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_1_ID;
 import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_2_ID;
+import static com.example.socialcook.firebase.FireBase.refreshedToken;
+import static com.example.socialcook.firebase.FireBase.usersDir;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
@@ -17,10 +20,12 @@ import com.example.socialcook.R;
 import com.example.socialcook.ReceiveNotificationActivity;
 import com.example.socialcook.afterlogin.adminFrag.NotificationApp;
 import com.example.socialcook.firebase.FireBase;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private NotificationManagerCompat notificationManager;
@@ -68,5 +73,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             FireBase.firebaseMessaging.unsubscribeFromTopic("news");
             FireBase.firebaseMessaging.unsubscribeFromTopic(FireBase.getAuth().getUid());
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onNewToken(@NonNull String s) {
+        super.onNewToken(s);
+        FireBase.usersDir.child(Objects.requireNonNull(FireBase.getAuth().getUid())).child("token").setValue(refreshedToken);
     }
 }

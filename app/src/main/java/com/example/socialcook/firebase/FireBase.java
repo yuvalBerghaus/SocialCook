@@ -42,14 +42,6 @@ public class FireBase extends FirebaseMessagingService {
     public interface ILogin {
         void login(TextView email , TextView password);
     }
-    @Override
-    public void onNewToken(String token) {
-        Log.d(TAG, "Refreshed token: " + token);
-        usersDir.child(FireBase.getAuth().getUid()).child("token").setValue(token);
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
-    }
     public static void updateToken() {
         usersDir.child(FireBase.getAuth().getUid()).child("token").setValue(refreshedToken);
     }
