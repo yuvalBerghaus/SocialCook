@@ -1,7 +1,6 @@
 package com.example.socialcook;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,21 +10,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.socialcook.afterlogin.activities.MainPage;
-import com.example.socialcook.afterlogin.mainPageFrag.CustomAdapter;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.firebase.FireBase;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class ReceiveNotificationActivity extends AppCompatActivity {
 
@@ -36,7 +28,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receive_notification);
         final DatabaseReference myRef = FireBase.recipeDir;
-        final TextView recipeNameView = findViewById(R.id.category);
+        final TextView recipeNameView = findViewById(R.id.recipeNameView);
         final TextView recipeDescription = findViewById(R.id.description);
         final TextView recipeTypeView = findViewById(R.id.brand);
         final TextView recipeItems = findViewById(R.id.items);
@@ -56,12 +48,13 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                         String recipeNAme=datas.child("recipeName").getValue().toString();
                         String recipeTYpe = datas.child("recipeType").getValue().toString();
                         String recipeMethod = datas.child("recipeDescription").getValue().toString();
+                        recipeNameView.setText(recipeNAme);
                         recipeTypeView.setText(recipeTYpe);
                         recipeDescription.setText(recipeMethod);
                         String recipeItemsAll = "";
                         for (DataSnapshot child: datas.child("recipeAmount").getChildren()) {
                             Log.d(TAG , child.getKey()+" we need AMOUNT "+child.getValue());
-                            recipeItemsAll += (child.getKey() != null)?"\n"+child.getValue().toString()+" "+child.getKey():"";
+                            recipeItemsAll += (child.getKey() != null)?child.getValue().toString()+" "+child.getKey()+"\n":"";
                         }
                         for (DataSnapshot child: datas.child("recipeG").getChildren()) {
                             Log.d(TAG , child.getKey()+" = "+child.getValue());

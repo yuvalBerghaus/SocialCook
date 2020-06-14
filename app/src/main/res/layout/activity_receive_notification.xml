@@ -17,14 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="accept" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="reject" />
     </LinearLayout>
 
     <ScrollView
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textSize="20sp"
-        android:id="@+id/category"
+        android:id="@+id/recipeNameView"
         android:textColor="@color/colorPrimaryDark"
         android:layout_margin="10dp"
         android:layout_gravity="center_horizontal"/>
