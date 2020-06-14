@@ -22,7 +22,7 @@
             android:gravity="center|start"
             android:text="@string/recipe_name"
             android:textColor="#403E3E"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/recipeNameInput"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:gravity="center|start"
             android:text="@string/recipe_type"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/recipeTypeInput"
@@ -75,7 +75,7 @@
             android:layout_weight="1"
             android:gravity="center|start"
             android:text="@string/recipe_method"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/descriptionID"
