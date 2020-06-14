@@ -5,6 +5,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_1_ID;
 import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_2_ID;
@@ -44,14 +47,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String recipeType = extraData.get("recipeType");
             String category = extraData.get("category");
 
+            Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
+            PendingIntent actionIntent = PendingIntent
+                    .getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this, CHANNEL_2_ID)
                             .setContentTitle(title)
                             .setContentText(body)
+                            .setLargeIcon(largeIcon)
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText("Big Text Style text here Big Text Style text here Big Text Style text here")
+                                .setBigContentTitle("Description")
+                                .setSummaryText("Invatation"))
+                            .setColor(Color.RED)
+                            .addAction(R.mipmap.ic_launcher, "Reject", actionIntent)
+                            .addAction(R.mipmap.ic_launcher, "Accept", actionIntent)
                             .setPriority(NotificationCompat.PRIORITY_HIGH)
                             .setAutoCancel(true)
                             .setOnlyAlertOnce(true)
-                            .setSmallIcon(R.drawable.ic_one);
+                            .setSmallIcon(R.drawable.ic_launcher);
 
             Intent intent;
             if (category.equals("shoes")) {
