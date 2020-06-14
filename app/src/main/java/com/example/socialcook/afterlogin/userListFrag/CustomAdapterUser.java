@@ -11,6 +11,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
 
@@ -20,6 +21,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
 
     private ArrayList<User> dataSet;
     MainPage mainPage;
+    Recipe chosenRecipe;
     private NotificationManagerCompat notificationManager;
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -37,7 +39,8 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
 
     }
 
-    public CustomAdapterUser(ArrayList<User> data , MainPage mainPage) {
+    public CustomAdapterUser(ArrayList<User> data , MainPage mainPage , Recipe chosenRecipe) {
+        this.chosenRecipe = chosenRecipe;
         this.dataSet = data;
         this.mainPage = mainPage;
         notificationManager = NotificationManagerCompat.from(mainPage);
@@ -73,7 +76,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
             @Override
             public void onClick(View v) {
                 //mainPage.sendNotification(dataSet.get(listPosition).getName());
-                mainPage.sendNotificationUID(FireBase.getAuth().getCurrentUser().getDisplayName(), dataSet.get(listPosition).getUID());
+                mainPage.sendNotificationUID(FireBase.getAuth().getCurrentUser().getDisplayName(), dataSet.get(listPosition).getUID() , chosenRecipe);
             }
         });
     }

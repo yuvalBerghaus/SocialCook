@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class UsersListFrag extends Fragment implements FireBase.IMainPage {
+    private static final String TAG = "userlistRecipe";
     FirebaseUser user = FireBase.getAuth().getCurrentUser();
     FirebaseAuth userAuth = FireBase.getAuth();
     private static RecyclerView recyclerView;
@@ -46,6 +47,9 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
         View view = inflater.inflate(R.layout.fragment_users_list, container, false);
 
         if (user != null) {
+            Bundle bdl = getArguments();
+            final Recipe chosenRecipe = (Recipe) bdl.getSerializable("recipe");
+            Log.d(TAG,chosenRecipe.getRecipeName());
             mainPage = (MainPage)getContext();
             final FirebaseDatabase database = FireBase.getDataBase();
             final DatabaseReference myRef = database.getReference().child("users");
@@ -65,7 +69,7 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
                     Log.d("<<< TESTING >>>", "onChildAdded: "+userIteration.getName());
                     data.add(userIteration);
                     Log.d("TESTING", "onChildAdded: data size = "+data.size());
-                    adapter = new CustomAdapterUser(data , mainPage);
+                    adapter = new CustomAdapterUser(data , mainPage , chosenRecipe);
                     recyclerView.setAdapter(adapter);
                 }
                 @Override

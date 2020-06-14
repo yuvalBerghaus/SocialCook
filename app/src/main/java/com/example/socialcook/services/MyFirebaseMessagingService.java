@@ -19,6 +19,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.socialcook.R;
 import com.example.socialcook.ReceiveNotificationActivity;
 import com.example.socialcook.afterlogin.adminFrag.NotificationApp;
+import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -38,8 +39,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String body = remoteMessage.getNotification().getBody();
 
             Map<String, String> extraData = remoteMessage.getData();
-
             String brandId = extraData.get("brandId");
+            String recipeName = extraData.get("recipeName");
+            String recipeType = extraData.get("recipeType");
             String category = extraData.get("category");
 
             NotificationCompat.Builder notificationBuilder =
@@ -61,7 +63,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
             intent.putExtra("brandId", brandId);
             intent.putExtra("category", category);
-
+            intent.putExtra("recipeName", recipeName);
+            intent.putExtra("recipeType", recipeType);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 10, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             notificationBuilder.setContentIntent(pendingIntent);

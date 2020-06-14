@@ -26,6 +26,7 @@ public class FireBase extends FirebaseMessagingService {
     public static String POST = "https://fcm.googleapis.com/fcm/send";
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();
     public static DatabaseReference usersDir = database.getReference("users");
+    public static DatabaseReference recipeDir = database.getReference("recipes");
     public static FirebaseAuth getAuth(){
         return mAuth;
     }

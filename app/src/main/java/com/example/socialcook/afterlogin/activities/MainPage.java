@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
+    private static final String TAG = "checkIfrecieved";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private NotificationManagerCompat notificationManager;
@@ -160,19 +161,19 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
         startActivity(i);
         finish();
     }
-    public void sendNotificationUID(String name , String uid) {
-
+    public void sendNotificationUID(String name , String uid , Recipe recipe) {
         JSONObject json = new JSONObject();
         try {
             json.put("to","/topics/"+uid);
             JSONObject notificationObj = new JSONObject();
             notificationObj.put("title","New request!");
-            notificationObj.put("body",name+" just sent a notification to you!");
+            notificationObj.put("body",name+" just sent you a request");
+         JSONObject extraData = new JSONObject();
 
-            JSONObject extraData = new JSONObject();
+            extraData.put("recipeName" , recipe.getRecipeName());
+            extraData.put("recipeType" , recipe.getRecipeType());
             extraData.put("brandId","puma");
             extraData.put("category","Shoes");
-
 
 
             json.put("notification",notificationObj);
