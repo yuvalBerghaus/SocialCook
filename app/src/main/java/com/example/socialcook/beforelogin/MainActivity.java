@@ -46,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
                 //:)
             }
         }
-        if (getIntent().hasExtra("category")){
+        if (getIntent().hasExtra("recipeName")){
             Intent intent = new Intent(this, ReceiveNotificationActivity.class);
             intent.putExtra("category",getIntent().getStringExtra("category"));
             intent.putExtra("brandId",getIntent().getStringExtra("brandId"));
+            intent.putExtra("recipeName",getIntent().getStringExtra("recipeName"));
             startActivity(intent);
         }
         else if(FireBase.getAuth().getCurrentUser() != null) {
