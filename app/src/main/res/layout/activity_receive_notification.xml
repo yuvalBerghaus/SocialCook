@@ -40,4 +40,38 @@
         android:textColor="@color/colorPrimaryDark"
         android:layout_margin="10dp"
         android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="Recipe ingridients"
+        android:textSize="20sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="20sp"
+        android:id="@+id/items"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="Recipe method"
+        android:textSize="20sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="20sp"
+        android:id="@+id/description"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>

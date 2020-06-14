@@ -43,7 +43,4 @@ public class FireBase extends FirebaseMessagingService {
     public interface ILogin {
         void login(TextView email , TextView password);
     }
-    public static void updateToken() {
-        usersDir.child(FireBase.getAuth().getUid()).child("token").setValue(refreshedToken);
-    }
 }
