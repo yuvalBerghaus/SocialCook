@@ -51,6 +51,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                         String recipeTYpe = datas.child("recipeType").getValue().toString();
                         for (DataSnapshot child: datas.child("recipeAmount").getChildren()) {
                             Log.d(TAG , child.getKey()+" = "+child.getValue());
+                            brandTv.setText(child.getKey()+" = "+child.getValue());
                         }
                         for (DataSnapshot child: datas.child("recipeG").getChildren()) {
                             Log.d(TAG , child.getKey()+" = "+child.getValue());
