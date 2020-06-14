@@ -7,12 +7,40 @@
     android:orientation="vertical"
     tools:context=".ReceiveNotificationActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Button" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:text="Recipe request:"
+        android:text="@string/recipe_request"
         android:textSize="20sp" />
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:text="Recipe type"
+        android:text="@string/recipe_typee"
         android:textSize="20sp" />
     <TextView
         android:layout_width="wrap_content"
@@ -46,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:text="Recipe ingridients"
+        android:text="@string/recipe_ingridients"
         android:textSize="20sp" />
     <TextView
         android:layout_width="wrap_content"
@@ -63,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:text="Recipe method"
+        android:text="@string/recipe_methodd"
         android:textSize="20sp" />
     <TextView
         android:layout_width="wrap_content"
@@ -74,4 +102,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:layout_margin="10dp"
         android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>
