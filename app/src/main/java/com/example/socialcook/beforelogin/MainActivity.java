@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialcook.R;
+import com.example.socialcook.ReceiveNotificationActivity;
+import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.firebase.FireBase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,16 +33,29 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState != null) {
                 return;
             }
-            FirebaseAuth mAuth = FireBase.getAuth();
-            Log.d(TAG, "uid before logging in is "+mAuth.getCurrentUser());
-            // Create a new Fragment to be placed in the activity layout
-            Fragment firstFragment = new LoginFragment();
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
-
+            else {
+                FirebaseAuth mAuth = FireBase.getAuth();
+                Log.d(TAG, "uid before logging in is "+mAuth.getCurrentUser());
+                // Create a new Fragment to be placed in the activity layout
+                Fragment firstFragment = new LoginFragment();
+                // In case this activity was started with special instructions from an
+                // Intent, pass the Intent's extras to the fragment as arguments
+                firstFragment.setArguments(getIntent().getExtras());
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
+                //:)
+            }
+        }
+        if (getIntent().hasExtra("category")){
+            Intent intent = new Intent(this, ReceiveNotificationActivity.class);
+            intent.putExtra("category",getIntent().getStringExtra("category"));
+            intent.putExtra("brandId",getIntent().getStringExtra("brandId"));
+            startActivity(intent);
+        }
+        else if(FireBase.getAuth().getCurrentUser() != null) {
+            Intent next = new Intent(this , MainPage.class);
+            startActivity(next);
+            finish();
         }
     }
     public void loadLoginFrag() {

@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.socialcook.R;
+import com.example.socialcook.ReceiveNotificationActivity;
 import com.example.socialcook.afterlogin.adminFrag.AdminPage;
 import com.example.socialcook.afterlogin.mainPageFrag.MainPageFrag;
 import com.example.socialcook.afterlogin.recipeInfoFrag.RecipeInfo;
@@ -53,8 +54,8 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
 
         setContentView(R.layout.activity_main_page);
         FirebaseUser user = FireBase.getAuth().getCurrentUser();
+        mAuth = FireBase.getAuth();
         if (user != null) {
-            mAuth = FireBase.getAuth();
             System.out.println("This is "+user.getDisplayName());
             notificationManager = NotificationManagerCompat.from(this);
             mRequestQue = Volley.newRequestQueue(this);
