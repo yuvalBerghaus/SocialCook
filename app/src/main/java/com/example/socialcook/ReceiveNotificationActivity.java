@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.socialcook.classes.Recipe;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_receive_notification);
         final DatabaseReference myRef = FireBase.recipeDir;
         final TextView recipeNameView = findViewById(R.id.recipeNameView);
+        final ImageView recipeImageView = findViewById(R.id.imageRecieve);
         final TextView recipeDescription = findViewById(R.id.description);
         final TextView recipeTypeView = findViewById(R.id.brand);
         final TextView recipeItems = findViewById(R.id.items);
@@ -48,6 +51,8 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                         String recipeNAme=datas.child("recipeName").getValue().toString();
                         String recipeTYpe = datas.child("recipeType").getValue().toString();
                         String recipeMethod = datas.child("recipeDescription").getValue().toString();
+                        String imageUrl = datas.child("imageUrl").getValue().toString();
+                        Picasso.get().load(imageUrl).into(recipeImageView);
                         recipeNameView.setText(recipeNAme);
                         recipeTypeView.setText(recipeTYpe);
                         recipeDescription.setText(recipeMethod);
