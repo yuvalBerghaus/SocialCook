@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent">
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -18,32 +19,44 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:background="@android:color/holo_blue_dark"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@android:color/background_light"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView2"
+                <ImageView
+                    android:id="@+id/imageID"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="TextView"
-                    android:textColor="@color/design_default_color_on_secondary" />
+                    app:srcCompat="@drawable/pot" />
 
-                <Button
-                    android:id="@+id/buttonSendTo"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Open"
-                    android:background="@android:drawable/btn_default_small"
-                    />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView"
+                        android:textColor="@color/design_default_color_on_secondary"
+                        android:textSize="30sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
         </androidx.cardview.widget.CardView>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

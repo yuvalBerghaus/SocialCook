@@ -52,6 +52,7 @@ public class AdminPage extends Fragment {//:)
         recipeName = view.findViewById(R.id.recipeNameInput);
         final EditText recipeDescription = view.findViewById(R.id.descriptionID);
         final EditText recipeType = view.findViewById(R.id.recipeTypeInput);
+        final EditText recipeImage = view.findViewById(R.id.urlInput);
         final EditText recipeAmountKey = view.findViewById(R.id.keyAmount);
         final EditText recipeAmountValue = view.findViewById(R.id.valueAmount);
         final EditText recipeGKey = view.findViewById(R.id.keyMg);
@@ -114,12 +115,14 @@ public class AdminPage extends Fragment {//:)
                 try {
                     recipe.setName(recipeName.getText().toString());
                     recipe.setType(recipeType.getText().toString());
+                    recipe.setImageUrl(recipeImage.getText().toString());
                     recipe.setRecipeDescription(recipeDescription.getText().toString());
                     String result = "recipe name: "+recipe.getRecipeName()+"\n recipe Type : "+recipe.getRecipeType()+"\nRecipeAmount : "+recipe.convertRecipeAmountIteration()+"\nRecipe ML : "+recipe.convertRecipeMLIteration()+"\nRecipe Grams : "+recipe.convertRecipeGIteration();
                     arrayList.add(result);
                     myRef.child(recipe.getRecipeName()).setValue(recipe);
                     sendOnChannel1();
                     recipeName.getText().clear();
+                    recipeImage.getText().clear();
                     recipeType.getText().clear();
                     recipeAmountKey.getText().clear();
                     recipeAmountValue.getText().clear();

@@ -10,6 +10,16 @@ public class Recipe implements Serializable {
     private String recipeName;
     private String recipeType;
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    private String imageUrl;
+
     public String getRecipeDescription() {
         return recipeDescription;
     }
