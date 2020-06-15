@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.classes.OnSwipeTouchListener;
 import com.example.socialcook.classes.Recipe;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.PicassoProvider;

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.classes.OnSwipeTouchListener;
 import com.example.socialcook.classes.Recipe;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,6 +45,19 @@ public class RecipeInfo extends Fragment {
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    mainPage.loadUsersPage(currentRecipe);
+                }
+            });
+            view.setOnTouchListener(new OnSwipeTouchListener(mainPage) {
+
+                @Override
+                public void onSwipeRight() {
+                    super.onSwipeLeft();
+                    mainPage.loadMainPage();
+                }
+                @Override
+                public void onSwipeLeft() {
+                    super.onSwipeLeft();
                     mainPage.loadUsersPage(currentRecipe);
                 }
             });

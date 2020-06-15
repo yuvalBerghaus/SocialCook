@@ -136,6 +136,17 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
 // Commit the transaction
         transaction.commit();
     }
+    public void loadMainPage() {
+        // Create fragment and give it an argument specifying the article it should show
+        Fragment newFragment = new MainPageFrag();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_mainPage, newFragment);
+        transaction.addToBackStack(null);
+// Commit the transaction
+        transaction.commit();
+    }
     public void loadUsersPage(Recipe recipe) {
         // Create fragment and give it an argument specifying the article it should show
         Fragment newFragment = new UsersListFrag();
