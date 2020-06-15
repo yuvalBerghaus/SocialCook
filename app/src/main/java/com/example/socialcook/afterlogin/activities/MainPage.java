@@ -185,6 +185,7 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
             extraData.put("recipeType" , recipe.getRecipeType());
             extraData.put("brandId","puma");
             extraData.put("category","Shoes");
+            extraData.put("username" , name);
 
 
             json.put("notification",notificationObj);

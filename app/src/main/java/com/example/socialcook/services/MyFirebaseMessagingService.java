@@ -46,6 +46,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String recipeName = extraData.get("recipeName");
             String recipeType = extraData.get("recipeType");
             String category = extraData.get("category");
+            String name = extraData.get("username");
 
             Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
             PendingIntent actionIntent = PendingIntent
@@ -59,7 +60,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                             .setContentText(body)
                             .setLargeIcon(largeIcon)
                             .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText("Big Text Style text here Big Text Style text here Big Text Style text here")
+                                .bigText(name+" requested to bake "+recipeName+" with you! click accept to confirm.")
                                 .setBigContentTitle("Description")
                                 .setSummaryText("Invatation"))
                             .setColor(Color.RED)
