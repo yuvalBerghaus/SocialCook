@@ -11,5 +11,6 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String message = "Broadcast Works";
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
     }
 }

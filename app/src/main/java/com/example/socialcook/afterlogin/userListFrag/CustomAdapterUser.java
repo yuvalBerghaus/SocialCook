@@ -76,7 +76,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
             @Override
             public void onClick(View v) {
                 //mainPage.sendNotification(dataSet.get(listPosition).getName());
-                mainPage.sendNotificationUID(FireBase.getAuth().getCurrentUser().getDisplayName(), dataSet.get(listPosition).getUID() , chosenRecipe);
+                mainPage.sendNotificationUID(FireBase.getAuth().getCurrentUser().getDisplayName(), dataSet.get(listPosition).getUID() , chosenRecipe , FireBase.getAuth().getCurrentUser().getUid());
             }
         });
     }

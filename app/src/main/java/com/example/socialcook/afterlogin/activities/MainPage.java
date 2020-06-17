@@ -172,7 +172,7 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
         startActivity(i);
         finish();
     }
-    public void sendNotificationUID(String name , String uid , Recipe recipe) {
+    public void sendNotificationUID(String name , String uid , Recipe recipe , String uidSource) {
         JSONObject json = new JSONObject();
         try {
             json.put("to","/topics/"+uid);
@@ -186,7 +186,7 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
             extraData.put("brandId","puma");
             extraData.put("category","Shoes");
             extraData.put("username" , name);
-
+            extraData.put("uidSource" , uidSource);
 
             json.put("notification",notificationObj);
             json.put("data",extraData);

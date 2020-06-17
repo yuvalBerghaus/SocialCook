@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
+
 import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_1_ID;
 import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_2_ID;
 import static com.example.socialcook.firebase.FireBase.refreshedToken;
@@ -32,67 +34,20 @@ import java.util.Map;
 import java.util.Objects;
 //yes
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    private static final String TAG = "checking remote message";
     private NotificationManagerCompat notificationManager;
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+        Log.d(TAG , "message type "+remoteMessage.getMessageType());
+        Log.d(TAG , "message "+remoteMessage.getNotification().getTitle());
         if(FireBase.getAuth().getCurrentUser() != null) {
-            notificationManager = NotificationManagerCompat.from(this);
-            String title = remoteMessage.getNotification().getTitle();
-            String body = remoteMessage.getNotification().getBody();
-
-            Map<String, String> extraData = remoteMessage.getData();
-            String brandId = extraData.get("brandId");
-            String recipeName = extraData.get("recipeName");
-            String recipeType = extraData.get("recipeType");
-            String category = extraData.get("category");
-            String name = extraData.get("username");
-
-            Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
-            PendingIntent actionIntent = PendingIntent
-                    .getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-
-            NotificationCompat.Builder notificationBuilder =
-                    new NotificationCompat.Builder(this, CHANNEL_2_ID)
-                            .setContentTitle(title)
-                            .setContentText(body)
-                            .setLargeIcon(largeIcon)
-                            .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(name+" requested to bake "+recipeName+" with you! click accept to confirm.")
-                                .setBigContentTitle("Description")
-                                .setSummaryText("Invatation"))
-                            .setColor(Color.RED)
-                            .addAction(R.mipmap.ic_launcher, "Reject", actionIntent)
-                            .addAction(R.mipmap.ic_launcher, "Accept", actionIntent)
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setAutoCancel(true)
-                            .setOnlyAlertOnce(true)
-                            .setSmallIcon(R.drawable.ic_launcher);
-
-            Intent intent;
-            if (category.equals("shoes")) {
-                intent = new Intent(this, ReceiveNotificationActivity.class);
-
-            } else {
-                intent = new Intent(this, ReceiveNotificationActivity.class);
-
+            if(remoteMessage.getNotification().getTitle().contains("New")) {
+                showNotificationRequest(remoteMessage.getNotification().getTitle() , remoteMessage.getNotification().getBody() , remoteMessage);
             }
-            intent.putExtra("brandId", brandId);
-            intent.putExtra("category", category);
-            intent.putExtra("recipeName", recipeName);
-            intent.putExtra("recipeType", recipeType);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 10, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            notificationBuilder.setContentIntent(pendingIntent);
-
-            int id = (int) System.currentTimeMillis();
-            notificationManager.notify(id, notificationBuilder.build());
-        }
-        else {
-            FireBase.firebaseMessaging.unsubscribeFromTopic("news");
-            FireBase.firebaseMessaging.unsubscribeFromTopic(FireBase.getAuth().getUid());
+            else if(remoteMessage.getNotification().getTitle().contains("accepted")) {
+                showNotificationAccept(remoteMessage.getNotification().getTitle() , remoteMessage.getNotification().getBody() , remoteMessage);
+            }
         }
     }
 
@@ -101,5 +56,105 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         FireBase.usersDir.child(Objects.requireNonNull(FireBase.getAuth().getUid())).child("token").setValue(refreshedToken);
+    }
+    public void showNotificationAccept(String title , String body , RemoteMessage remoteMessage) {
+        notificationManager = NotificationManagerCompat.from(this);
+        Log.d(TAG , "getFrom() is "+remoteMessage.getFrom());
+        Log.d(TAG , "getSenderId() is "+remoteMessage.getSenderId());
+        Log.d(TAG , "getTo() is "+remoteMessage.getTo());
+        Map<String, String> extraData = remoteMessage.getData();
+        String sourceName = extraData.get("username");
+/*
+        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
+        PendingIntent actionIntent = PendingIntent
+                .getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+*/
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this, CHANNEL_2_ID)
+                        .setContentTitle(title)
+                        .setContentText(body)
+                        .setLargeIcon(largeIcon)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true)
+                        .setOnlyAlertOnce(true)
+                        .setSmallIcon(R.drawable.ic_launcher);
+/*
+        Intent intent;
+        if (category.equals("shoes")) {
+            intent = new Intent(this, ReceiveNotificationActivity.class);
+
+        } else {
+            intent = new Intent(this, ReceiveNotificationActivity.class);
+
+        }
+        intent.putExtra("username" , sourceName);
+        intent.putExtra("brandId", brandId);
+        intent.putExtra("category", category);
+        intent.putExtra("recipeName", recipeName);
+        intent.putExtra("recipeType", recipeType);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 10, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notificationBuilder.setContentIntent(pendingIntent);
+ */
+        int id = (int) System.currentTimeMillis();
+        notificationManager.notify(id, notificationBuilder.build());
+    }
+    public void showNotificationRequest(String title , String body , RemoteMessage remoteMessage) {
+        notificationManager = NotificationManagerCompat.from(this);
+        Log.d(TAG , "getFrom() is "+remoteMessage.getFrom());
+        Log.d(TAG , "getSenderId() is "+remoteMessage.getSenderId());
+        Log.d(TAG , "getTo() is "+remoteMessage.getTo());
+        Map<String, String> extraData = remoteMessage.getData();
+        String brandId = extraData.get("brandId");
+        String recipeName = extraData.get("recipeName");
+        String userIdSource = extraData.get("uidSource");
+        String recipeType = extraData.get("recipeType");
+        String category = extraData.get("category");
+        String name = extraData.get("username");
+
+        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
+        PendingIntent actionIntent = PendingIntent
+                .getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this, CHANNEL_2_ID)
+                        .setContentTitle(title)
+                        .setContentText(body)
+                        .setLargeIcon(largeIcon)
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(name+" requested to bake "+recipeName+" with you! click accept to confirm.")
+                                .setBigContentTitle("Description")
+                                .setSummaryText("Invitation"))
+                        .setColor(Color.RED)
+                        .addAction(R.mipmap.ic_launcher, "Reject", actionIntent)
+                        .addAction(R.mipmap.ic_launcher, "Accept", actionIntent)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true)
+                        .setOnlyAlertOnce(true)
+                        .setSmallIcon(R.drawable.ic_launcher);
+
+        Intent intent;
+        if (category.equals("shoes")) {
+            intent = new Intent(this, ReceiveNotificationActivity.class);
+
+        } else {
+            intent = new Intent(this, ReceiveNotificationActivity.class);
+
+        }
+        intent.putExtra("uidSource" , userIdSource);
+        intent.putExtra("brandId", brandId);
+        intent.putExtra("category", category);
+        intent.putExtra("recipeName", recipeName);
+        intent.putExtra("recipeType", recipeType);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 10, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notificationBuilder.setContentIntent(pendingIntent);
+
+        int id = (int) System.currentTimeMillis();
+        notificationManager.notify(id, notificationBuilder.build());
     }
 }
