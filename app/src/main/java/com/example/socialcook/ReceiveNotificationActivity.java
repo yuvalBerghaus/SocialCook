@@ -104,21 +104,20 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                         recipe.setAllRecipeML(child.getKey());
                                                     }
                                                 }
-                                                newDir.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    long maxId = 0;
+                                                newDir.child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                         if(dataSnapshot.exists()) {
-                                                            maxId = dataSnapshot.getChildrenCount();
                                                             Log.d(TAG , recipe.getRecipeName());
                                                             Room room = new Room();
+                                                            String roomId = newDir.child("rooms").push().getKey();
                                                             room.setRecipe(recipe);
-                                                            room.setRoomID(maxId+1);
+                                                            room.setRoomID(roomId);
                                                             room.setUid1(uidUser);
                                                             room.setUid2(FireBase.getAuth().getUid());
-                                                            newDir.child("rooms").child(String.valueOf(maxId+1)).setValue(room);
-                                                            FireBase.getDataBase().getReference("users").child(uidUser).child("myRooms").setValue(maxId+1);
-                                                            FireBase.getDataBase().getReference("users").child(FireBase.getAuth().getUid()).child("myRooms").setValue(maxId+1);
+                                                            newDir.child("rooms").child(roomId).setValue(room);
+                                                            FireBase.getDataBase().getReference("users").child(uidUser).child("myRooms").setValue(roomId);
+                                                            FireBase.getDataBase().getReference("users").child(FireBase.getAuth().getUid()).child("myRooms").setValue(roomId);
                                                             finish();
                                                         }
                                                     }
