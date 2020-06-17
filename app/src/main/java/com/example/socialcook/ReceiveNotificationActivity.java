@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.Recipe;
+import com.example.socialcook.classes.Room;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,6 +48,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_receive_notification);
         final Button accept = findViewById(R.id.acceptButton);
         final DatabaseReference myRef = FireBase.recipeDir;
+        final DatabaseReference newDir = FireBase.getDataBase().getReference();
         final TextView recipeNameView = findViewById(R.id.recipeNameView);
         final RequestQueue mRequestQue;
         final ImageView recipeImageView = findViewById(R.id.imageRecieve);
@@ -57,7 +59,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
         final String category = getIntent().getStringExtra("category");
         String brand = getIntent().getStringExtra("brandId");
         final String recipeName = getIntent().getStringExtra("recipeName");
-        String recipeType = getIntent().getStringExtra("recipeType");
+        final String recipeType = getIntent().getStringExtra("recipeType");
         if (getIntent().hasExtra("category")){
             mRequestQue = Volley.newRequestQueue(this);
             accept.setOnClickListener(new View.OnClickListener() {
@@ -88,10 +90,9 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 for(DataSnapshot datas: dataSnapshot.getChildren()){
                                                     String recipeNAme=datas.child("recipeName").getValue().toString();
+                                                    recipe.setName(recipeName);
+                                                    recipe.setType(recipeType);
                                                     String recipeTYpe = datas.child("recipeType").getValue().toString();
-                                                    String recipeMethod = datas.child("recipeDescription").getValue().toString();
-                                                    String imageUrl = datas.child("imageUrl").getValue().toString();
-                                                    Picasso.get().load(imageUrl).into(recipeImageView);
                                                     for (DataSnapshot child: datas.child("recipeAmount").getChildren()) {
                                                         recipe.setALLRecipeAmount(child.getKey());
                                                     }
@@ -101,8 +102,14 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                     for (DataSnapshot child: datas.child("recipeML").getChildren()) {
                                                         recipe.setAllRecipeML(child.getKey());
                                                     }
-                                                    Log.d(TAG , "recipe name = "+recipeNAme+"\nrecipe type = "+recipeTYpe);
                                                 }
+                                                Log.d(TAG , recipe.getRecipeName());
+                                                Room room = new Room();
+                                                room.setRecipe(recipe);
+                                                room.setRoomID(1);
+                                                room.setUid1("dad");
+                                                room.setUid2("fsdf");
+                                                newDir.push().setValue(room);
                                             }
 
                                             @Override
