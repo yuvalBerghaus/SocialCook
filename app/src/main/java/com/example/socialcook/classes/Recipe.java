@@ -65,11 +65,14 @@ public class Recipe implements Serializable {
             this.recipeG.put(recipeGramsKey , recipeGramsValue);
         }
     }
-    public void setALLRecipeAmount(Map recipeAmount) {
-        this.recipeAmount = recipeAmount;
+    public void setALLRecipeAmount(String key) {
+        this.recipeAmount.put(key , 0);
     }
-    public void setALLRecipeGrams(Map recipeG) {
-        this.recipeG = recipeG;
+    public void setALLRecipeGrams(String key) {
+        this.recipeG.put(key , 0);
+    }
+    public void setAllRecipeML(String key) {
+        this.recipeML.put(key , 0);
     }
     public String getRecipeName() {
         return recipeName;

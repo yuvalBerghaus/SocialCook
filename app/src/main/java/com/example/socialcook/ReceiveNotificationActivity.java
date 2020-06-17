@@ -92,21 +92,15 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                     String recipeMethod = datas.child("recipeDescription").getValue().toString();
                                                     String imageUrl = datas.child("imageUrl").getValue().toString();
                                                     Picasso.get().load(imageUrl).into(recipeImageView);
-                   
-                                                    String recipeItemsAll = "";
                                                     for (DataSnapshot child: datas.child("recipeAmount").getChildren()) {
-                                                        Log.d(TAG , child.getKey()+" we need AMOUNT "+child.getValue());
-                                                        recipeItemsAll += (child.getKey() != null)?child.getValue().toString()+" "+child.getKey()+"\n":"";
+                                                        recipe.setALLRecipeAmount(child.getKey());
                                                     }
                                                     for (DataSnapshot child: datas.child("recipeG").getChildren()) {
-                                                        Log.d(TAG , child.getKey()+" = "+child.getValue());
-                                                        recipeItemsAll += (child.getKey() != null)?"\n"+child.getValue().toString()+" grams of "+child.getKey():"";
+                                                        recipe.setALLRecipeGrams(child.getKey());
                                                     }
                                                     for (DataSnapshot child: datas.child("recipeML").getChildren()) {
-                                                        Log.d(TAG , child.getKey()+" we need ML "+child.getValue());
-                                                        recipeItemsAll += (child.getKey() != null)?"\n"+child.getValue().toString()+" ML of "+child.getKey():"";
+                                                        recipe.setAllRecipeML(child.getKey());
                                                     }
-                                                    recipeItems.setText(recipeItemsAll);
                                                     Log.d(TAG , "recipe name = "+recipeNAme+"\nrecipe type = "+recipeTYpe);
                                                 }
                                             }
