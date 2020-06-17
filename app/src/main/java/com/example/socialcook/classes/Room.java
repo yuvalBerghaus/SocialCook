@@ -3,13 +3,13 @@ package com.example.socialcook.classes;
 import java.io.Serializable;
 
 public class Room implements Serializable {
-    private int roomID;
+    private long roomID;
 
-    public int getRoomID() {
+    public long getRoomID() {
         return roomID;
     }
 
-    public void setRoomID(int roomID) {
+    public void setRoomID(long roomID) {
         this.roomID = roomID;
     }
 

@@ -37,6 +37,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
 
 public class ReceiveNotificationActivity extends AppCompatActivity {
 
@@ -103,13 +104,29 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                         recipe.setAllRecipeML(child.getKey());
                                                     }
                                                 }
-                                                Log.d(TAG , recipe.getRecipeName());
-                                                Room room = new Room();
-                                                room.setRecipe(recipe);
-                                                room.setRoomID(1);
-                                                room.setUid1("dad");
-                                                room.setUid2("fsdf");
-                                                newDir.push().setValue(room);
+                                                newDir.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    long maxId = 0;
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        if(dataSnapshot.exists()) {
+                                                            maxId = dataSnapshot.getChildrenCount();
+                                                            Log.d(TAG , recipe.getRecipeName());
+                                                            Room room = new Room();
+                                                            room.setRecipe(recipe);
+                                                            room.setRoomID(maxId);
+                                                            room.setUid1(uidUser);
+                                                            room.setUid2(FireBase.getAuth().getUid());
+                                                            newDir.child("rooms").child(String.valueOf(maxId)).setValue(room);
+                                                            FireBase.getDataBase().getReference("users").child(uidUser).child("myRooms").setValue(maxId);
+                                                            finish();
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
                                             }
 
                                             @Override
@@ -117,7 +134,6 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
 
                                             }
                                         });
-                                        finish();
                                     }
                                 }, new Response.ErrorListener() {
                             @Override
