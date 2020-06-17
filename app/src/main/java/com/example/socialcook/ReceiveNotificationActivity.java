@@ -113,10 +113,10 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                             Log.d(TAG , recipe.getRecipeName());
                                                             Room room = new Room();
                                                             room.setRecipe(recipe);
-                                                            room.setRoomID(maxId);
+                                                            room.setRoomID(maxId+1);
                                                             room.setUid1(uidUser);
                                                             room.setUid2(FireBase.getAuth().getUid());
-                                                            newDir.child("rooms").child(String.valueOf(maxId)).setValue(room);
+                                                            newDir.child("rooms").child(String.valueOf(maxId+1)).setValue(room);
                                                             FireBase.getDataBase().getReference("users").child(uidUser).child("myRooms").setValue(maxId);
                                                             finish();
                                                         }
