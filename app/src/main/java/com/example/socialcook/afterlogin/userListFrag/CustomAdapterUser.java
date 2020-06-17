@@ -63,7 +63,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
 
         TextView textViewName = holder.textViewName;
         CardView cardView = holder.cardView;
-        Button buttonInfo = holder.infoButton;
+        final Button buttonInfo = holder.infoButton;
         textViewName.setText(dataSet.get(listPosition).getName());
 
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +76,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
             @Override
             public void onClick(View v) {
                 //mainPage.sendNotification(dataSet.get(listPosition).getName());
+                buttonInfo.setClickable(false);
                 mainPage.sendNotificationUID(FireBase.getAuth().getCurrentUser().getDisplayName(), dataSet.get(listPosition).getUID() , chosenRecipe , FireBase.getAuth().getCurrentUser().getUid());
             }
         });
