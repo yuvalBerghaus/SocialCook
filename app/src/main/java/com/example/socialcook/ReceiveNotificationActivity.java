@@ -117,7 +117,8 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                             room.setUid1(uidUser);
                                                             room.setUid2(FireBase.getAuth().getUid());
                                                             newDir.child("rooms").child(String.valueOf(maxId+1)).setValue(room);
-                                                            FireBase.getDataBase().getReference("users").child(uidUser).child("myRooms").setValue(maxId);
+                                                            FireBase.getDataBase().getReference("users").child(uidUser).child("myRooms").setValue(maxId+1);
+                                                            FireBase.getDataBase().getReference("users").child(FireBase.getAuth().getUid()).child("myRooms").setValue(maxId+1);
                                                             finish();
                                                         }
                                                     }
