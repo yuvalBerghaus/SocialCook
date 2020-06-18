@@ -116,9 +116,13 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                             room.setUid1(uidUser);
                                                             room.setUid2(FireBase.getAuth().getUid());
                                                             newDir.child("rooms").child(roomId).setValue(room);
-                                                            FireBase.getDataBase().getReference("users").child(uidUser).child("myRooms").child(roomId).setValue(roomId);
-                                                            FireBase.getDataBase().getReference("users").child(FireBase.getAuth().getUid()).child("myRooms").child(roomId).setValue(roomId);
-                                                            finish();
+                                                            try {
+                                                                FireBase.getDataBase().getReference("users").child(uidUser).child("myRooms").child(roomId).setValue(roomId);
+                                                                FireBase.getDataBase().getReference("users").child(FireBase.getAuth().getUid()).child("myRooms").child(roomId).setValue(roomId);
+                                                            }
+                                                            catch (Exception NullPointerException) {
+                                                                Log.d(TAG , "uid user was equal to "+uidUser);
+                                                            }
                                                         }
                                                     }
 
@@ -151,6 +155,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                             }
                         };
                         mRequestQue.add(request);
+                        finish();
                     }
                     catch (JSONException e)
                     {
