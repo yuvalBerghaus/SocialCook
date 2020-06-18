@@ -33,7 +33,7 @@
                     android:textColor="@color/design_default_color_on_secondary" />
 
                 <Button
-                    android:id="@+id/buttonSendTo"
+                    android:id="@+id/buttonSelectRoom"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

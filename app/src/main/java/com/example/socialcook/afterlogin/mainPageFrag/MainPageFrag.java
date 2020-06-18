@@ -127,7 +127,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
             roomsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mainPage.loa
+                    mainPage.loadRoomPage();
                 }
             });
         }

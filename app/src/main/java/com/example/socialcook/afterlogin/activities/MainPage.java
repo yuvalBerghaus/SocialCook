@@ -20,8 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.socialcook.R;
-import com.example.socialcook.ReceiveNotificationActivity;
-import com.example.socialcook.RoomsFrag;
+import com.example.socialcook.roomListFrag.RoomsListFrag;
 import com.example.socialcook.afterlogin.adminFrag.AdminPage;
 import com.example.socialcook.afterlogin.mainPageFrag.MainPageFrag;
 import com.example.socialcook.afterlogin.recipeInfoFrag.RecipeInfo;
@@ -29,7 +28,6 @@ import com.example.socialcook.afterlogin.userListFrag.UsersListFrag;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
-import com.example.socialcook.services.MyFirebaseMessagingService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -124,7 +122,7 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     }
     public void loadRoomPage() {
         // Create fragment and give it an argument specifying the article it should show
-        Fragment newFragment = new RoomsFrag();
+        Fragment newFragment = new RoomsListFrag();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack so the user can navigate back
