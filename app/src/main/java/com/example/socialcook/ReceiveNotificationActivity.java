@@ -153,9 +153,9 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                 header.put("authorization","key=AAAA8W53yXc:APA91bHXoE3oXyuCG1GixUIOoy9A8M3EiBbXIF5QH-nrHRTTgZ8l-RSExlX4ALFVnFWFXfGg7YWKZZzPQ9IR_kxksiLDguhRoTBmUfEHGC6qD1UfBTAMalL3WU-MCarVxh36EDCTNG3u");
                                 return header;
                             }
+
                         };
                         mRequestQue.add(request);
-                        finish();
                     }
                     catch (JSONException e)
                     {

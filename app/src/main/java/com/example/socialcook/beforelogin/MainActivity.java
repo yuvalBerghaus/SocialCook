@@ -33,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState != null) {
                 return;
             }
+            if (getIntent().hasExtra("recipeName")){
+                Intent intent = new Intent(this, ReceiveNotificationActivity.class);
+                intent.putExtra("category",getIntent().getStringExtra("category"));
+                intent.putExtra("brandId",getIntent().getStringExtra("brandId"));
+                intent.putExtra("recipeName",getIntent().getStringExtra("recipeName"));
+                startActivity(intent);
+                finish();
+            }
+            else if(FireBase.getAuth().getCurrentUser() != null) {
+                loadOnline();
+                finish();
+            }
             else {
                 FirebaseAuth mAuth = FireBase.getAuth();
                 Log.d(TAG, "uid before logging in is "+mAuth.getCurrentUser());
@@ -43,20 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 firstFragment.setArguments(getIntent().getExtras());
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
-                //:)
             }
-        }
-        if (getIntent().hasExtra("recipeName")){
-            Intent intent = new Intent(this, ReceiveNotificationActivity.class);
-            intent.putExtra("category",getIntent().getStringExtra("category"));
-            intent.putExtra("brandId",getIntent().getStringExtra("brandId"));
-            intent.putExtra("recipeName",getIntent().getStringExtra("recipeName"));
-            startActivity(intent);
-        }
-        else if(FireBase.getAuth().getCurrentUser() != null) {
-            Intent next = new Intent(this , MainPage.class);
-            startActivity(next);
-            finish();
         }
     }
     public void loadLoginFrag() {
@@ -82,5 +81,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
 // Commit the transaction
         transaction.commit();
+    }
+    public void loadOnline() {
+        Intent next = new Intent(this , MainPage.class);
+        startActivity(next);
+        finish();
     }
 }
