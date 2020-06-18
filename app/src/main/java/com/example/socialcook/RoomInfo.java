@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.classes.Room;
@@ -31,6 +32,7 @@ public class RoomInfo extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_room_info, container, false);
         Bundle extras = this.getArguments();
+        final TextView recipeName = view.findViewById(R.id.nameOfRecipe);
         final String roomID = extras.get("roomID").toString();
         Log.d(TAG , "the room id is "+roomID);
         DatabaseReference myRef = FireBase.getDataBase().getReference("rooms");
@@ -40,6 +42,8 @@ public class RoomInfo extends Fragment {
                 Room room = dataSnapshot.getValue(Room.class);
                 //System.out.println(dataSnapshot.child("uid1").getValue());
                 System.out.println(room.getRecipe().convertRecipeAmountIteration());
+                recipeName.setText(room.getRecipe().getRecipeName());
+
             }
 
             @Override
