@@ -1,6 +1,8 @@
 package com.example.socialcook.classes;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     public String name;
@@ -8,7 +10,6 @@ public class User {
     public String address;
     public String birthday;
     public String uid;
-
     public String getToken() {
         return token;
     }

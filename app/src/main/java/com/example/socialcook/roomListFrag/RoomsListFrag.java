@@ -15,8 +15,6 @@ import android.view.ViewGroup;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.beforelogin.MainActivity;
-import com.example.socialcook.classes.Recipe;
-import com.example.socialcook.classes.Room;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 
 public class RoomsListFrag extends Fragment implements FireBase.IMainPage {
@@ -37,7 +35,7 @@ public class RoomsListFrag extends Fragment implements FireBase.IMainPage {
     private static RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     MainPage mainPage;
-    private static ArrayList<Room> data;
+    private static ArrayList<String> data;
     private static CustomAdapterRoom adapter;
     static View.OnTouchListener myOnClickListener;
     @Override
@@ -50,7 +48,7 @@ public class RoomsListFrag extends Fragment implements FireBase.IMainPage {
             Bundle bdl = getArguments();
             mainPage = (MainPage)getContext();
             final FirebaseDatabase database = FireBase.getDataBase();
-            final DatabaseReference myRef = database.getReference().child("rooms");
+            final DatabaseReference myRef = database.getReference().child("users").child(FireBase.getAuth().getUid());
             Bundle extras = this.getArguments();
             recyclerView = view.findViewById(R.id.recyclerViewRoom);
             recyclerView.setHasFixedSize(true);
@@ -58,14 +56,15 @@ public class RoomsListFrag extends Fragment implements FireBase.IMainPage {
             recyclerView.setLayoutManager(layoutManager);
 
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            data = new ArrayList<Room>();
+            data = new ArrayList();
 
-            myRef.addChildEventListener(new ChildEventListener() {
+            myRef.orderByChild("myRooms").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                    Room roomIteration = dataSnapshot.getValue(Room.class);
-                    Log.d("<<< TESTING >>>", "onChildAdded: "+roomIteration.getRoomID());
-                    data.add(roomIteration);
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Log.d(TAG , "i do not know "+postSnapshot.getKey());
+                        data.add(postSnapshot.getKey());
+                    }
                     Log.d("TESTING", "onChildAdded: data size = "+data.size());
                     adapter = new CustomAdapterRoom(data , mainPage);
                     recyclerView.setAdapter(adapter);

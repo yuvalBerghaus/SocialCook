@@ -18,10 +18,12 @@ import com.example.socialcook.classes.Room;
 import com.example.socialcook.firebase.FireBase;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.MyViewHolder>{
 
-    private ArrayList<Room> dataSet;
+    private ArrayList<String> dataSet;
     MainPage mainPage;
     Recipe chosenRecipe;
     private NotificationManagerCompat notificationManager;
@@ -41,7 +43,7 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
 
     }
 
-    public CustomAdapterRoom(ArrayList<Room> data , MainPage mainPage) {
+    public CustomAdapterRoom(ArrayList<String> data , MainPage mainPage) {
         this.dataSet = data;
         this.mainPage = mainPage;
         notificationManager = NotificationManagerCompat.from(mainPage);
@@ -64,12 +66,11 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
         TextView textViewName = holder.textViewName;
         CardView cardView = holder.cardView;
         final Button buttonInfo = holder.infoButton;
-        textViewName.setText(dataSet.get(listPosition).getRoomID());
-
+        textViewName.setText(dataSet.get(listPosition));
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(dataSet.get(listPosition).getRoomID());
+
             }
         });
         buttonInfo.setOnClickListener(new View.OnClickListener() {
