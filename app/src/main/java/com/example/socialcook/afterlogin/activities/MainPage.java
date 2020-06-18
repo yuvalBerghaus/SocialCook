@@ -21,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.socialcook.R;
 import com.example.socialcook.ReceiveNotificationActivity;
+import com.example.socialcook.RoomsFrag;
 import com.example.socialcook.afterlogin.adminFrag.AdminPage;
 import com.example.socialcook.afterlogin.mainPageFrag.MainPageFrag;
 import com.example.socialcook.afterlogin.recipeInfoFrag.RecipeInfo;
@@ -63,7 +64,6 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
             if(FireBase.getAuth().getCurrentUser() != null) {
                 FireBase.firebaseMessaging.subscribeToTopic("news");
                 FireBase.firebaseMessaging.subscribeToTopic(user.getUid());
-
             }
             else {
                 FireBase.firebaseMessaging.unsubscribeFromTopic("news");
@@ -114,6 +114,17 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     public void loadAdminPage() {
         // Create fragment and give it an argument specifying the article it should show
         Fragment newFragment = new AdminPage();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_mainPage, newFragment);
+        transaction.addToBackStack(null);
+// Commit the transaction
+        transaction.commit();
+    }
+    public void loadRoomPage() {
+        // Create fragment and give it an argument specifying the article it should show
+        Fragment newFragment = new RoomsFrag();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack so the user can navigate back

@@ -47,9 +47,10 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
-
         ///////////////////////////////////////////////////////////////////////
         if (user != null) {
+            final MainPage mainPage = (MainPage) getActivity();
+            Button roomsButton = view.findViewById(R.id.myRoomButton);
             final FirebaseDatabase database = FireBase.getDataBase();
             final DatabaseReference myRef = database.getReference().child("recipes");
             recyclerView = view.findViewById(R.id.recyclerView);
@@ -120,8 +121,13 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
             adminPageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainPage mainPage = (MainPage) getActivity();
                     mainPage.loadAdminPage();
+                }
+            });
+            roomsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainPage.loa
                 }
             });
         }

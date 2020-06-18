@@ -19,10 +19,17 @@
 
         <Button
             android:id="@+id/accountOption"
-            android:layout_width="151dp"
+            android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/admin_page" />
+
+        <Button
+            android:id="@+id/myRoomButton"
+            android:layout_width="154dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="my rooms" />
 
         <Button
             android:id="@+id/signOutButton"
