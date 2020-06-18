@@ -76,8 +76,9 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
         buttonInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mainPage.sendNotification(dataSet.get(listPosition).getName());
+                mainPage.loadRoomInfo(dataSet.get(listPosition));
                 buttonInfo.setClickable(false);
+
             }
         });
     }

@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.socialcook.R;
+import com.example.socialcook.RoomInfo;
 import com.example.socialcook.roomListFrag.RoomsListFrag;
 import com.example.socialcook.afterlogin.adminFrag.AdminPage;
 import com.example.socialcook.afterlogin.mainPageFrag.MainPageFrag;
@@ -148,6 +149,20 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     public void loadMainPage() {
         // Create fragment and give it an argument specifying the article it should show
         Fragment newFragment = new MainPageFrag();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_mainPage, newFragment);
+        transaction.addToBackStack(null);
+// Commit the transaction
+        transaction.commit();
+    }
+    public void loadRoomInfo(String roomID) {
+        // Create fragment and give it an argument specifying the article it should show
+        Fragment newFragment = new RoomInfo();
+        Bundle bndl = new Bundle();
+        bndl.putString("roomID" , roomID);
+        newFragment.setArguments(bndl);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack so the user can navigate back
