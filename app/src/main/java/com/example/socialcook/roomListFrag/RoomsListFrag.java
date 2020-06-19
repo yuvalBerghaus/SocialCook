@@ -62,10 +62,8 @@ public class RoomsListFrag extends Fragment implements FireBase.IMainPage {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Log.d(TAG , "i do not know "+postSnapshot.getKey());
                         data.add(postSnapshot.getKey());
                     }
-                    Log.d("TESTING", "onChildAdded: data size = "+data.size());
                     adapter = new CustomAdapterRoom(data , mainPage);
                     recyclerView.setAdapter(adapter);
                 }

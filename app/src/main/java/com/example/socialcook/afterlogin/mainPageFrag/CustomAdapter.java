@@ -67,11 +67,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         String url =holder.url;
         Picasso.get().load(dataSet.get(listPosition).getImageUrl()).into(image);
         textViewName.setText(dataSet.get(listPosition).getRecipeName());
-        Log.d(TAG , dataSet.get(listPosition).getRecipeName()+" "+dataSet.get(listPosition).getImageUrl());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(dataSet.get(listPosition).getRecipeName());
                 mainPage.loadRecipePage(dataSet.get(listPosition));
             }
         });

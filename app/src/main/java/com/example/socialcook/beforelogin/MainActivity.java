@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 FirebaseAuth mAuth = FireBase.getAuth();
-                Log.d(TAG, "uid before logging in is "+mAuth.getCurrentUser());
                 // Create a new Fragment to be placed in the activity layout
                 Fragment firstFragment = new LoginFragment();
                 // In case this activity was started with special instructions from an

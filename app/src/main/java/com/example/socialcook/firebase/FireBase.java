@@ -1,9 +1,15 @@
 package com.example.socialcook.firebase;
 
+import android.app.Service;
+import android.content.Intent;
 import android.media.MediaDrm;
+import android.os.IBinder;
 import android.util.Log;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.socialcook.classes.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,11 +21,13 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.logging.Handler;
 
-public class FireBase  {
+public class FireBase {
 
     private static final String TAG = "debugIT";
 
-    public FireBase(){};
+    public FireBase(){}
+
+    ;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     public static String refreshedToken = FirebaseInstanceId.getInstance().getToken();
     public static String POST = "https://fcm.googleapis.com/fcm/send";

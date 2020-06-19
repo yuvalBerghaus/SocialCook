@@ -49,7 +49,6 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
         if (user != null) {
             Bundle bdl = getArguments();
             final Recipe chosenRecipe = (Recipe) bdl.getSerializable("recipe");
-            Log.d(TAG,chosenRecipe.getRecipeName());
             mainPage = (MainPage)getContext();
             final FirebaseDatabase database = FireBase.getDataBase();
             final DatabaseReference myRef = database.getReference().child("users");
@@ -65,9 +64,7 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     User userIteration = dataSnapshot.getValue(User.class);
-                    Log.d("<<< TESTING >>>", "onChildAdded: "+userIteration.getName());
                     data.add(userIteration);
-                    Log.d("TESTING", "onChildAdded: data size = "+data.size());
                     adapter = new CustomAdapterUser(data , mainPage , chosenRecipe);
                     recyclerView.setAdapter(adapter);
                 }

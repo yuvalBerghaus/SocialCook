@@ -56,18 +56,12 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
         setContentView(R.layout.activity_main_page);
         FirebaseUser user = FireBase.getAuth().getCurrentUser();
         mAuth = FireBase.getAuth();
+        notificationManager = NotificationManagerCompat.from(this);
+        mRequestQue = Volley.newRequestQueue(this);
         if (user != null) {
             System.out.println("This is "+user.getDisplayName());
-            notificationManager = NotificationManagerCompat.from(this);
-            mRequestQue = Volley.newRequestQueue(this);
-            if(FireBase.getAuth().getCurrentUser() != null) {
-                FireBase.firebaseMessaging.subscribeToTopic("news");
-                FireBase.firebaseMessaging.subscribeToTopic(user.getUid());
-            }
-            else {
-                FireBase.firebaseMessaging.unsubscribeFromTopic("news");
-                FireBase.firebaseMessaging.unsubscribeFromTopic(mAuth.getUid());
-            }
+            FireBase.firebaseMessaging.subscribeToTopic("recipe");
+            FireBase.firebaseMessaging.subscribeToTopic(user.getUid());
             // Name, email address, and profile photo Url
             String name = user.getDisplayName();
             String email = user.getEmail();
@@ -104,8 +98,8 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
                 });
             }
         } else {
-            FireBase.firebaseMessaging.unsubscribeFromTopic("news");
-            FireBase.firebaseMessaging.unsubscribeFromTopic(mAuth.getUid());
+            FireBase.firebaseMessaging.unsubscribeFromTopic("recipe");
+            FireBase.firebaseMessaging.unsubscribeFromTopic(FirebaseAuth.getInstance().getUid());
             Toast.makeText(MainPage.this, "User not logged In",
                     Toast.LENGTH_SHORT).show();
         }
@@ -199,6 +193,7 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     public void sendNotificationUID(String name , String uid , Recipe recipe , String uidSource) {
         JSONObject json = new JSONObject();
         try {
+            Log.d(TAG , "The mainpage sendnotification sending it to "+uid);
             json.put("to","/topics/"+uid);
             JSONObject notificationObj = new JSONObject();
             notificationObj.put("title","New request!");
@@ -207,11 +202,9 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
 
             extraData.put("recipeName" , recipe.getRecipeName());
             extraData.put("recipeType" , recipe.getRecipeType());
-            extraData.put("brandId","puma");
-            extraData.put("category","Shoes");
             extraData.put("username" , name);
+            extraData.put("my_custom_key" , "request");
             extraData.put("uidSource" , uidSource);
-
             json.put("notification",notificationObj);
             json.put("data",extraData);
 

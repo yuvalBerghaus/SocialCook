@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 
 import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_1_ID;
@@ -36,34 +37,32 @@ import java.util.Objects;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "checking remote message";
     private NotificationManagerCompat notificationManager;
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Log.d(TAG , "message type "+remoteMessage.getMessageType());
-        Log.d(TAG , "message "+remoteMessage.getNotification().getTitle());
-        if(FireBase.getAuth().getCurrentUser() != null) {
-            if(remoteMessage.getNotification().getTitle().contains("New")) {
+      // if(FireBase.getAuth().getCurrentUser() != null) {
+        Map<String, String> data = remoteMessage.getData();
+        String myCustomKey = data.get("my_custom_key");
+        Log.d(TAG , "the title is "+remoteMessage.getNotification().getTitle());
+            if(myCustomKey.equals("request")) {
                 showNotificationRequest(remoteMessage.getNotification().getTitle() , remoteMessage.getNotification().getBody() , remoteMessage);
             }
-            else if(remoteMessage.getNotification().getTitle().contains("accepted")) {
+            else if(myCustomKey.equals("accept")) {
                 showNotificationAccept(remoteMessage.getNotification().getTitle() , remoteMessage.getNotification().getBody() , remoteMessage);
             }
-        }
+        //}
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
-        FireBase.usersDir.child(Objects.requireNonNull(FireBase.getAuth().getUid())).child("token").setValue(refreshedToken);
+        FireBase.usersDir.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("token").setValue(refreshedToken);
     }
     public void showNotificationAccept(String title , String body , RemoteMessage remoteMessage) {
         notificationManager = NotificationManagerCompat.from(this);
-        Log.d(TAG , "getFrom() is "+remoteMessage.getFrom());
-        Log.d(TAG , "getSenderId() is "+remoteMessage.getSenderId());
-        Log.d(TAG , "getTo() is "+remoteMessage.getTo());
-        Map<String, String> extraData = remoteMessage.getData();
-        String sourceName = extraData.get("username");
+      //  Map<String, String> extraData = remoteMessage.getData();
 /*
         Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
         PendingIntent actionIntent = PendingIntent
@@ -103,21 +102,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
     public void showNotificationRequest(String title , String body , RemoteMessage remoteMessage) {
         notificationManager = NotificationManagerCompat.from(this);
-        Log.d(TAG , "getFrom() is "+remoteMessage.getFrom());
-        Log.d(TAG , "getSenderId() is "+remoteMessage.getSenderId());
-        Log.d(TAG , "getTo() is "+remoteMessage.getTo());
         Map<String, String> extraData = remoteMessage.getData();
-        String brandId = extraData.get("brandId");
         String recipeName = extraData.get("recipeName");
         String userIdSource = extraData.get("uidSource");
+        Log.d(TAG , "MYFIREBASESERVICE UIDSOURCE we wanna see the remote message "+userIdSource);
         String recipeType = extraData.get("recipeType");
-        String category = extraData.get("category");
         String name = extraData.get("username");
-
         Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
         PendingIntent actionIntent = PendingIntent
                 .getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
 
         NotificationCompat.Builder notificationBuilder =
@@ -138,16 +131,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setSmallIcon(R.drawable.ic_launcher);
 
         Intent intent;
-        if (category.equals("shoes")) {
-            intent = new Intent(this, ReceiveNotificationActivity.class);
-
-        } else {
-            intent = new Intent(this, ReceiveNotificationActivity.class);
-
-        }
+        Bundle bndl = new Bundle();
+        bndl.putString("uidSource" , userIdSource);
+        bndl.putString("recipeName" , recipeName);
+        bndl.putString("recipeType" , recipeType);
+        intent = new Intent(this, ReceiveNotificationActivity.class);
+        intent.putExtras(bndl);
         intent.putExtra("uidSource" , userIdSource);
-        intent.putExtra("brandId", brandId);
-        intent.putExtra("category", category);
+        Log.d(TAG , "uid source in the service request putting extra is "+userIdSource);
         intent.putExtra("recipeName", recipeName);
         intent.putExtra("recipeType", recipeType);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 10, intent, PendingIntent.FLAG_UPDATE_CURRENT);

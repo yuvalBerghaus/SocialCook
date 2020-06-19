@@ -49,6 +49,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_receive_notification);
         final Button accept = findViewById(R.id.acceptButton);
         final DatabaseReference myRef = FireBase.recipeDir;
+        Bundle bndl = getIntent().getExtras();
         final DatabaseReference newDir = FireBase.getDataBase().getReference();
         final TextView recipeNameView = findViewById(R.id.recipeNameView);
         final RequestQueue mRequestQue;
@@ -56,23 +57,30 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
         final TextView recipeDescription = findViewById(R.id.description);
         final TextView recipeTypeView = findViewById(R.id.brand);
         final TextView recipeItems = findViewById(R.id.items);
-        final String uidUser = getIntent().getStringExtra("uidSource");
-        final String category = getIntent().getStringExtra("category");
-        String brand = getIntent().getStringExtra("brandId");
-        final String recipeName = getIntent().getStringExtra("recipeName");
-        final String recipeType = getIntent().getStringExtra("recipeType");
-        if (getIntent().hasExtra("category")){
+        //final String uidUser = getIntent().getStringExtra("uidSource");/////////////VERY IMPORTANT!
+        //final String recipeName = getIntent().getStringExtra("recipeName");
+        //final String recipeType = getIntent().getStringExtra("recipeType");
+        final String recipeName = bndl.getString("recipeName");
+        final String recipeType = bndl.getString("recipeType");
+        final String uidUser = bndl.getString("uidSource");
+        Log.d(TAG , "UID USER IS "+uidUser);
             mRequestQue = Volley.newRequestQueue(this);
             accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     JSONObject json = new JSONObject();
+                    Log.d(TAG , "uid on click is "+uidUser);
                     try {
+                        Log.d(TAG , "uid user is "+uidUser);
+                        if(uidUser == null) {
+                            Log.d(TAG , "DAAAA PROBLEEEM IS ----------------------------------------------------------------------------------------------------------------------------------------"+uidUser);
+                        }
                         json.put("to","/topics/"+uidUser);
                         JSONObject notificationObj = new JSONObject();
                         notificationObj.put("title","Your request has been accepted!");
                         notificationObj.put("body",FireBase.getAuth().getCurrentUser().getDisplayName()+" just accepted your request");
                         JSONObject extraData = new JSONObject();
+                        extraData.put("my_custom_key" , "accept");
                         json.put("notification",notificationObj);
                         json.put("data",extraData);
                         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, FireBase.POST,
@@ -108,7 +116,6 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                         if(dataSnapshot.exists()) {
-                                                            Log.d(TAG , recipe.getRecipeName());
                                                             Room room = new Room();
                                                             String roomId = newDir.child("rooms").push().getKey();
                                                             room.setRecipe(recipe);
@@ -121,7 +128,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                                 FireBase.getDataBase().getReference("users").child(FireBase.getAuth().getUid()).child("myRooms").child(roomId).setValue(roomId);
                                                             }
                                                             catch (Exception NullPointerException) {
-                                                                Log.d(TAG , "uid user was equal to "+uidUser);
+                                                                Log.d(TAG , "*********FAILED TO SEND BECAUSE THE UID TO SEND TO WAS NULL "+uidUser+"*************");
                                                             }
                                                         }
                                                     }
@@ -156,6 +163,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
 
                         };
                         mRequestQue.add(request);
+                        finish();
                     }
                     catch (JSONException e)
                     {
@@ -181,19 +189,15 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                         recipeDescription.setText(recipeMethod);
                         String recipeItemsAll = "";
                         for (DataSnapshot child: datas.child("recipeAmount").getChildren()) {
-                            Log.d(TAG , child.getKey()+" we need AMOUNT "+child.getValue());
                             recipeItemsAll += (child.getKey() != null)?child.getValue().toString()+" "+child.getKey()+"\n":"";
                         }
                         for (DataSnapshot child: datas.child("recipeG").getChildren()) {
-                            Log.d(TAG , child.getKey()+" = "+child.getValue());
                             recipeItemsAll += (child.getKey() != null)?"\n"+child.getValue().toString()+" grams of "+child.getKey():"";
                         }
                         for (DataSnapshot child: datas.child("recipeML").getChildren()) {
-                            Log.d(TAG , child.getKey()+" we need ML "+child.getValue());
                             recipeItemsAll += (child.getKey() != null)?"\n"+child.getValue().toString()+" ML of "+child.getKey():"";
                         }
                         recipeItems.setText(recipeItemsAll);
-                        Log.d(TAG , "recipe name = "+recipeNAme+"\nrecipe type = "+recipeTYpe);
                     }
                 }
 
@@ -202,7 +206,6 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
 
                 }
             });
-        }
         /*
         if (getIntent().hasExtra("category")){
             String category = getIntent().getStringExtra("category");

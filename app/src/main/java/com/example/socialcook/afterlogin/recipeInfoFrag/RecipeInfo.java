@@ -33,7 +33,6 @@ public class RecipeInfo extends Fragment {
         if (user != null) {
             Bundle extras = this.getArguments();
             final Recipe currentRecipe= (Recipe) extras.getSerializable("recipe");
-            Log.d(TAG, "1: "+currentRecipe.getRecipeAmount().keySet().size());
             TextView recipeInfoView = view.findViewById(R.id.recipeInfo);
             ImageView recipeImage = view.findViewById(R.id.recipeInfoImage);
             Picasso.get().load(currentRecipe.getImageUrl()).into(recipeImage);
