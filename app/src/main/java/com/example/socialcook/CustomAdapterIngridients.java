@@ -16,12 +16,12 @@ import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapterIngridients.MyViewHolder>{
 
-    private ArrayList<User> dataSet;
+    private ArrayList<Map<String, Integer>> dataSet;
     MainPage mainPage;
-    Recipe chosenRecipe;
     private NotificationManagerCompat notificationManager;
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -39,8 +39,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
 
     }
 
-    public CustomAdapterIngridients(ArrayList<User> data , MainPage mainPage , Recipe chosenRecipe) {
-        this.chosenRecipe = chosenRecipe;
+    public CustomAdapterIngridients(ArrayList<Map<String,Integer>> data , MainPage mainPage) {
         this.dataSet = data;
         this.mainPage = mainPage;
         notificationManager = NotificationManagerCompat.from(mainPage);
@@ -64,12 +63,11 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         TextView textViewName = holder.textViewName;
         CardView cardView = holder.cardView;
         final Button buttonInfo = holder.infoButton;
-        textViewName.setText(dataSet.get(listPosition).getName());
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(dataSet.get(listPosition).getName());
+
             }
         });
         buttonInfo.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +75,6 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             public void onClick(View v) {
                 //mainPage.sendNotification(dataSet.get(listPosition).getName());
                 //   buttonInfo.setClickable(false);
-                mainPage.sendNotificationUID(FireBase.getAuth().getCurrentUser().getDisplayName(), dataSet.get(listPosition).getUID() , chosenRecipe , FireBase.getAuth().getCurrentUser().getUid());
             }
         });
     }
