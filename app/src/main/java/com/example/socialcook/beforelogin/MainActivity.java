@@ -35,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
             }
             if (getIntent().hasExtra("recipeName")){
                 Intent intent = new Intent(this, ReceiveNotificationActivity.class);
+                Bundle bndl = getIntent().getExtras();
                 intent.putExtra("category",getIntent().getStringExtra("category"));
                 intent.putExtra("brandId",getIntent().getStringExtra("brandId"));
                 intent.putExtra("recipeName",getIntent().getStringExtra("recipeName"));
+                intent.putExtras(bndl);
                 startActivity(intent);
                 finish();
             }
