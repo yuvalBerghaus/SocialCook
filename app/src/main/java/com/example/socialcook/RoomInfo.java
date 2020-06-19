@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class RoomInfo extends Fragment {
@@ -55,20 +56,36 @@ public class RoomInfo extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Room room = dataSnapshot.getValue(Room.class);
                 //System.out.println(dataSnapshot.child("uid1").getValue());
-                System.out.println(room.getRecipe().convertRecipeAmountIteration());
                 recipeName.setText(room.getRecipe().getRecipeName());
                 recipeType.setText(room.getRecipe().getRecipeType());
                 Map<String, Integer> mapAmount = room.getRecipe().getRecipeAmount();
-                Map mapGrams = room.getRecipe().getRecipeG();
-                Map mapML = room.getRecipe().getRecipeML();
-                data.add(mapAmount);
-                adapter = new CustomAdapterIngridients(data , mainPage);
-                recyclerView.setAdapter(adapter);
+                Map<String , Integer>mapGrams = room.getRecipe().getRecipeG();
+                Map<String , Integer> mapML = room.getRecipe().getRecipeML();
+                Map<String , Integer>all = new HashMap<>();
+                for(String key:mapAmount.keySet()) {
+                    Log.d(TAG , "the key of "+key+" issss "+mapAmount.get(key));
+                    all.put(key ,mapAmount.get(key));
+                }
+                for(String key:mapGrams.keySet()) {
+                    Log.d(TAG , "the key of "+key+" issss "+mapGrams.get(key));
+                    all.put(key , mapGrams.get(key));
+                }
+                for(String key:mapML.keySet()) {
+                    Log.d(TAG , "the key of "+key+" issss "+mapML.get(key));
+                    all.put(key , mapML.get(key));
+                }
+                System.out.println("------------------------------------------------------------------------\n-------------------------");
+                for(String key:all.keySet()) {
+                    Log.d(TAG , "the key of "+key+" issss "+all.get(key));
+                }
+                adapter = new CustomAdapterIngridients(all, mainPage);
+              recyclerView.setAdapter(adapter);
             }
 
             @Override

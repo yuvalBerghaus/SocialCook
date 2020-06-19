@@ -16,13 +16,14 @@ import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapterIngridients.MyViewHolder>{
 
-    private ArrayList<Map<String, Integer>> dataSet;
+    private Map<String , Integer> dataSet;
     MainPage mainPage;
-    private NotificationManagerCompat notificationManager;
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
@@ -39,17 +40,18 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
 
     }
 
-    public CustomAdapterIngridients(ArrayList<Map<String,Integer>> data , MainPage mainPage) {
+    public CustomAdapterIngridients(Map<String , Integer> data , MainPage mainPage) {
         this.dataSet = data;
         this.mainPage = mainPage;
-        notificationManager = NotificationManagerCompat.from(mainPage);
+
+
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
                                            int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cards_userlist_layout, parent, false);
+                .inflate(R.layout.cards_ingridients, parent, false);
 
         view.setOnTouchListener(RoomInfo.myOnClickListener);
 
@@ -59,22 +61,15 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
     }
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
-
+        String key = (new ArrayList<>(dataSet.keySet())).get(listPosition);
         TextView textViewName = holder.textViewName;
         CardView cardView = holder.cardView;
         final Button buttonInfo = holder.infoButton;
-
+        textViewName.setText(key);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-            }
-        });
-        buttonInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //mainPage.sendNotification(dataSet.get(listPosition).getName());
-                //   buttonInfo.setClickable(false);
             }
         });
     }
