@@ -1,10 +1,8 @@
 package com.example.socialcook.afterlogin.mainPageFrag;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,10 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
-import com.example.socialcook.classes.OnSwipeTouchListener;
 import com.example.socialcook.classes.Recipe;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.PicassoProvider;
 
 import java.util.ArrayList;
 
@@ -35,7 +31,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             super(itemView);
             this.imageURL = (ImageView) itemView.findViewById(R.id.imageID);
             this.cardView = (CardView) itemView.findViewById(R.id.cardView);
-            this.textViewName = (TextView) itemView.findViewById(R.id.textView2);
+            this.textViewName = (TextView) itemView.findViewById(R.id.itemName);
         }
 
 

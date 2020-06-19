@@ -32,15 +32,15 @@
                     android:text="TextView"
                     android:textColor="@color/design_default_color_on_secondary" />
 
-                <Button
-                    android:id="@+id/buttonSelectRoom"
+                <EditText
+                    android:id="@+id/itemValue"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@android:drawable/btn_default_small"
-                    android:gravity="center"
-                    android:text="send" />
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Name" />
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

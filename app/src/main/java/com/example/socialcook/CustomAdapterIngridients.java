@@ -1,4 +1,4 @@
-package com.example.socialcook.afterlogin.userListFrag;
+package com.example.socialcook;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +17,7 @@ import com.example.socialcook.firebase.FireBase;
 
 import java.util.ArrayList;
 
-public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.MyViewHolder>{
+public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapterIngridients.MyViewHolder>{
 
     private ArrayList<User> dataSet;
     MainPage mainPage;
@@ -39,7 +39,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
 
     }
 
-    public CustomAdapterUser(ArrayList<User> data , MainPage mainPage , Recipe chosenRecipe) {
+    public CustomAdapterIngridients(ArrayList<User> data , MainPage mainPage , Recipe chosenRecipe) {
         this.chosenRecipe = chosenRecipe;
         this.dataSet = data;
         this.mainPage = mainPage;
@@ -52,7 +52,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cards_userlist_layout, parent, false);
 
-        view.setOnTouchListener(UsersListFrag.myOnClickListener);
+        view.setOnTouchListener(RoomInfo.myOnClickListener);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
 
@@ -76,7 +76,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
             @Override
             public void onClick(View v) {
                 //mainPage.sendNotification(dataSet.get(listPosition).getName());
-             //   buttonInfo.setClickable(false);
+                //   buttonInfo.setClickable(false);
                 mainPage.sendNotificationUID(FireBase.getAuth().getCurrentUser().getDisplayName(), dataSet.get(listPosition).getUID() , chosenRecipe , FireBase.getAuth().getCurrentUser().getUid());
             }
         });
@@ -85,17 +85,5 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
     public int getItemCount() {
         return dataSet.size();
     }
-    /*
-    public void sendOnChannel1(User user , MainPage mainPage) {
-        String title = user.getName();
-        Notification notification = new NotificationCompat.Builder(mainPage, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle(title)
-                .setContentText(title+" was added to the list!")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
-        notificationManager.notify(1, notification);
-    }
-     */
+
 }

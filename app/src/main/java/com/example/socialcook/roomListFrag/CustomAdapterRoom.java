@@ -14,12 +14,8 @@ import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 
 import com.example.socialcook.classes.Recipe;
-import com.example.socialcook.classes.Room;
-import com.example.socialcook.firebase.FireBase;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 
 public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.MyViewHolder>{
 
@@ -36,7 +32,7 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
             super(itemView);
 
             this.cardView = (CardView) itemView.findViewById(R.id.cardView);
-            this.textViewName = (TextView) itemView.findViewById(R.id.textView2);
+            this.textViewName = (TextView) itemView.findViewById(R.id.itemName);
             this.infoButton = (Button) itemView.findViewById(R.id.buttonSelectRoom);
         }
 

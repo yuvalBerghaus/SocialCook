@@ -98,8 +98,6 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
                 });
             }
         } else {
-            FireBase.firebaseMessaging.unsubscribeFromTopic("recipe");
-            FireBase.firebaseMessaging.unsubscribeFromTopic(FirebaseAuth.getInstance().getUid());
             Toast.makeText(MainPage.this, "User not logged In",
                     Toast.LENGTH_SHORT).show();
         }
