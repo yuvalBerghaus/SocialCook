@@ -63,7 +63,7 @@ public class RoomInfo extends Fragment {
                 System.out.println(room.getRecipe().convertRecipeAmountIteration());
                 recipeName.setText(room.getRecipe().getRecipeName());
                 recipeType.setText(room.getRecipe().getRecipeType());
-                Map mapAmount = room.getRecipe().getRecipeAmount();
+                Map<String, Integer> mapAmount = room.getRecipe().getRecipeAmount();
                 Map mapGrams = room.getRecipe().getRecipeG();
                 Map mapML = room.getRecipe().getRecipeML();
                 data.add(mapAmount);

@@ -49,7 +49,7 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
                                            int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cards_userlist_layout, parent, false);
+                .inflate(R.layout.cards_roomlist_layout, parent, false);
 
         view.setOnTouchListener(RoomsListFrag.myOnClickListener);
 
@@ -74,7 +74,6 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
             public void onClick(View v) {
                 mainPage.loadRoomInfo(dataSet.get(listPosition));
                 buttonInfo.setClickable(false);
-
             }
         });
     }
