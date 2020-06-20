@@ -48,9 +48,11 @@ public class RoomInfo extends Fragment {
         Bundle extras = this.getArguments();
         final TextView recipeName = view.findViewById(R.id.nameOfRecipe);
         final TextView recipeType = view.findViewById(R.id.recipeTypeInsert);
+        final TextView uidView = view.findViewById(R.id.uidNamesView);
         final String roomID = extras.get("roomID").toString();
         Log.d(TAG , "the room id is "+roomID);
         final DatabaseReference myRef = FireBase.getDataBase().getReference("rooms");
+        final DatabaseReference userNamesRef = FireBase.getDataBase().getReference("users");
         recyclerView = view.findViewById(R.id.recyclerViewRoomInfo);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -60,10 +62,34 @@ public class RoomInfo extends Fragment {
         myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Room room = dataSnapshot.getValue(Room.class);
+                final Room room = dataSnapshot.getValue(Room.class);
                 //System.out.println(dataSnapshot.child("uid1").getValue());
                 recipeName.setText(room.getRecipe().getRecipeName());
                 recipeType.setText(room.getRecipe().getRecipeType());
+                userNamesRef.child(room.getUid1()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        final String nameUid1 = dataSnapshot.getValue(String.class);
+                        userNamesRef.child(room.getUid2()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                String nameUid2 = dataSnapshot.getValue(String.class);
+                                String together = nameUid1+" and "+nameUid2;
+                                uidView.setText(together);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 Map<String, Integer> mapAmount = room.getRecipe().getRecipeAmount();
                 Map<String , Integer>mapGrams = room.getRecipe().getRecipeG();
                 Map<String , Integer> mapML = room.getRecipe().getRecipeML();

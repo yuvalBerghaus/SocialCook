@@ -42,7 +42,6 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
     public CustomAdapterRoom(ArrayList<String> data , MainPage mainPage) {
         this.dataSet = data;
         this.mainPage = mainPage;
-        notificationManager = NotificationManagerCompat.from(mainPage);
     }
 
     @Override
@@ -81,17 +80,4 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
     public int getItemCount() {
         return dataSet.size();
     }
-    /*
-    public void sendOnChannel1(User user , MainPage mainPage) {
-        String title = user.getName();
-        Notification notification = new NotificationCompat.Builder(mainPage, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle(title)
-                .setContentText(title+" was added to the list!")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
-        notificationManager.notify(1, notification);
-    }
-     */
 }

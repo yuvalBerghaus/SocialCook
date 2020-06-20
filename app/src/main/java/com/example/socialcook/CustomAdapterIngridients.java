@@ -134,7 +134,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             public void onClick(View v) {
 
             }
-        });
+        });//:)
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
