@@ -41,8 +41,16 @@
                     android:inputType="textPersonName"
                     android:text="amount" />
 
+                <TextView
+                    android:id="@+id/typeSpecifier"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="TextView" />
+
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/saveButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

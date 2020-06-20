@@ -84,7 +84,7 @@ public class RoomInfo extends Fragment {
                 for(String key:all.keySet()) {
                     Log.d(TAG , "the key of "+key+" issss "+all.get(key));
                 }
-                adapter = new CustomAdapterIngridients(all, mainPage);
+                adapter = new CustomAdapterIngridients(all, mainPage , roomID);
               recyclerView.setAdapter(adapter);
             }
 
