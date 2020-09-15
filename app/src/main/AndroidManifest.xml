@@ -24,6 +24,10 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/CHANNEL_ID_2" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
         <service
             android:name=".services.MyFirebaseMessagingService"
             android:exported="false">

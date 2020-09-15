@@ -15,22 +15,25 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="70dp"
+            app:cardBackgroundColor="@color/login_form_details_light">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#BEB8C1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/itemName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="@font/chango"
                     android:gravity="center"
                     android:text="TextView"
-                    android:textColor="@color/design_default_color_on_secondary" />
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/itemValue"
@@ -38,23 +41,31 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:fontFamily="@font/chango"
                     android:inputType="textPersonName"
-                    android:text="amount" />
+                    android:text="amount"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/typeSpecifier"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="@font/chango"
                     android:gravity="center"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/saveButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="save" />
+                    android:background="@drawable/button_design"
+                    android:text="save"
+                    android:textColor="@color/colorOrange" />
 
             </LinearLayout>
 

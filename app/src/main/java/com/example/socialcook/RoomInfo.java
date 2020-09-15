@@ -47,7 +47,7 @@ public class RoomInfo extends Fragment {
         View view = inflater.inflate(R.layout.fragment_room_info, container, false);
         Bundle extras = this.getArguments();
         final TextView recipeName = view.findViewById(R.id.nameOfRecipe);
-        final TextView recipeType = view.findViewById(R.id.recipeTypeInsert);
+        //final TextView recipeType = view.findViewById(R.id.recipeTypeInsert);
         final TextView uidView = view.findViewById(R.id.uidNamesView);
         final String roomID = extras.get("roomID").toString();
         Log.d(TAG , "the room id is "+roomID);
@@ -65,7 +65,7 @@ public class RoomInfo extends Fragment {
                 final Room room = dataSnapshot.getValue(Room.class);
                 //System.out.println(dataSnapshot.child("uid1").getValue());
                 recipeName.setText(room.getRecipe().getRecipeName());
-                recipeType.setText(room.getRecipe().getRecipeType());
+                //recipeType.setText(room.getRecipe().getRecipeType());
                 userNamesRef.child(room.getUid1()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

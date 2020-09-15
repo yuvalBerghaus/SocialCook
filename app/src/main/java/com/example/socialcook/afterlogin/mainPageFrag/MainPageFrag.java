@@ -116,7 +116,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                     signOut();
                 }
             });
-            welcome.setText("Welcome Back "+user.getDisplayName()+"!!!");
+            welcome.setText("Welcome Back "+user.getDisplayName());
             Button adminPageButton = view.findViewById(R.id.accountOption);
             adminPageButton.setOnClickListener(new View.OnClickListener() {
                 @Override

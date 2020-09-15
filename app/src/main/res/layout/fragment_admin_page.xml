@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#47CD6D"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context=".afterlogin.adminFrag.AdminPage">
 
@@ -16,13 +16,14 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="240dp"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="@font/chango"
             android:gravity="center|start"
             android:text="@string/recipe_name"
-            android:textColor="#403E3E"
-            android:textSize="18sp" />
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/recipeNameInput"
@@ -30,9 +31,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/chango"
             android:hint="@string/type_name_here"
             android:inputType="textPersonName"
-            android:textSize="18sp" />
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -43,12 +46,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="240dp"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="@font/chango"
             android:gravity="center|start"
             android:text="@string/recipe_type"
-            android:textSize="18sp" />
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/recipeTypeInput"
@@ -56,9 +61,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/chango"
             android:hint="@string/insert_recipe_type"
             android:inputType="textPersonName"
-            android:textSize="18sp" />
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -70,12 +77,14 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="240dp"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="@font/chango"
             android:gravity="center|start"
             android:text="Image URL"
-            android:textSize="18sp" />
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/urlInput"
@@ -83,8 +92,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/chango"
             android:hint="recipe URL image here.."
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -95,12 +107,14 @@
 
         <TextView
             android:id="@+id/recipeDescription"
-            android:layout_width="260dp"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="@font/chango"
             android:gravity="center|start"
             android:text="@string/recipe_method"
-            android:textSize="18sp" />
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/descriptionID"
@@ -108,15 +122,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/chango"
             android:hint="@string/type_method"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <EditText
             android:id="@+id/keyAmount"
@@ -124,8 +142,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/chango"
             android:hint="@string/type_item_here"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/valueAmount"
@@ -133,22 +154,29 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/chango"
             android:hint="@string/type_amount_here"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/buttonAddAmount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/add" />
+            android:background="@drawable/button_design"
+            android:text="@string/add"
+            android:textColor="#ffaa00"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <EditText
             android:id="@+id/keyMl"
@@ -156,8 +184,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/chango"
             android:hint="@string/type_item_here"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/valueMl"
@@ -165,15 +196,21 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/chango"
             android:hint="@string/type_ml_here"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/buttonAddMl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Add" />
+            android:background="@drawable/button_design"
+            android:text="Add"
+            android:textColor="#ffaa00"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -181,7 +218,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <EditText
             android:id="@+id/keyMg"
@@ -189,8 +227,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/chango"
             android:hint="@string/type_item_here"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/valueMg"
@@ -198,35 +239,45 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/chango"
             android:hint="Type grams here..."
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/buttonAddMg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/add" />
+            android:background="@drawable/button_design"
+            android:text="@string/add"
+            android:textColor="#ffaa00"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <Button
             android:id="@+id/buttonSend"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Send" />
+            android:background="@drawable/button_design"
+            android:text="Send"
+            android:textColor="#ffaa00"
+            android:textSize="25sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="0.8"
         android:orientation="vertical">
 
         <ListView
@@ -234,7 +285,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/cardview_shadow_start_color" />
+            android:background="@color/common_google_signin_btn_text_light_disabled" />
     </LinearLayout>
 
 </LinearLayout>
