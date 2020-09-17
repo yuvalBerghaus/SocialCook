@@ -36,6 +36,7 @@ import java.util.Map;
 public class RoomInfo extends Fragment {
     private static ArrayList<Map<String,Integer>> data;
     private MainPage mainPage = (MainPage)getActivity();
+    Recipe recipe;
     private static CustomAdapterIngridients adapter;
     static View.OnTouchListener myOnClickListener;
     private static final String TAG = "my time has come";
@@ -53,18 +54,30 @@ public class RoomInfo extends Fragment {
         Log.d(TAG , "the room id is "+roomID);
         final DatabaseReference myRef = FireBase.getDataBase().getReference("rooms");
         final DatabaseReference userNamesRef = FireBase.getDataBase().getReference("users");
+        final DatabaseReference recipesRef = FireBase.getDataBase().getReference("recipes");
         recyclerView = view.findViewById(R.id.recyclerViewRoomInfo);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+        Recipe recipeALL;
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final Room room = dataSnapshot.getValue(Room.class);
                 //System.out.println(dataSnapshot.child("uid1").getValue());
                 recipeName.setText(room.getRecipe().getRecipeName());
+                recipesRef.child(room.getRecipe().getRecipeName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        recipe = dataSnapshot.getValue(Recipe.class);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 //recipeType.setText(room.getRecipe().getRecipeType());
                 userNamesRef.child(room.getUid1()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -110,7 +123,8 @@ public class RoomInfo extends Fragment {
                 for(String key:all.keySet()) {
                     Log.d(TAG , "the key of "+key+" issss "+all.get(key));
                 }
-                adapter = new CustomAdapterIngridients(all, mainPage , roomID);
+                Log.d("dsa" , room.getRecipe().getRecipeName());
+                adapter = new CustomAdapterIngridients(all, mainPage , roomID , room.getRecipe().getRecipeName());
               recyclerView.setAdapter(adapter);
             }
 

@@ -25,6 +25,17 @@
                 android:padding="5dp">
 
                 <TextView
+                    android:id="@+id/itemRequired"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/chango"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp" />
+
+                <TextView
                     android:id="@+id/itemName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
