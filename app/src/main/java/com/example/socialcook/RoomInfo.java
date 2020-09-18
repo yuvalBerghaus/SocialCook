@@ -42,8 +42,8 @@ public class RoomInfo extends Fragment {
     private static CustomAdapterIngridients adapter;
     static View.OnTouchListener myOnClickListener;
     boolean amountFull = true;
-    boolean gramsFull = false;
-    boolean mlFull = false;
+    boolean gramsFull = true;
+    boolean mlFull = true;
     Button nextButton;
     private static final String TAG = "my time has come";
     private static RecyclerView recyclerView;
@@ -96,10 +96,27 @@ public class RoomInfo extends Fragment {
                                 }
                             }
                         }
-                        if(recipe.getRecipeAmount().containsKey(dataSnapshot.child("recipe").child("recipeAmount").getChildren())) {
-                            Log.d("LIKA" , "YES there is");
+
+                        for(DataSnapshot key:dataSnapshot.child("recipe").child("recipeG").getChildren()) {
+                            if(recipe.getRecipeG().containsKey(key.getKey())) {
+                                Log.d("WUHAN" , "FUCK "+key.getKey()+key.getValue()+recipe.getRecipeG().get(key.getKey()));
+                                if (Integer.parseInt(recipe.getRecipeG().get(key.getKey()).toString()) != Integer.parseInt(key.getValue().toString())) {
+                                    Log.d("WHYYYYY" , "SHIT "+amountFull);
+                                    gramsFull = false;
+                                }
+                            }
                         }
-                        if (amountFull) {
+
+                        for(DataSnapshot key:dataSnapshot.child("recipe").child("recipeML").getChildren()) {
+                            if(recipe.getRecipeML().containsKey(key.getKey())) {
+                                Log.d("WUHAN" , "FUCK "+key.getKey()+key.getValue()+recipe.getRecipeML().get(key.getKey()));
+                                if (Integer.parseInt(recipe.getRecipeML().get(key.getKey()).toString()) != Integer.parseInt(key.getValue().toString())) {
+                                    Log.d("WHYYYYY" , "SHIT "+amountFull);
+                                    mlFull = false;
+                                }
+                            }
+                        }
+                        if (amountFull && gramsFull && mlFull) {
                             nextButton.setClickable(true);
                             nextButton.setAlpha(1f);
                         }
