@@ -61,7 +61,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             this.saveButton = (Button) itemView.findViewById(R.id.saveButton);
             this.textInput = (TextView) itemView.findViewById(R.id.itemValue);
             this.typeSpecifier = (TextView) itemView.findViewById(R.id.typeSpecifier);
-            this.maxAmount = (TextView) itemView.findViewById(R.id.itemRequired);
+            this.maxAmount = (TextView) itemView.findViewById(R.id.itemRequired); // this variable contains the value of the max amount of each item
         }
 
 
@@ -106,6 +106,11 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         textViewName.setText(key);
         textInput.setText(value);
         amountRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            /*
+            This snapshot contains :
+            1)datasnapshot1 -> here we fill all of the items of hashtable that contain Amounts
+            2)datasnapshot2 -> recipeRef belongs to the original item quantities we use it in order to compare to the immidiate text in order to display if the amount is correct
+             */
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot1) {
                 if(dataSnapshot1.hasChild(key)) {
@@ -114,16 +119,10 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
                             final Recipe recipe = dataSnapshot2.getValue(Recipe.class);
-                            /*
-                            if(Integer.parseInt(dataSnapshot2.child(key).getValue().toString()) > Integer.parseInt(textInput.getText().toString())) {
-                                Log.d("GEEEE" , "YESSSS");
-                            }
-                             */
                             Log.d("ROSH","Recipe amount from DB = "+recipe.getRecipeAmount().get(key)+"\nRecipe amount from text is "+textInput.getText().toString());
                             if(recipe.getRecipeAmount().containsKey(key)) {
                                 Log.d("AfterMath" , recipe.getRecipeAmount().get(key).toString());
                                 maxAmount.setText(recipe.getRecipeAmount().get(key).toString());
-
                                 int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
                                 int InputValue = 0;
                                 if (!textInput.getText().toString().matches("")) {
@@ -139,12 +138,6 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                                 else {
                                     maxAmount.setTextColor(Color.WHITE);
                                 }
-                                /*
-                                if(recipe.getRecipeAmount().get(key).equals(amountRef.child(key))) {
-                                    countBoolAmount = true;
-                                }
-
-                                 */
                             }
                             Log.d("DIE KVAR" , ""+Integer.parseInt(dataSnapshot1.child(key).getValue().toString()));
                             textInput.addTextChangedListener(new TextWatcher() {
@@ -205,10 +198,14 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
 
             }
         });
+        /*
+            This snapshot contains :
+            1)datasnapshot3 -> gramsRef refers to the current quantity of hashtable grams that was stored in the room database
+         */
         gramsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(key)) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot3) {
+                if(dataSnapshot3.hasChild(key)) {
                     typeSpecifier.setText("Grams");
                     recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -288,10 +285,14 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
 
             }
         });
+        /*
+            This snapshot contains :
+            1)datasnapshot4 -> mlRef refers to the current quantity of hashtable ML that was stored in the room database
+         */
         mlRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(key)) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot4) {
+                if(dataSnapshot4.hasChild(key)) {
                     typeSpecifier.setText("ML");
                     recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -376,7 +377,8 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             public void onClick(View v) {
 
             }
-        });//:)
+        });
+        // Once we click on the save button of each row this function will be executed
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

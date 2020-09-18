@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.socialcook.afterlogin.activities.MainPage;
@@ -31,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 public class RoomInfo extends Fragment {
@@ -39,7 +41,10 @@ public class RoomInfo extends Fragment {
     Recipe recipe;
     private static CustomAdapterIngridients adapter;
     static View.OnTouchListener myOnClickListener;
-    boolean full = false;
+    boolean amountFull = false;
+    boolean gramsFull = false;
+    boolean mlFull = false;
+    Button nextButton;
     private static final String TAG = "my time has come";
     private static RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -49,29 +54,62 @@ public class RoomInfo extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_room_info, container, false);
         Bundle extras = this.getArguments();
         final TextView recipeName = view.findViewById(R.id.nameOfRecipe);
-        //final TextView recipeType = view.findViewById(R.id.recipeTypeInsert);
         final TextView uidView = view.findViewById(R.id.uidNamesView);
         final String roomID = extras.get("roomID").toString();
         Log.d(TAG , "the room id is "+roomID);
-        final DatabaseReference myRef = FireBase.getDataBase().getReference("rooms");
-        final DatabaseReference userNamesRef = FireBase.getDataBase().getReference("users");
-        final DatabaseReference recipesRef = FireBase.getDataBase().getReference("recipes");
+        final DatabaseReference myRef = FireBase.getDataBase().getReference("rooms"); // This var contains reference to rooms
+        final DatabaseReference userNamesRef = FireBase.getDataBase().getReference("users"); // This var contains reference to users room
+        final DatabaseReference recipesRef = FireBase.getDataBase().getReference("recipes"); // This var contains reference to recipes room
         recyclerView = view.findViewById(R.id.recyclerViewRoomInfo);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         Recipe recipeALL;
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        nextButton = view.findViewById(R.id.Next);
+
         myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
+            /*
+            In this block we are comparing database realtime info to the original
+            recipe quantity once its equal we will be able to click continue page
+            +
+            This block also contains both names of the accounts that use this room in a TextView
+            +
+            contains all the UI presentation -> recipe name ,
+            */
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                Log.d("Where am i?" , ""+dataSnapshot.child("recipe").child("recipeAmount"));
                 final Room room = dataSnapshot.getValue(Room.class);
                 //System.out.println(dataSnapshot.child("uid1").getValue());
                 recipeName.setText(room.getRecipe().getRecipeName());
                 recipesRef.child(room.getRecipe().getRecipeName()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        recipe = dataSnapshot.getValue(Recipe.class);
+                    public void onDataChange(@NonNull final DataSnapshot dataSnapshot2) {
+                        recipe = dataSnapshot2.getValue(Recipe.class); // this object now will contain all the room db quantity
+                        for(DataSnapshot key:dataSnapshot.child("recipe").child("recipeAmount").getChildren()) {
+                            if(recipe.getRecipeAmount().containsKey(key.getKey())) {
+                                Log.d("WUHAN" , "FUCK "+key.getKey()+key.getValue()+recipe.getRecipeAmount().get(key.getKey()));
+                                if (Integer.parseInt(recipe.getRecipeAmount().get(key.getKey()).toString()) == Integer.parseInt(key.getValue().toString())) {
+                                    Log.d("WHYYYYY" , "SHIT "+key.getValue());
+                                    amountFull = true;
+                                }
+                                else {
+                                    amountFull = false;
+                                }
+                            }
+                        }
+                        if(recipe.getRecipeAmount().containsKey(dataSnapshot.child("recipe").child("recipeAmount").getChildren())) {
+                            Log.d("LIKA" , "YES there is");
+                        }
+                        if (amountFull) {
+                            nextButton.setClickable(true);
+                            nextButton.setAlpha(1f);
+                        }
+                        else {
+                            nextButton.setClickable(false);
+                            nextButton.setAlpha(0.5f);
+                        }
                     }
 
                     @Override
@@ -79,7 +117,6 @@ public class RoomInfo extends Fragment {
 
                     }
                 });
-                //recipeType.setText(room.getRecipe().getRecipeType());
                 userNamesRef.child(room.getUid1()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -108,6 +145,10 @@ public class RoomInfo extends Fragment {
                 Map<String , Integer>mapGrams = room.getRecipe().getRecipeG();
                 Map<String , Integer> mapML = room.getRecipe().getRecipeML();
                 Map<String , Integer>all = new HashMap<>();
+                /*
+                These loops all belong hashmaps of the amount , grams and ML that the purpose is to concatanate
+                 into a one array that is called all
+                 */
                 for(String key:mapAmount.keySet()) {
                     Log.d(TAG , "the key of "+key+" issss "+mapAmount.get(key));
                     all.put(key ,mapAmount.get(key));
