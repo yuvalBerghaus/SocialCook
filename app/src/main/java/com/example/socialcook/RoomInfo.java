@@ -39,13 +39,14 @@ public class RoomInfo extends Fragment {
     Recipe recipe;
     private static CustomAdapterIngridients adapter;
     static View.OnTouchListener myOnClickListener;
+    boolean full = false;
     private static final String TAG = "my time has come";
     private static RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_room_info, container, false);
+        final View view = inflater.inflate(R.layout.fragment_room_info, container, false);
         Bundle extras = this.getArguments();
         final TextView recipeName = view.findViewById(R.id.nameOfRecipe);
         //final TextView recipeType = view.findViewById(R.id.recipeTypeInsert);

@@ -1,6 +1,9 @@
 package com.example.socialcook;
 
+import android.graphics.Color;
 import android.os.Build;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.afterlogin.recipeInfoFrag.RecipeInfo;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.classes.Room;
 import com.example.socialcook.classes.User;
@@ -36,6 +40,7 @@ import java.util.Set;
 
 public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapterIngridients.MyViewHolder>{
 
+    RoomInfo recipeInfoPage;
     private Map<String , Integer> dataSet;
     MainPage mainPage;
     String roomID;
@@ -62,7 +67,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
 
     }
 
-    public CustomAdapterIngridients(Map<String , Integer> data , MainPage mainPage , String roomID , String recipeName) {
+    public CustomAdapterIngridients(Map<String, Integer> data, MainPage mainPage, String roomID, String recipeName) {
         this.dataSet = data;
         this.mainPage = mainPage;
         this.roomID = roomID;
@@ -90,7 +95,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         TextView textViewName = holder.textViewName;
         final TextView textInput = holder.textInput;
         final TextView typeSpecifier = holder.typeSpecifier;
-        CardView cardView = holder.cardView;
+        final CardView cardView = holder.cardView;
         final Button buttonSave = holder.saveButton;
         final TextView maxAmount = holder.maxAmount;
         final FirebaseDatabase database = FireBase.getDataBase();
@@ -102,19 +107,89 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         textInput.setText(value);
         amountRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(key)) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot1) {
+                if(dataSnapshot1.hasChild(key)) {
                     typeSpecifier.setText("Amount");
                     recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Recipe recipe = dataSnapshot.getValue(Recipe.class);
-                            Log.d("GUY",key);
-                            Log.d("YUVAL" , recipe.getRecipeName());
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                            final Recipe recipe = dataSnapshot2.getValue(Recipe.class);
+                            /*
+                            if(Integer.parseInt(dataSnapshot2.child(key).getValue().toString()) > Integer.parseInt(textInput.getText().toString())) {
+                                Log.d("GEEEE" , "YESSSS");
+                            }
+                             */
+                            Log.d("ROSH","Recipe amount from DB = "+recipe.getRecipeAmount().get(key)+"\nRecipe amount from text is "+textInput.getText().toString());
                             if(recipe.getRecipeAmount().containsKey(key)) {
                                 Log.d("AfterMath" , recipe.getRecipeAmount().get(key).toString());
                                 maxAmount.setText(recipe.getRecipeAmount().get(key).toString());
+
+                                int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
+                                int InputValue = 0;
+                                if (!textInput.getText().toString().matches("")) {
+                                    InputValue = Integer.parseInt(textInput.getText().toString());
+                                }
+                                else {
+                                    InputValue = 0;
+                                }
+                                if(InputValue != recipeValue) {
+                                    maxAmount.setTextColor(Color.RED);
+
+                                }
+                                else {
+                                    maxAmount.setTextColor(Color.WHITE);
+                                }
+                                /*
+                                if(recipe.getRecipeAmount().get(key).equals(amountRef.child(key))) {
+                                    countBoolAmount = true;
+                                }
+
+                                 */
                             }
+                            Log.d("DIE KVAR" , ""+Integer.parseInt(dataSnapshot1.child(key).getValue().toString()));
+                            textInput.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
+                                    int InputValue = 0;
+                                    if (!textInput.getText().toString().matches("")) {
+                                        InputValue = Integer.parseInt(textInput.getText().toString());
+                                    }
+                                    if(InputValue > recipeValue) {
+                                        Log.d("MIKE" , "YESSSS!!!!");
+                                        buttonSave.setClickable(false);
+                                        buttonSave.setAlpha(0.5f);
+                                        maxAmount.setTextColor(Color.RED);
+
+                                    }
+                                    else {
+                                        buttonSave.setClickable(true);
+                                        buttonSave.setAlpha(1f);
+                                        maxAmount.setTextColor(Color.WHITE);
+                                    }
+                                    if (InputValue != recipeValue) {
+                                        maxAmount.setTextColor(Color.RED);
+                                    }
+                                    else {
+                                        maxAmount.setTextColor(Color.WHITE);
+                                    }
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+                            int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
+                            int roomValue = Integer.parseInt(dataSnapshot1.child(key).getValue().toString());
+                            if(recipeValue == roomValue) {
+                                //enter here...........................................................
+                            }
+
                         }
 
                         @Override
@@ -138,13 +213,66 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                     recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Recipe recipe = dataSnapshot.getValue(Recipe.class);
+                            final Recipe recipe = dataSnapshot.getValue(Recipe.class);
                             Log.d("GUY",key);
                             Log.d("YUVAL" , recipe.getRecipeName());
                             if(recipe.getRecipeG().containsKey(key)) {
                                 Log.d("AfterMath" , recipe.getRecipeG().get(key).toString());
                                 maxAmount.setText(recipe.getRecipeG().get(key).toString());
+                                //if(recipe.getRecipeG().get(key) == )
+                                int recipeValue = Integer.parseInt(recipe.getRecipeG().get(key).toString());
+                                int InputValue = 0;
+                                if (!textInput.getText().toString().matches("")) {
+                                    InputValue = Integer.parseInt(textInput.getText().toString());
+                                }
+                                else {
+                                    InputValue = 0;
+                                }
+                                if(InputValue != recipeValue) {
+                                    maxAmount.setTextColor(Color.RED);
+
+                                }
+                                else {
+                                    maxAmount.setTextColor(Color.WHITE);
+                                }
                             }
+                            textInput.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    int recipeValue = Integer.parseInt(recipe.getRecipeG().get(key).toString());
+                                    int InputValue = 0;
+                                    if (!textInput.getText().toString().matches("")) {
+                                        InputValue = Integer.parseInt(textInput.getText().toString());
+                                    }
+                                    if(InputValue > recipeValue) {
+                                        Log.d("MIKE" , "YESSSS!!!!");
+                                        buttonSave.setClickable(false);
+                                        buttonSave.setAlpha(0.5f);
+                                        maxAmount.setTextColor(Color.RED);
+
+                                    }
+                                    else {
+                                        buttonSave.setClickable(true);
+                                        buttonSave.setAlpha(1f);
+                                        maxAmount.setTextColor(Color.WHITE);
+                                    }
+                                    if (InputValue != recipeValue) {
+                                        maxAmount.setTextColor(Color.RED);
+                                    }
+                                    else {
+                                        maxAmount.setTextColor(Color.WHITE);
+                                    }
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
                         }
 
                         @Override
@@ -168,13 +296,66 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                     recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Recipe recipe = dataSnapshot.getValue(Recipe.class);
+                            final Recipe recipe = dataSnapshot.getValue(Recipe.class);
                             Log.d("GUY",key);
                             Log.d("YUVAL" , recipe.getRecipeName());
                             if(recipe.getRecipeML().containsKey(key)) {
                                 Log.d("AfterMath" , recipe.getRecipeML().get(key).toString());
                                 maxAmount.setText(recipe.getRecipeML().get(key).toString());
+
+                                int recipeValue = Integer.parseInt(recipe.getRecipeML().get(key).toString());
+                                int InputValue = 0;
+                                if (!textInput.getText().toString().matches("")) {
+                                    InputValue = Integer.parseInt(textInput.getText().toString());
+                                }
+                                else {
+                                    InputValue = 0;
+                                }
+                                if(InputValue != recipeValue) {
+                                    maxAmount.setTextColor(Color.RED);
+
+                                }
+                                else {
+                                    maxAmount.setTextColor(Color.WHITE);
+                                }
                             }
+                            textInput.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    int recipeValue = Integer.parseInt(recipe.getRecipeML().get(key).toString());
+                                    int InputValue = 0;
+                                    if (!textInput.getText().toString().matches("")) {
+                                        InputValue = Integer.parseInt(textInput.getText().toString());
+                                    }
+                                    if(InputValue > recipeValue) {
+                                        Log.d("MIKE" , "YESSSS!!!!");
+                                        buttonSave.setClickable(false);
+                                        buttonSave.setAlpha(0.5f);
+                                        maxAmount.setTextColor(Color.RED);
+
+                                    }
+                                    else {
+                                        buttonSave.setClickable(true);
+                                        buttonSave.setAlpha(1f);
+                                        maxAmount.setTextColor(Color.WHITE);
+                                    }
+                                    if (InputValue != recipeValue) {
+                                        maxAmount.setTextColor(Color.RED);
+                                    }
+                                    else {
+                                        maxAmount.setTextColor(Color.WHITE);
+                                    }
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
                         }
 
                         @Override
