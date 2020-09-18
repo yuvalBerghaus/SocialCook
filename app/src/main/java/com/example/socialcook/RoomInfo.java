@@ -41,7 +41,7 @@ public class RoomInfo extends Fragment {
     Recipe recipe;
     private static CustomAdapterIngridients adapter;
     static View.OnTouchListener myOnClickListener;
-    boolean amountFull = false;
+    boolean amountFull = true;
     boolean gramsFull = false;
     boolean mlFull = false;
     Button nextButton;
@@ -90,11 +90,8 @@ public class RoomInfo extends Fragment {
                         for(DataSnapshot key:dataSnapshot.child("recipe").child("recipeAmount").getChildren()) {
                             if(recipe.getRecipeAmount().containsKey(key.getKey())) {
                                 Log.d("WUHAN" , "FUCK "+key.getKey()+key.getValue()+recipe.getRecipeAmount().get(key.getKey()));
-                                if (Integer.parseInt(recipe.getRecipeAmount().get(key.getKey()).toString()) == Integer.parseInt(key.getValue().toString())) {
-                                    Log.d("WHYYYYY" , "SHIT "+key.getValue());
-                                    amountFull = true;
-                                }
-                                else {
+                                if (Integer.parseInt(recipe.getRecipeAmount().get(key.getKey()).toString()) != Integer.parseInt(key.getValue().toString())) {
+                                    Log.d("WHYYYYY" , "SHIT "+amountFull);
                                     amountFull = false;
                                 }
                             }
