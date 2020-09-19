@@ -1,11 +1,13 @@
 package com.example.socialcook.roomListFrag;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,12 @@ import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 
 import com.example.socialcook.classes.Recipe;
+import com.example.socialcook.firebase.FireBase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -58,11 +66,35 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
     }
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
-        TextView textViewName = holder.textViewName;
+        final TextView textViewName = holder.textViewName;
         CardView cardView = holder.cardView;
         final Button buttonInfo = holder.infoButton;
         //textViewName.setText(dataSet.get(listPosition));
-        textViewName.setText(dataSet.get(listPosition));
+        final FirebaseDatabase database = FireBase.getDataBase();
+        DatabaseReference myRef = database.getReference("rooms").child(dataSet.get(listPosition).toString());
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                DatabaseReference myRefUsers = database.getReference("users");
+                myRefUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                        textViewName.setText(dataSnapshot.child("recipe").child("recipeName").getValue().toString()+" with "+dataSnapshot2.child(dataSnapshot.child("uid2").getValue().toString()).child("name").getValue().toString());
+                        Log.d("WAKA", dataSnapshot.child("recipe").child("recipeName").getValue().toString());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
