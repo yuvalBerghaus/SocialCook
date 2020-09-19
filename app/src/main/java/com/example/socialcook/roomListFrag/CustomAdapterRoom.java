@@ -79,7 +79,12 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
                 myRefUsers.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
-                        textViewName.setText(dataSnapshot.child("recipe").child("recipeName").getValue().toString()+" with "+dataSnapshot2.child(dataSnapshot.child("uid2").getValue().toString()).child("name").getValue().toString());
+                        if(FireBase.getAuth().getCurrentUser().getUid().toString().matches(dataSnapshot.child("uid2").getValue().toString())) {
+                            textViewName.setText(dataSnapshot.child("recipe").child("recipeName").getValue().toString()+" with "+dataSnapshot2.child(dataSnapshot.child("uid1").getValue().toString()).child("name").getValue().toString());
+                        }
+                        else {
+                            textViewName.setText(dataSnapshot.child("recipe").child("recipeName").getValue().toString()+" with "+dataSnapshot2.child(dataSnapshot.child("uid2").getValue().toString()).child("name").getValue().toString());
+                        }
                         Log.d("WAKA", dataSnapshot.child("recipe").child("recipeName").getValue().toString());
                     }
 
