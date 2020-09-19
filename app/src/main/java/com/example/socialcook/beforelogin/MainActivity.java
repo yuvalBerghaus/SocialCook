@@ -1,29 +1,23 @@
 package com.example.socialcook.beforelogin;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.socialcook.R;
 import com.example.socialcook.ReceiveNotificationActivity;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.firebase.FireBase;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "auth";
+    private static int SPLASH_TIME_OUT = 4000;
     private TextView emailText;
     private TextView passwordText;
     @Override

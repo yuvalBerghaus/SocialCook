@@ -61,6 +61,7 @@ public class CustomAdapterRoom extends RecyclerView.Adapter<CustomAdapterRoom.My
         TextView textViewName = holder.textViewName;
         CardView cardView = holder.cardView;
         final Button buttonInfo = holder.infoButton;
+        //textViewName.setText(dataSet.get(listPosition));
         textViewName.setText(dataSet.get(listPosition));
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
