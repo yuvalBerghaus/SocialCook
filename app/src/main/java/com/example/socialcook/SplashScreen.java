@@ -21,6 +21,16 @@ public class SplashScreen extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if (getIntent().hasExtra("recipeName")){
+                    Intent intent = new Intent(SplashScreen.this, ReceiveNotificationActivity.class);
+                    Bundle bndl = getIntent().getExtras();
+                    intent.putExtra("category",getIntent().getStringExtra("category"));
+                    intent.putExtra("brandId",getIntent().getStringExtra("brandId"));
+                    intent.putExtra("recipeName",getIntent().getStringExtra("recipeName"));
+                    intent.putExtras(bndl);
+                    startActivity(intent);
+                    finish();
+                }
                 Intent intent = new Intent(SplashScreen.this , MainActivity.class);
                 startActivity(intent);
                 finish();
