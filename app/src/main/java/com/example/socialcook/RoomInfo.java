@@ -40,6 +40,7 @@ public class RoomInfo extends Fragment {
     private MainPage mainPage = (MainPage)getActivity();
     Recipe recipe;
     private static CustomAdapterIngridients adapter;
+    TextView logInfo;
     static View.OnTouchListener myOnClickListener;
     boolean amountFull = true;
     boolean gramsFull = true;
@@ -54,12 +55,14 @@ public class RoomInfo extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_room_info, container, false);
         Bundle extras = this.getArguments();
         final TextView recipeName = view.findViewById(R.id.nameOfRecipe);
+        logInfo = view.findViewById(R.id.logInfo);
         final TextView uidView = view.findViewById(R.id.uidNamesView);
         final String roomID = extras.get("roomID").toString();
         Log.d(TAG , "the room id is "+roomID);
         final DatabaseReference myRef = FireBase.getDataBase().getReference("rooms"); // This var contains reference to rooms
         final DatabaseReference userNamesRef = FireBase.getDataBase().getReference("users"); // This var contains reference to users room
         final DatabaseReference recipesRef = FireBase.getDataBase().getReference("recipes"); // This var contains reference to recipes room
+        final DatabaseReference logRef = FireBase.getDataBase().getReference("rooms").child(roomID).child("logs");
         recyclerView = view.findViewById(R.id.recyclerViewRoomInfo);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -67,7 +70,7 @@ public class RoomInfo extends Fragment {
         Recipe recipeALL;
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         nextButton = view.findViewById(R.id.Next);
-
+       // final DatabaseReference refLogs = myRef.child(roomID).child("recipe").;
         myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
             /*
             In this block we are comparing database realtime info to the original
@@ -79,7 +82,6 @@ public class RoomInfo extends Fragment {
             */
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                Log.d("Where am i?" , ""+dataSnapshot.child("recipe").child("recipeAmount"));
                 final Room room = dataSnapshot.getValue(Room.class);
                 //System.out.println(dataSnapshot.child("uid1").getValue());
                 recipeName.setText(room.getRecipe().getRecipeName());
@@ -89,9 +91,7 @@ public class RoomInfo extends Fragment {
                         recipe = dataSnapshot2.getValue(Recipe.class); // this object now will contain all the room db quantity
                         for(DataSnapshot key:dataSnapshot.child("recipe").child("recipeAmount").getChildren()) {
                             if(recipe.getRecipeAmount().containsKey(key.getKey())) {
-                                Log.d("WUHAN" , "FUCK "+key.getKey()+key.getValue()+recipe.getRecipeAmount().get(key.getKey()));
                                 if (Integer.parseInt(recipe.getRecipeAmount().get(key.getKey()).toString()) != Integer.parseInt(key.getValue().toString())) {
-                                    Log.d("WHYYYYY" , "SHIT "+amountFull);
                                     amountFull = false;
                                 }
                             }
@@ -99,9 +99,7 @@ public class RoomInfo extends Fragment {
 
                         for(DataSnapshot key:dataSnapshot.child("recipe").child("recipeG").getChildren()) {
                             if(recipe.getRecipeG().containsKey(key.getKey())) {
-                                Log.d("WUHAN" , "FUCK "+key.getKey()+key.getValue()+recipe.getRecipeG().get(key.getKey()));
                                 if (Integer.parseInt(recipe.getRecipeG().get(key.getKey()).toString()) != Integer.parseInt(key.getValue().toString())) {
-                                    Log.d("WHYYYYY" , "SHIT "+amountFull);
                                     gramsFull = false;
                                 }
                             }
@@ -124,6 +122,22 @@ public class RoomInfo extends Fragment {
                             nextButton.setClickable(false);
                             nextButton.setAlpha(0.5f);
                         }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                logRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String str = "";
+                        for(DataSnapshot db:dataSnapshot.getChildren()) {
+                            str += db.getValue().toString()+"\n";
+                        }
+                        Log.d("Kol hayom",str);
+                        logInfo.setText(str);
                     }
 
                     @Override

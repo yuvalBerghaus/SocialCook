@@ -1,5 +1,6 @@
 package com.example.socialcook;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.Editable;
@@ -9,20 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.socialcook.R;
+
 import com.example.socialcook.afterlogin.activities.MainPage;
-import com.example.socialcook.afterlogin.recipeInfoFrag.RecipeInfo;
 import com.example.socialcook.classes.Recipe;
-import com.example.socialcook.classes.Room;
-import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,12 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapterIngridients.MyViewHolder>{
 
@@ -60,7 +52,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             this.textViewName = (TextView) itemView.findViewById(R.id.itemName);
             this.saveButton = (Button) itemView.findViewById(R.id.saveButton);
             this.textInput = (TextView) itemView.findViewById(R.id.itemValue);
-            this.typeSpecifier = (TextView) itemView.findViewById(R.id.typeSpecifier);
+            this.typeSpecifier = (TextView) itemView.findViewById(R.id.log);
             this.maxAmount = (TextView) itemView.findViewById(R.id.itemRequired); // this variable contains the value of the max amount of each item
         }
 
@@ -387,7 +379,16 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.hasChild(key)) {
+                                int diff = Integer.parseInt(dataSnapshot.child(key).getValue().toString()) - Integer.parseInt(textInput.getText().toString());
+                                if(diff < 0) {
+                                    amountRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" added "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
+                                }
+                                else if(diff > 0) {
+                                    amountRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" removed "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
+                                }
+                                Log.d("DIFF" , "diff = "+diff+"\nDb = "+textInput.getText().toString());///////////////////////////////////////////////////////////////////////////////////////////////////////////
                                 amountRef.child(key).setValue(Integer.parseInt(textInput.getText().toString()));
+
                             }
                         }
 
