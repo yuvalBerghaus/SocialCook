@@ -124,7 +124,7 @@
             android:ems="10"
             android:fontFamily="@font/chango"
             android:hint="@string/type_method"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine|textPersonName"
             android:textColor="@color/common_google_signin_btn_text_light_focused"
             android:textSize="12sp" />
     </LinearLayout>

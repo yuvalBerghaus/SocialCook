@@ -50,6 +50,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_receive_notification);
         final Button accept = findViewById(R.id.acceptButton);
+        final Button reject = findViewById(R.id.rejectButton);
         final DatabaseReference myRef = FireBase.recipeDir;
         Bundle bndl = getIntent().getExtras();
         final DatabaseReference newDir = FireBase.getDataBase().getReference();
@@ -67,6 +68,12 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
         final String uidUser = bndl.getString("uidSource");
         Log.d(TAG , "UID USER IS "+uidUser);
             mRequestQue = Volley.newRequestQueue(this);
+            reject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
             accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
