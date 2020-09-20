@@ -41,8 +41,8 @@
 
         <TextView
             android:id="@+id/recipeNameIDButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="381dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/great_vibes"
             android:gravity="right"
@@ -54,7 +54,7 @@
         <TextView
             android:id="@+id/nameOfRecipe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/great_vibes"
             android:text="TextView"
@@ -99,8 +99,8 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="363dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/great_vibes"
             android:gravity="right"
