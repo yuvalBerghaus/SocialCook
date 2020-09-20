@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context=".beforelogin.LoginFragment">
+    tools:context=".beforelogin.LoginFragment"
+    tools:ignore="MissingDefaultResource">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
