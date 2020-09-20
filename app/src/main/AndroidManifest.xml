@@ -36,8 +36,9 @@
         </service>
 
         <activity android:name=".ReceiveNotificationActivity" />
+        <activity android:name=".beforelogin.MainActivity" />
         <activity android:name=".afterlogin.activities.MainPage" />
-        <activity android:name=".beforelogin.MainActivity">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
