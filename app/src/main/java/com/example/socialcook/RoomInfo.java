@@ -1,9 +1,10 @@
 package com.example.socialcook;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-
+import java.lang.Object;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -11,13 +12,14 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.content.pm.PackageManager;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.afterlogin.userListFrag.CustomAdapterUser;
 import com.example.socialcook.classes.Recipe;
@@ -31,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -76,6 +79,15 @@ public class RoomInfo extends Fragment {
             @Override
             public void onClick(View v) {
                 mainPage.loadEventPage();
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setData(CalendarContract.Events.CONTENT_URI);
+                intent.putExtra(CalendarContract.Events.TITLE , "Cooking "+recipeName);
+                intent.putExtra(CalendarContract.Events.DESCRIPTION, "you put buk lau");
+                intent.putExtra(CalendarContract.Events.ALL_DAY, "true");
+                intent.putExtra(Intent.EXTRA_EMAIL, FireBase.getAuth().getCurrentUser().getEmail());
+                if(intent.resolveActivity(mainPage.getPackageManager()) != null){
+                    startActivity(intent);
+                }
             }
         });
        // final DatabaseReference refLogs = myRef.child(roomID).child("recipe").;
