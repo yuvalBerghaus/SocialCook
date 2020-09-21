@@ -179,7 +179,7 @@ public class RoomInfo extends Fragment {
                                                         mainPage.loadEventPage();
                                                         Intent intent = new Intent(Intent.ACTION_INSERT);
                                                         intent.setData(CalendarContract.Events.CONTENT_URI);
-                                                        intent.putExtra(CalendarContract.Events.TITLE , "Cooking "+recipeName.getText().toString());
+                                                        intent.putExtra(CalendarContract.Events.TITLE , "Lets make "+recipeName.getText().toString()+"!!!");
                                                         intent.putExtra(CalendarContract.Events.DESCRIPTION, "WELCOME TO "+nameUid1.toUpperCase()+" and "+nameUid2.toUpperCase()+"'S ROOM.\nPlease FILL IN ALL THE DETAILS AND PRESS THE SAVE BUTTON");
                                                         intent.putExtra(CalendarContract.Events.ALL_DAY, false);
                                                         intent.putExtra(Intent.EXTRA_EMAIL, email1+","+email2);
