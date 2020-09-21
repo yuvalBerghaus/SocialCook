@@ -74,22 +74,6 @@ public class RoomInfo extends Fragment {
         Recipe recipeALL;
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         nextButton = view.findViewById(R.id.Next);
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainPage.loadEventPage();
-                Intent intent = new Intent(Intent.ACTION_INSERT);
-                intent.setData(CalendarContract.Events.CONTENT_URI);
-                intent.putExtra(CalendarContract.Events.TITLE , "Cooking "+recipeName);
-                intent.putExtra(CalendarContract.Events.DESCRIPTION, "you put buk lau");
-                intent.putExtra(CalendarContract.Events.ALL_DAY, "true");
-                intent.putExtra(Intent.EXTRA_EMAIL, FireBase.getAuth().getCurrentUser().getEmail());
-                if(intent.resolveActivity(mainPage.getPackageManager()) != null){
-                    startActivity(intent);
-                }
-            }
-        });
        // final DatabaseReference refLogs = myRef.child(roomID).child("recipe").;
         myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
             /*
@@ -165,16 +149,59 @@ public class RoomInfo extends Fragment {
 
                     }
                 });
+                /*
+                This function block collects the user's email in order to put it in the event creator
+                 */
                 userNamesRef.child(room.getUid1()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        final String nameUid1 = dataSnapshot.getValue(String.class);
+                    public void onDataChange(@NonNull final DataSnapshot dataSnapshot1) {
+                        final String nameUid1 = dataSnapshot1.getValue(String.class);
                         userNamesRef.child(room.getUid2()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String nameUid2 = dataSnapshot.getValue(String.class);
+                            public void onDataChange(@NonNull final DataSnapshot dataSnapshot2) {
+                                final String nameUid2 = dataSnapshot2.getValue(String.class);
                                 String together = nameUid1+" and "+nameUid2;
                                 uidView.setText(together);
+                                dataSnapshot1.getRef().getParent().addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull final DataSnapshot dataSnapshot12) {
+                                        dataSnapshot2.getRef().getParent().addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot45) {
+                                                final String email1 = dataSnapshot45.child("email").getValue().toString();
+                                                final String email2 = dataSnapshot12.child("email").getValue().toString();
+                                                /*
+                                                Clicking the next button in order to create an event! :)
+                                                 */
+                                                nextButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        mainPage.loadEventPage();
+                                                        Intent intent = new Intent(Intent.ACTION_INSERT);
+                                                        intent.setData(CalendarContract.Events.CONTENT_URI);
+                                                        intent.putExtra(CalendarContract.Events.TITLE , "Cooking "+recipeName.getText().toString());
+                                                        intent.putExtra(CalendarContract.Events.DESCRIPTION, "WELCOME TO "+nameUid1.toUpperCase()+" and "+nameUid2.toUpperCase()+"'S ROOM.\nPlease FILL IN ALL THE DETAILS AND PRESS THE SAVE BUTTON");
+                                                        intent.putExtra(CalendarContract.Events.ALL_DAY, false);
+                                                        intent.putExtra(Intent.EXTRA_EMAIL, email1+","+email2);
+                                                        if(intent.resolveActivity(mainPage.getPackageManager()) != null){
+                                                            startActivity(intent);
+                                                        }
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
                             }
 
                             @Override
