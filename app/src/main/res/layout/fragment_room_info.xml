@@ -148,6 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="#52C3C3C3"
                 android:fontFamily="@font/chango"
                 android:text="TextView"
                 android:textColor="@color/colorWhite"

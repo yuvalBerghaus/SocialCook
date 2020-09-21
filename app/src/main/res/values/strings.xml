@@ -49,5 +49,11 @@
     <string name="recipe_ingridients">Recipe ingridients</string>
     <string name="recipe_type">Recipe type</string>
     <string name="recipe_request">Recipe request:</string>
+    <string name="Date">Date</string>
+    <string name="Time">Time</string>
+    <string name="Address">Address</string>
+    <string name="type_date_here">Type date here</string>
+    <string name="type_time_here">Type time here</string>
+    <string name="type_address_here">Type address here</string>
 
 </resources>

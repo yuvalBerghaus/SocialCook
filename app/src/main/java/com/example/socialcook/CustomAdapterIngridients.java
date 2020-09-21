@@ -401,6 +401,14 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.hasChild(key)) {
+                                int diff = Integer.parseInt(dataSnapshot.child(key).getValue().toString()) - Integer.parseInt(textInput.getText().toString());
+                                if(diff < 0) {
+                                    gramsRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" added "+Math.abs(diff)+" grams of "+dataSnapshot.child(key).getKey());
+                                }
+                                else if(diff > 0) {
+                                    gramsRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" removed "+Math.abs(diff)+" grams of "+dataSnapshot.child(key).getKey());
+                                }
+                                Log.d("DIFF" , "diff = "+diff+"\nDb = "+textInput.getText().toString());
                                 gramsRef.child(key).setValue(Integer.parseInt(textInput.getText().toString()));
                             }
                         }
@@ -414,6 +422,14 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.hasChild(key)) {
+                                int diff = Integer.parseInt(dataSnapshot.child(key).getValue().toString()) - Integer.parseInt(textInput.getText().toString());
+                                if(diff < 0) {
+                                    mlRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" added "+Math.abs(diff)+" ml of "+dataSnapshot.child(key).getKey());
+                                }
+                                else if(diff > 0) {
+                                    mlRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" removed "+Math.abs(diff)+" ml of "+dataSnapshot.child(key).getKey());
+                                }
+                                Log.d("DIFF" , "diff = "+diff+"\nDb = "+textInput.getText().toString());
                                 mlRef.child(key).setValue(Integer.parseInt(textInput.getText().toString()));
                             }
                         }

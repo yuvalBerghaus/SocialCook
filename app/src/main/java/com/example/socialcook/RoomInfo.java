@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class RoomInfo extends Fragment {
     private static ArrayList<Map<String,Integer>> data;
-    private MainPage mainPage = (MainPage)getActivity();
+
     Recipe recipe;
     private static CustomAdapterIngridients adapter;
     TextView logInfo;
@@ -53,6 +53,7 @@ public class RoomInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_room_info, container, false);
+        final MainPage mainPage = (MainPage)getActivity();
         Bundle extras = this.getArguments();
         final TextView recipeName = view.findViewById(R.id.nameOfRecipe);
         logInfo = view.findViewById(R.id.logInfo);
@@ -70,6 +71,13 @@ public class RoomInfo extends Fragment {
         Recipe recipeALL;
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         nextButton = view.findViewById(R.id.Next);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainPage.loadEventPage();
+            }
+        });
        // final DatabaseReference refLogs = myRef.child(roomID).child("recipe").;
         myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
             /*
