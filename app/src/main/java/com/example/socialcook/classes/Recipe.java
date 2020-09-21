@@ -93,7 +93,7 @@ public class Recipe implements Serializable {
         Map<String,Integer> map = this.getRecipeAmount();
         StringBuilder mapAsString = new StringBuilder("\n");
         for (String key : map.keySet()) {
-            mapAsString.append(key + " = " + map.get(key).toString() + " Units\n ");
+            mapAsString.append(map.get(key).toString() + " units of " + key + "\n");
         }
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");
         return mapAsString.toString();
@@ -102,7 +102,7 @@ public class Recipe implements Serializable {
         Map<String,Integer> map = this.getRecipeG();
         StringBuilder mapAsString = new StringBuilder("\n");
         for (String key : map.keySet()) {
-            mapAsString.append(key + " = " + map.get(key).toString() + " grams\n ");
+            mapAsString.append(map.get(key).toString() + " grams of " + key + "\n");
         }
         //mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");
         return mapAsString.toString();
@@ -115,7 +115,7 @@ public class Recipe implements Serializable {
         for (String key : map.keySet()) {
             Log.d(TAG, "convertRecipeMLIteration 3: key = "+key);
             Log.d(TAG, "convertRecipeMLIteration 4: map.get =  "+map.get(key).toString());
-            mapAsString.append(key + " = " + map.get(key).toString() + " Mili-Liters\n ");
+            mapAsString.append(map.get(key).toString() + " mili-liters of " + key + "\n");
         }
         System.out.println("the length is "+mapAsString.length());
         //mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");

@@ -120,10 +120,12 @@ public class RoomInfo extends Fragment {
                         }
                         if (amountFull && gramsFull && mlFull) {
                             nextButton.setClickable(true);
+                            nextButton.setEnabled(true);
                             nextButton.setAlpha(1f);
                         }
                         else {
                             nextButton.setClickable(false);
+                            nextButton.setEnabled(false);
                             nextButton.setAlpha(0.5f);
                         }
                     }
@@ -176,7 +178,6 @@ public class RoomInfo extends Fragment {
                                                 nextButton.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
-                                                        mainPage.loadEventPage();
                                                         Intent intent = new Intent(Intent.ACTION_INSERT);
                                                         intent.setData(CalendarContract.Events.CONTENT_URI);
                                                         intent.putExtra(CalendarContract.Events.TITLE , "Lets make "+recipeName.getText().toString()+"!!!");

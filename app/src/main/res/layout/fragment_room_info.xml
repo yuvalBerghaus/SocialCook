@@ -160,7 +160,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/button_design"
-                android:text="Next"
+                android:text="Create Event"
                 android:textColor="@color/colorOrange"
                 android:textSize="16sp" />
 
