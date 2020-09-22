@@ -1,9 +1,11 @@
 package com.example.socialcook.beforelogin;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +13,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -43,7 +47,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class RegisterFragment extends Fragment implements FireBase.IRegister {
+public class RegisterFragment extends Fragment implements FireBase.IRegister, ActivityCompat.OnRequestPermissionsResultCallback {
+
+    static final int REQUEST_CODE = 123;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +59,6 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         Button registerButton = view.findViewById(R.id.signUpButton);
         Button photoButton = view.findViewById(R.id.photoButton);
-        ImageView photoImage = view.findViewById(R.id.photoImage);
         /*
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //String userID = user.getUid();
@@ -79,9 +84,53 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister {
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+                if (ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.CAMERA) +
+                    ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE) +
+                    ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_DENIED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA) ||
+                        ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) ||
+                        ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme);
+                        builder.setTitle("Please grant permissions:");
+                        builder.setMessage("Camera, Read Storage, Write Storage");
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(getActivity(),
+                                        new String[] {
+                                                Manifest.permission.CAMERA,
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                        }, REQUEST_CODE);
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+                    }
+                    else {
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[] {
+                                        Manifest.permission.CAMERA,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                }, REQUEST_CODE);
+                        selectImage();
+                    }
+                }
+                else {
+                    Toast.makeText(getContext(), "Permission already granted", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

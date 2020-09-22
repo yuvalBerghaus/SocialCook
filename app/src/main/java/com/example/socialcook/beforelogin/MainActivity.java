@@ -1,13 +1,17 @@
 package com.example.socialcook.beforelogin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.socialcook.R;
 import com.example.socialcook.ReceiveNotificationActivity;
 import com.example.socialcook.afterlogin.activities.MainPage;
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     {
         return contextOfApplication;
     }
+    static final int REQUEST_CODE = 123;
     private TextView emailText;
     private TextView passwordText;
     @Override
@@ -59,6 +64,19 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
             }
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE) {
+            if((grantResults.length>0) && grantResults[0] + grantResults[1] + grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
     public void loadLoginFrag() {
