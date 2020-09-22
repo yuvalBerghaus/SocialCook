@@ -93,9 +93,9 @@ public class Recipe implements Serializable {
         Map<String,Integer> map = this.getRecipeAmount();
         StringBuilder mapAsString = new StringBuilder("\n");
         for (String key : map.keySet()) {
-            mapAsString.append(map.get(key).toString() + " units of " + key + "\n");
+            mapAsString.append(map.get(key).toString() + " units of "+key+"\n");
         }
-        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("\n");
+        mapAsString.delete(mapAsString.length()-1, mapAsString.length()).append("\n");
         return mapAsString.toString();
     }
     public String convertRecipeGIteration() {
