@@ -37,6 +37,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -54,6 +57,8 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister {
         Button registerButton = view.findViewById(R.id.signUpButton);
         Button photoButton = view.findViewById(R.id.photoButton);
         ImageView photoImage = view.findViewById(R.id.photoImage);
+        StorageReference mStorageRef;
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         /*
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //String userID = user.getUid();
@@ -100,7 +105,6 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister {
         });
         return view;
     }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
@@ -189,7 +193,6 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister {
             }
         }
     }
-
     @Override
     public void register(TextView email , TextView password , final DatabaseReference myRef, final User userSignUp) {
         final MainActivity main = (MainActivity)getActivity();

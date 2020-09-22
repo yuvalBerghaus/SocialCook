@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1036940462455-sipaldek7neignq398hit1him00qijqa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.socialcook",
+            "certificate_hash": "6a0d04fdbdf1a52e1e0eeab554d319b1c9a24452"
+          }
+        },
+        {
           "client_id": "1036940462455-43bsbjrrutj2v3ji7rbpjcpqtg26cri2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
