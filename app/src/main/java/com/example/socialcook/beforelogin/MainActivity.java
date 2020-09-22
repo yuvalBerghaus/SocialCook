@@ -3,12 +3,11 @@ package com.example.socialcook.beforelogin;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.TextView;
-
 import com.example.socialcook.R;
 import com.example.socialcook.ReceiveNotificationActivity;
 import com.example.socialcook.afterlogin.activities.MainPage;
@@ -18,6 +17,11 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "auth";
     private static int SPLASH_TIME_OUT = 4000;
+    public static Context contextOfApplication;
+    public static Context getContextOfApplication()
+    {
+        return contextOfApplication;
+    }
     private TextView emailText;
     private TextView passwordText;
     @Override
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        contextOfApplication = getApplicationContext();
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) {
                 return;
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     public void loadLoginFrag() {
         // Create fragment and give it an argument specifying the article it should show
         Fragment newFragment = new LoginFragment();
