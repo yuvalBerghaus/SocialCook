@@ -277,15 +277,10 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
         app:layout_constraintTop_toTopOf="@+id/guideline14" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/photoImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxHeight="100dp"
-        android:maxWidth="100dp"
-        android:minHeight="100dp"
-        android:minWidth="100dp"
-        android:adjustViewBounds="true"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/ic_baseline_photo_camera_24"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
