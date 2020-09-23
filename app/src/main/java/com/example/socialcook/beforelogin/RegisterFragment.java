@@ -2,6 +2,7 @@ package com.example.socialcook.beforelogin;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -50,6 +51,8 @@ import java.io.OutputStream;
 public class RegisterFragment extends Fragment implements FireBase.IRegister, ActivityCompat.OnRequestPermissionsResultCallback {
 
     static final int REQUEST_CODE = 123;
+    static final int IMAGE_CAPTURE_CODE = 1001;
+    Uri image_uri;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -165,10 +168,17 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Take Photo"))
                 {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    ContentValues values = new ContentValues();
+                    values.put(MediaStore.Images.Media.TITLE, "New Picture");
+                    values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
+                    image_uri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
+                    startActivityForResult(cameraIntent, 1);
+                    /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);
+                    startActivityForResult(intent, 1); */
                 }
                 else if (options[item].equals("Choose from Gallery"))
                 {
@@ -187,7 +197,10 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
         ImageView photoImage = (ImageView)getView().findViewById(R.id.photoImage);
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
+            Log.d("IMAGECAPTURED", "IMAGECAPTURED!!");
             if (requestCode == 1) {
+                photoImage.setImageURI(image_uri);
+                /*
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
                     if (temp.getName().equals("temp.jpg")) {
@@ -222,8 +235,9 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
-            } else if (requestCode == 2) {
+                } */
+            }
+            else if (requestCode == 2) {
                 Uri selectedImage = data.getData();
                 String[] filePath = { MediaStore.Images.Media.DATA };
                 Context applicationContext = MainActivity.getContextOfApplication();
