@@ -7,6 +7,16 @@ import java.util.Map;
 public class User {
     public String name;
     public String email;
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String imagePath;
     public String address;
     public String birthday;
     public String uid;

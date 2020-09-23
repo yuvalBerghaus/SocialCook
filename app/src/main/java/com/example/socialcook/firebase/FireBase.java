@@ -3,6 +3,7 @@ package com.example.socialcook.firebase;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaDrm;
+import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.NumberPicker;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.OnDisconnect;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.logging.Handler;
 
@@ -45,7 +47,7 @@ public class FireBase {
         void signOut();
     }
     public interface IRegister {
-        void register(TextView email , TextView password, DatabaseReference myRef , User newUser);
+        void register(TextView email , TextView password, DatabaseReference myRef , User newUser, StorageReference riversRef , Uri image_Uri);
     }
     public interface ILogin {
         void login(TextView email , TextView password);

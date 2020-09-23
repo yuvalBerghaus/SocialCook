@@ -17,6 +17,7 @@
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#FFFFFF"
             app:cardBackgroundColor="@color/login_form_details_light">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +32,7 @@
                     app:layout_constraintGuide_percent="0.05" />
 
                 <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline2"
+                    android:id="@+id/guideline23"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -56,7 +57,7 @@
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/guideline2"
+                    app:layout_constraintStart_toStartOf="@+id/guideline23"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -66,7 +67,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/pot"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline23"
                     app:layout_constraintStart_toStartOf="@+id/guideline1"
                     app:layout_constraintTop_toTopOf="parent" />
 

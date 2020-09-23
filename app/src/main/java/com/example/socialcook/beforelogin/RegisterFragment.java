@@ -36,36 +36,47 @@ import com.example.socialcook.R;
 import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.UUID;
 
 public class RegisterFragment extends Fragment implements FireBase.IRegister, ActivityCompat.OnRequestPermissionsResultCallback {
 
     static final int REQUEST_CODE = 123;
     static final int IMAGE_CAPTURE_CODE = 1001;
     Uri image_uri;
-
+    StorageReference mStorageRef;
+    String randomKey = UUID.randomUUID().toString();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final MainActivity main = (MainActivity)getActivity();
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
+        Uri selectedImage;
+        final View view = inflater.inflate(R.layout.fragment_register, container, false);
         Button registerButton = view.findViewById(R.id.signUpButton);
         Button photoButton = view.findViewById(R.id.photoButton);
         /*
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //String userID = user.getUid();
          */
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        final StorageReference riversRef = mStorageRef.child("images/"+randomKey+".jpg");
         final FirebaseDatabase database = FireBase.getDataBase();
         final DatabaseReference myRef = database.getReference("users");
         final EditText nameSignUp = view.findViewById(R.id.nameReg);
@@ -142,10 +153,12 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                     userSignUp.setEmail(emailSignUp.getText().toString());
                     userSignUp.setName(nameSignUp.getText().toString());
                     userSignUp.setBirthday(birthdaySignUp.getText().toString());
-                    register(emailSignUp , passwordSignUp , myRef, userSignUp);
+                    Log.d("waaaaaaaaaaaaaaa", "image_uri = "+image_uri.getPath()+" riversRef="+riversRef.getPath());
+                    register(emailSignUp , passwordSignUp , myRef, userSignUp , riversRef , image_uri);
                 }
                 catch (Exception NullPointerException) {
                     Toast.makeText(getContext(), "you need to fill everything!", Toast.LENGTH_SHORT).show();
+                    Log.d("naaaaaaaaaaaaaaaaaaaaaa", image_uri.getPath());
                     return;
                 }
             }
@@ -200,6 +213,8 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
             Log.d("IMAGECAPTURED", "IMAGECAPTURED!!");
             if (requestCode == 1) {
                 photoImage.setImageURI(image_uri);
+                Log.d("IMAGE URI IS ",image_uri.getPath());
+
                 /*
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
@@ -238,29 +253,47 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                 } */
             }
             else if (requestCode == 2) {
-                Uri selectedImage = data.getData();
+                image_uri = data.getData();
                 String[] filePath = { MediaStore.Images.Media.DATA };
                 Context applicationContext = MainActivity.getContextOfApplication();
-                Cursor c = applicationContext.getContentResolver().query(selectedImage,filePath, null, null, null);
+                Cursor c = applicationContext.getContentResolver().query(image_uri,filePath, null, null, null);
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
                 Log.w("path of gallery image", picturePath+"");
+                Log.d("IMAGE URI IS ",image_uri.getAuthority());
                 photoImage.setImageBitmap(thumbnail);
             }
         }
     }
 
     @Override
-    public void register(TextView email , TextView password , final DatabaseReference myRef, final User userSignUp) {
+    public void register(TextView email , TextView password , final DatabaseReference myRef, final User userSignUp , final StorageReference riversRef , final Uri image_uri) {
         final MainActivity main = (MainActivity)getActivity();
+        Log.d("hell no" , "fdsfsdfsd"+riversRef.getPath());
+        userSignUp.setImagePath("images/"+randomKey);
         FireBase.getAuth().createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(main, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            riversRef.putFile(image_uri)
+                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            // Get a URL to the uploaded content
+                                            // Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                            // Handle unsuccessful uploads
+                                            // ...
+                                        }
+                                    });
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(getContext(), "Register Succeed.",
                                     Toast.LENGTH_SHORT).show();

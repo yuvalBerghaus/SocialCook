@@ -16,7 +16,7 @@
         app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/guideline23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -154,7 +154,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:src="@drawable/label"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintBottom_toTopOf="@+id/guideline23"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
         app:layout_constraintTop_toTopOf="@+id/guideline1" />
@@ -175,7 +175,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        app:layout_constraintTop_toTopOf="@+id/guideline23" />
 
     <EditText
         android:id="@+id/emailReg"
