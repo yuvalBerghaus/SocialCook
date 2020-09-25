@@ -87,27 +87,29 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
         TextView textViewName = holder.textViewName;
        final ImageView profilePhoto = holder.imageView;
        String imagePath = dataSet.get(listPosition).getImagePath();
-        FireBase.storageRef.child(imagePath).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                try {
-                    System.out.println(uri);
-                    Picasso.get().load(uri).into(profilePhoto);
-                }
-                catch (IllegalArgumentException error) {
-                    System.out.println("FUCK");
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+       if (imagePath != null)
+       {
+           FireBase.storageRef.child(imagePath).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+               @Override
+               public void onSuccess(Uri uri) {
+                   // Got the download URL for 'users/me/profile.png'
+                   try {
+                       System.out.println(uri);
+                       Picasso.get().load(uri).into(profilePhoto);
+                   }
+                   catch (IllegalArgumentException error) {
+                       System.out.println("FUCK");
+                   }
+               }
+           }).addOnFailureListener(new OnFailureListener() {
+               @Override
+               public void onFailure(@NonNull Exception exception) {
+                   // Handle any errors
+               }
+           });
+       }
         CardView cardView = holder.cardView;
         final Button buttonInfo = holder.infoButton;
-       // Picasso.get().load(imgRef.getPath()).into(profilePhoto);
         textViewName.setText(dataSet.get(listPosition).getName());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override

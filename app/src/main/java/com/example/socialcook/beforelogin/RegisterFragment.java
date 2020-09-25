@@ -58,7 +58,6 @@ import java.util.UUID;
 public class RegisterFragment extends Fragment implements FireBase.IRegister, ActivityCompat.OnRequestPermissionsResultCallback {
 
     static final int REQUEST_CODE = 123;
-    static final int IMAGE_CAPTURE_CODE = 1001;
     Uri image_uri;
     StorageReference mStorageRef;
     String randomKey = UUID.randomUUID().toString();
@@ -67,7 +66,6 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final MainActivity main = (MainActivity)getActivity();
-        Uri selectedImage;
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
         Button registerButton = view.findViewById(R.id.signUpButton);
         Button photoButton = view.findViewById(R.id.photoButton);
@@ -76,7 +74,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
         //String userID = user.getUid();
          */
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        final StorageReference riversRef = mStorageRef.child("images/"+randomKey);
+        final StorageReference imagesRef = mStorageRef.child("images/"+randomKey);
         final FirebaseDatabase database = FireBase.getDataBase();
         final DatabaseReference myRef = database.getReference("users");
         final EditText nameSignUp = view.findViewById(R.id.nameReg);
@@ -153,8 +151,8 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                     userSignUp.setEmail(emailSignUp.getText().toString());
                     userSignUp.setName(nameSignUp.getText().toString());
                     userSignUp.setBirthday(birthdaySignUp.getText().toString());
-                    Log.d("waaaaaaaaaaaaaaa", "image_uri = "+image_uri.getPath()+" riversRef="+riversRef.getPath());
-                    register(emailSignUp , passwordSignUp , myRef, userSignUp , riversRef , image_uri);
+                    Log.d("waaaaaaaaaaaaaaa", "image_uri = "+image_uri.getPath()+" imagesRef="+imagesRef.getPath());
+                    register(emailSignUp , passwordSignUp , myRef, userSignUp , imagesRef , image_uri);
                 }
                 catch (Exception NullPointerException) {
                     Toast.makeText(getContext(), "you need to fill everything!", Toast.LENGTH_SHORT).show();
@@ -213,43 +211,6 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
             Log.d("IMAGECAPTURED", "IMAGECAPTURED!!");
             if (requestCode == 1) {
                 photoImage.setImageURI(image_uri);
-
-                /*
-                File f = new File(Environment.getExternalStorageDirectory().toString());
-                for (File temp : f.listFiles()) {
-                    if (temp.getName().equals("temp.jpg")) {
-                        f = temp;
-                        break;
-                    }
-                }
-                try {
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
-                            bitmapOptions);
-                    photoImage.setImageBitmap(bitmap);
-                    String path = android.os.Environment
-                            .getExternalStorageDirectory()
-                            + File.separator
-                            + "Phoenix" + File.separator + "default";
-                    f.delete();
-                    OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
-                    try {
-                        outFile = new FileOutputStream(file);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
-                        outFile.flush();
-                        outFile.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } */
             }
             else if (requestCode == 2) {
                 image_uri = data.getData();
