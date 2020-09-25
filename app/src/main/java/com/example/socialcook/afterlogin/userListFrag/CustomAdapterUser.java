@@ -1,38 +1,29 @@
 package com.example.socialcook.afterlogin.userListFrag;
 
-import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Registry;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
-import com.example.socialcook.classes.Log;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.MyViewHolder>{
@@ -47,6 +38,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
         CardView cardView;
         TextView textViewName;
         ImageView imageView;
+        ProgressBar progressBar;
         Button infoButton;
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -55,6 +47,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
             this.textViewName = (TextView) itemView.findViewById(R.id.itemName);
             this.infoButton = (Button) itemView.findViewById(R.id.buttonSelectRoom);
             this.imageView = (ImageView) itemView.findViewById(R.id.userImage);
+            this.progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar2);
         }
 
 
@@ -86,6 +79,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
 // Load the image using Glide
         TextView textViewName = holder.textViewName;
        final ImageView profilePhoto = holder.imageView;
+       final ProgressBar progressBar = holder.progressBar;
        String imagePath = dataSet.get(listPosition).getImagePath();
        if (imagePath != null)
        {
@@ -95,7 +89,17 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
                    // Got the download URL for 'users/me/profile.png'
                    try {
                        System.out.println(uri);
-                       Picasso.get().load(uri).into(profilePhoto);
+                       Picasso.get().load(uri).into(profilePhoto, new Callback() {
+                           @Override
+                           public void onSuccess() {
+                               progressBar.setVisibility(View.GONE);
+                           }
+
+                           @Override
+                           public void onError(Exception e) {
+
+                           }
+                       });
                    }
                    catch (IllegalArgumentException error) {
                        System.out.println("FUCK");

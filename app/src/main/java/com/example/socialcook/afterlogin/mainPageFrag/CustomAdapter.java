@@ -4,14 +4,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.Recipe;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,11 +27,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         String url;
         TextView textViewName;
         ImageView imageURL;
+        ProgressBar progressBar;
         public MyViewHolder(View itemView) {
             super(itemView);
             this.imageURL = (ImageView) itemView.findViewById(R.id.imageID);
             this.cardView = (CardView) itemView.findViewById(R.id.cardView);
             this.textViewName = (TextView) itemView.findViewById(R.id.itemName);
+            this.progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
         }
 
 
@@ -60,8 +62,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         TextView textViewName = holder.textViewName;
         CardView cardView = holder.cardView;
         ImageView image = holder.imageURL;
+        final ProgressBar progressBar = holder.progressBar;
         String url =holder.url;
-        Picasso.get().load(dataSet.get(listPosition).getImageUrl()).into(image);
+        Picasso.get().load(dataSet.get(listPosition).getImageUrl()).into(image, new Callback() {
+            @Override
+            public void onSuccess() {
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
         textViewName.setText(dataSet.get(listPosition).getRecipeName());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override

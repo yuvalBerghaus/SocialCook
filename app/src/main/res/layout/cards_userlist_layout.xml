@@ -28,6 +28,16 @@
                 android:layout_height="80dp"
                 android:padding="5dp">
 
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/userImage"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline23"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/userImage" />
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/userImage"
                     android:layout_width="0dp"
