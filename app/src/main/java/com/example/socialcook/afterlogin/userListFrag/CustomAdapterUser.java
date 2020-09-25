@@ -25,6 +25,8 @@ import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.MyViewHolder>{
 
     private ArrayList<User> dataSet;
+    StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
     MainPage mainPage;
     Recipe chosenRecipe;
     private NotificationManagerCompat notificationManager;
@@ -71,7 +74,7 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
                 .inflate(R.layout.cards_userlist_layout, parent, false);
 
         view.setOnTouchListener(UsersListFrag.myOnClickListener);
-
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         MyViewHolder myViewHolder = new MyViewHolder(view);
 
         return myViewHolder;
@@ -82,15 +85,29 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
 // Load the image using Glide
         TextView textViewName = holder.textViewName;
-       ImageView profilePhoto = holder.imageView;
-        String imagePath = dataSet.get(listPosition).getImagePath();
-        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference imgRef = mStorageRef.child(imagePath);
+       final ImageView profilePhoto = holder.imageView;
+       String imagePath = dataSet.get(listPosition).getImagePath();
+        FireBase.storageRef.child(imagePath).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                try {
+                    System.out.println(uri);
+                    Picasso.get().load(uri).into(profilePhoto);
+                }
+                catch (IllegalArgumentException error) {
+                    System.out.println("FUCK");
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
         CardView cardView = holder.cardView;
-        profilePhoto.setImageResource(R.drawable.chicken);
         final Button buttonInfo = holder.infoButton;
-        System.out.println(imgRef.getPath());
-        Picasso.get().load(imgRef.getPath()).into(profilePhoto);
+       // Picasso.get().load(imgRef.getPath()).into(profilePhoto);
         textViewName.setText(dataSet.get(listPosition).getName());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.OnDisconnect;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.logging.Handler;
@@ -30,6 +31,8 @@ public class FireBase {
     public FireBase(){}
 
     ;
+    public static FirebaseStorage storage = FirebaseStorage.getInstance();
+    public static StorageReference storageRef = storage.getReference();
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     public static String refreshedToken = FirebaseInstanceId.getInstance().getToken();
     public static String POST = "https://fcm.googleapis.com/fcm/send";

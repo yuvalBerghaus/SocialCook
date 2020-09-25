@@ -76,7 +76,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
         //String userID = user.getUid();
          */
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        final StorageReference riversRef = mStorageRef.child("images/"+randomKey+".jpg");
+        final StorageReference riversRef = mStorageRef.child("images/"+randomKey);
         final FirebaseDatabase database = FireBase.getDataBase();
         final DatabaseReference myRef = database.getReference("users");
         final EditText nameSignUp = view.findViewById(R.id.nameReg);
@@ -213,7 +213,6 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
             Log.d("IMAGECAPTURED", "IMAGECAPTURED!!");
             if (requestCode == 1) {
                 photoImage.setImageURI(image_uri);
-                Log.d("IMAGE URI IS ",image_uri.getPath());
 
                 /*
                 File f = new File(Environment.getExternalStorageDirectory().toString());
@@ -262,29 +261,25 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                 String picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Log.w("path of gallery image", picturePath+"");
-                Log.d("IMAGE URI IS ",image_uri.getAuthority());
                 photoImage.setImageBitmap(thumbnail);
             }
         }
     }
 
     @Override
-    public void register(TextView email , TextView password , final DatabaseReference myRef, final User userSignUp , final StorageReference riversRef , final Uri image_uri) {
+    public void register(TextView email , TextView password , final DatabaseReference myRef, final User userSignUp , final StorageReference imagesRef , final Uri image_uri) {
         final MainActivity main = (MainActivity)getActivity();
-        Log.d("hell no" , "fdsfsdfsd"+riversRef.getPath());
         userSignUp.setImagePath("images/"+randomKey);
         FireBase.getAuth().createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(main, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete(@NonNull final Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            riversRef.putFile(image_uri)
+                            imagesRef.putFile(image_uri)
                                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot2) {
                                             // Get a URL to the uploaded content
-                                            // Uri downloadUrl = taskSnapshot.getDownloadUrl();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -292,6 +287,13 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                                         public void onFailure(@NonNull Exception exception) {
                                             // Handle unsuccessful uploads
                                             // ...
+                                        }
+                                    })
+                                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                            String downloadUrl = task.getResult().getStorage().getDownloadUrl().toString();
+                                            Log.d("downloadUrl", ""+downloadUrl);
                                         }
                                     });
                             // Sign in success, update UI with the signed-in user's information
