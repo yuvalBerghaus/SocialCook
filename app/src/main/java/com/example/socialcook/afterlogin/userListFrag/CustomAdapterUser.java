@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.Recipe;
@@ -87,6 +89,13 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
                @Override
                public void onSuccess(Uri uri) {
                    // Got the download URL for 'users/me/profile.png'
+                   Glide
+                           .with(holder.cardView.getContext())
+                           .load(uri)
+                           .centerCrop()
+                           .placeholder(progressBar.getProgressDrawable())
+                           .into(profilePhoto);
+                   /*
                    try {
                        System.out.println(uri);
                        Picasso.get().load(uri).into(profilePhoto, new Callback() {
@@ -104,6 +113,8 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
                    catch (IllegalArgumentException error) {
                        System.out.println("FUCK");
                    }
+
+                    */
                }
            }).addOnFailureListener(new OnFailureListener() {
                @Override

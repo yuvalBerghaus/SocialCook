@@ -8,6 +8,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.Recipe;
@@ -64,6 +66,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         ImageView image = holder.imageURL;
         final ProgressBar progressBar = holder.progressBar;
         String url =holder.url;
+        Glide
+                .with(cardView.getContext())
+                .load(dataSet.get(listPosition).getImageUrl())
+                .centerCrop()
+                .placeholder(progressBar.getProgressDrawable())
+                .into(image);
+        /*
         Picasso.get().load(dataSet.get(listPosition).getImageUrl()).into(image, new Callback() {
             @Override
             public void onSuccess() {
@@ -75,6 +84,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
             }
         });
+
+         */
         textViewName.setText(dataSet.get(listPosition).getRecipeName());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
