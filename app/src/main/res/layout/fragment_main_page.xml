@@ -5,7 +5,7 @@
     android:id="@+id/fragment_fragPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/depositphotos_184753676_stock_photo_black_chalkboard_as_mockup_for"
     android:orientation="vertical"
     tools:context=".afterlogin.mainPageFrag.MainPageFrag">
 
@@ -96,10 +96,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="12"
-            android:gravity="center"
+            android:gravity="center|left"
             android:text="Welcome Back"
             android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
+            android:textSize="10sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
