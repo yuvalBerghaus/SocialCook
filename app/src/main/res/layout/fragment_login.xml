@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/untitled3"
     android:orientation="vertical"
     tools:context=".beforelogin.LoginFragment">
 
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05"/>
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline23"
@@ -85,34 +85,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10"/>
+        app:layout_constraintGuide_percent="0.10" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineVertical2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90"/>
+        app:layout_constraintGuide_percent="0.90" />
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/icon"
-        app:layout_constraintTop_toTopOf="@+id/guideline1"
         app:layout_constraintBottom_toTopOf="@+id/guideline23"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2" />
+        app:layout_constraintTop_toTopOf="@+id/guideline1" />
 
     <ImageView
         android:id="@+id/appname"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/label"
-        app:layout_constraintTop_toTopOf="@+id/guideline23"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2" />
+        app:layout_constraintTop_toTopOf="@+id/guideline23" />
 
     <EditText
         android:id="@+id/emailText"
@@ -125,6 +125,8 @@
         android:hint="@string/enter_email"
         android:inputType="textEmailAddress"
         android:padding="10dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#E1DFDF"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
@@ -141,6 +143,9 @@
         android:hint="@string/enter_password"
         android:inputType="textPersonName|textPassword"
         android:padding="10dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#E1DFDF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
