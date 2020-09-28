@@ -25,7 +25,7 @@
                 android:padding="5dp">
 
                 <TextView
-                    android:id="@+id/itemRequired"
+                    android:id="@+id/leftOver"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

@@ -1,6 +1,5 @@
 package com.example.socialcook;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.Editable;
@@ -27,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -54,7 +52,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             this.saveButton = (Button) itemView.findViewById(R.id.saveButton);
             this.textInput = (TextView) itemView.findViewById(R.id.itemValue);
             this.typeSpecifier = (TextView) itemView.findViewById(R.id.log);
-            this.maxAmount = (TextView) itemView.findViewById(R.id.itemRequired); // this variable contains the value of the max amount of each item
+            this.maxAmount = (TextView) itemView.findViewById(R.id.leftOver); // this variable contains the value of the max amount of each item
         }
 
 
