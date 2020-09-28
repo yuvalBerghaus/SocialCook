@@ -39,6 +39,7 @@ public class RoomInfo extends Fragment {
 
     Recipe recipe;
     private static CustomAdapterIngridients adapter;
+    private static CustomAdapterPersonal adapter2;
     TextView logInfo;
     static View.OnTouchListener myOnClickListener;
     boolean amountFull = true;
@@ -47,7 +48,8 @@ public class RoomInfo extends Fragment {
     Button nextButton;
     private static final String TAG = "my time has come";
     private static RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
+    private static RecyclerView recyclerView2;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,8 +67,12 @@ public class RoomInfo extends Fragment {
         final DatabaseReference recipesRef = FireBase.getDataBase().getReference("recipes"); // This var contains reference to recipes room
         final DatabaseReference logRef = FireBase.getDataBase().getReference("rooms").child(roomID).child("logs");
         recyclerView = view.findViewById(R.id.recyclerViewRoomInfo);
+        recyclerView2 = view.findViewById(R.id.recyclerPersonal);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView2.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getActivity());
+        recyclerView2.setLayoutManager(layoutManager2);
         recyclerView.setLayoutManager(layoutManager);
         Recipe recipeALL;
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -85,6 +91,7 @@ public class RoomInfo extends Fragment {
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 final Room room = dataSnapshot.getValue(Room.class);
                 //System.out.println(dataSnapshot.child("uid1").getValue());
+                Log.d("CHECK" , room.getRecipeUid1().convertRecipeAmountIteration());
                 recipeName.setText(room.getRecipe().getRecipeName());
                 recipesRef.child(room.getRecipe().getRecipeName()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -219,11 +226,55 @@ public class RoomInfo extends Fragment {
                 Map<String, Integer> mapAmount = room.getRecipe().getRecipeAmount();
                 Map<String , Integer>mapGrams = room.getRecipe().getRecipeG();
                 Map<String , Integer> mapML = room.getRecipe().getRecipeML();
-                Map<String , Integer>all = new HashMap<>();
+                Map<String, Integer> mapAmountRecipeUid1 = room.getRecipeUid1().getRecipeAmount();
+                Map<String , Integer>mapGramsRecipeUid1 = room.getRecipeUid1().getRecipeG();
+                Map<String , Integer> mapMLRecipeUid1 = room.getRecipeUid1().getRecipeML();
+                Map<String, Integer> mapAmountRecipeUid2 = room.getRecipeUid2().getRecipeAmount();
+                Map<String , Integer>mapGramsRecipeUid2 = room.getRecipeUid2().getRecipeG();
+                Map<String , Integer> mapMLRecipeUid2 = room.getRecipeUid2().getRecipeML();
+                Map<String , Integer>all;
+                Map<String , Integer>allUid1;
+                Map<String , Integer>allUid2;
                 /*
                 These loops all belong hashmaps of the amount , grams and ML that the purpose is to concatanate
                  into a one array that is called all
                  */
+                all = putAllInOne(mapAmount , mapGrams , mapML);
+                allUid1 = putAllInOne(mapAmountRecipeUid1 , mapGramsRecipeUid1 , mapMLRecipeUid1);
+                allUid2 = putAllInOne(mapAmountRecipeUid2,mapGramsRecipeUid2,mapMLRecipeUid2);
+                /*
+                for(String key:mapAmount.keySet()) {
+                    Log.d(TAG , "the key of "+key+" issss "+mapAmount.get(key));
+                    all.put(key ,mapAmount.get(key));
+                }
+                for(String key:mapGrams.keySet()) {
+                    Log.d(TAG , "the key of "+key+" issss "+mapGrams.get(key));
+                    all.put(key , mapGrams.get(key));
+                }
+                for(String key:mapML.keySet()) {
+                    Log.d(TAG , "the key of "+key+" issss "+mapML.get(key));
+                    all.put(key , mapML.get(key));
+                }
+
+                System.out.println("------------------------------------------------------------------------\n-------------------------");
+                for(String key:all.keySet()) {
+                    Log.d(TAG , "the key of "+key+" issss "+all.get(key));
+                }
+                Log.d("dsa" , room.getRecipe().getRecipeName());
+
+                 */
+                adapter = new CustomAdapterIngridients(all, mainPage , roomID , room.getRecipe().getRecipeName());
+                adapter2 = new CustomAdapterPersonal(all, mainPage, roomID, room.getRecipe().getRecipeName(), allUid1, allUid2);
+                recyclerView2.setAdapter(adapter2);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+            public Map<String, Integer> putAllInOne(Map<String, Integer> mapAmount, Map<String, Integer> mapGrams , Map<String, Integer> mapML) {
+                Map<String , Integer>all = new HashMap<>();
                 for(String key:mapAmount.keySet()) {
                     Log.d(TAG , "the key of "+key+" issss "+mapAmount.get(key));
                     all.put(key ,mapAmount.get(key));
@@ -240,14 +291,7 @@ public class RoomInfo extends Fragment {
                 for(String key:all.keySet()) {
                     Log.d(TAG , "the key of "+key+" issss "+all.get(key));
                 }
-                Log.d("dsa" , room.getRecipe().getRecipeName());
-                adapter = new CustomAdapterIngridients(all, mainPage , roomID , room.getRecipe().getRecipeName());
-              recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                return all;
             }
         });
         // Inflate the layout for this fragment
