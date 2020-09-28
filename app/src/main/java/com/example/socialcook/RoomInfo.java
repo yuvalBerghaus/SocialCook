@@ -275,6 +275,7 @@ public class RoomInfo extends Fragment {
                             myRef.getParent().child("users").child(uid1).child("myRooms").child(roomID).removeValue();
                             myRef.getParent().child("users").child(uid2).child("myRooms").child(roomID).removeValue();
                             myRef.child(roomID).removeValue();
+                            getActivity().onBackPressed();
                         }
 
                         @Override

@@ -439,6 +439,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
 
                         }
                     });
+                    
                 }
                 catch (Exception NullPointerException) {
                     System.out.println("du hello");
