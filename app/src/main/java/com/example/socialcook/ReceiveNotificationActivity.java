@@ -101,6 +101,8 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "The message was sent successfully",
                                                 Toast.LENGTH_SHORT).show();
                                         final Recipe recipe = new Recipe();
+                                        final Recipe recipeUid1 = new Recipe();
+                                        final Recipe recipeUid2 = new Recipe();
                                         myRef.orderByChild("recipeName").equalTo(recipeName).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                                             @SuppressLint("SetTextI18n")
@@ -109,16 +111,26 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                 for(DataSnapshot datas: dataSnapshot.getChildren()){
                                                     String recipeNAme=datas.child("recipeName").getValue().toString();
                                                     recipe.setName(recipeName);
+                                                    recipeUid1.setName(recipeName);
+                                                    recipeUid2.setName(recipeName);
                                                     recipe.setType(recipeType);
+                                                    recipeUid1.setType(recipeType);
+                                                    recipeUid2.setType(recipeType);
                                                     String recipeTYpe = datas.child("recipeType").getValue().toString();
                                                     for (DataSnapshot child: datas.child("recipeAmount").getChildren()) {
                                                         recipe.setALLRecipeAmount(child.getKey());
+                                                        recipeUid1.setALLRecipeAmount(child.getKey());
+                                                        recipeUid2.setALLRecipeAmount(child.getKey());
                                                     }
                                                     for (DataSnapshot child: datas.child("recipeG").getChildren()) {
                                                         recipe.setALLRecipeGrams(child.getKey());
+                                                        recipeUid1.setALLRecipeGrams(child.getKey());
+                                                        recipeUid2.setALLRecipeGrams(child.getKey());
                                                     }
                                                     for (DataSnapshot child: datas.child("recipeML").getChildren()) {
                                                         recipe.setAllRecipeML(child.getKey());
+                                                        recipeUid1.setAllRecipeML(child.getKey());
+                                                        recipeUid2.setAllRecipeML(child.getKey());
                                                     }
                                                 }
                                                 newDir.child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -131,6 +143,8 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                                                             room.setRoomID(roomId);
                                                             room.setUid1(uidUser);
                                                             room.setUid2(FireBase.getAuth().getUid());
+                                                            room.setRecipeUid1(recipeUid1);
+                                                            room.setRecipeUid2(recipeUid2);
                                                             newDir.child("rooms").child(roomId).setValue(room);
                                                             try {
                                                                 FireBase.getDataBase().getReference("users").child(uidUser).child("myRooms").child(roomId).setValue(roomId);
@@ -154,6 +168,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
 
                                             }
                                         });
+
                                     }
                                 }, new Response.ErrorListener() {
                             @Override

@@ -175,6 +175,8 @@ public class RoomInfo extends Fragment {
                                                 nextButton.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
+                                                        Map<String , Integer>user1 = new HashMap<>();
+                                                        Map<String , Integer>user2 = new HashMap<>();
                                                         Intent intent = new Intent(Intent.ACTION_INSERT);
                                                         intent.setData(CalendarContract.Events.CONTENT_URI);
                                                         intent.putExtra(CalendarContract.Events.TITLE , "Lets make "+recipeName.getText().toString()+"!!!");

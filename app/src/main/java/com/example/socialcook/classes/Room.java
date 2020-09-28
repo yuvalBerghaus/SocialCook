@@ -48,6 +48,26 @@ public class Room implements Serializable {
     Boolean isReady;
 
     private Recipe recipe;
+
+    public Recipe getRecipeUid1() {
+        return recipeUid1;
+    }
+
+    public void setRecipeUid1(Recipe recipeUid1) {
+        this.recipeUid1 = recipeUid1;
+    }
+
+    private Recipe recipeUid1;
+
+    public Recipe getRecipeUid2() {
+        return recipeUid2;
+    }
+
+    public void setRecipeUid2(Recipe recipeUid2) {
+        this.recipeUid2 = recipeUid2;
+    }
+
+    private Recipe recipeUid2;
     private String uid1;
     private String uid2;
     public Room() {
