@@ -1,12 +1,11 @@
 package com.example.socialcook;
 
-import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import java.lang.Object;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,27 +14,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.content.pm.PackageManager;
+
 import com.example.socialcook.afterlogin.activities.MainPage;
-import com.example.socialcook.afterlogin.userListFrag.CustomAdapterUser;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.classes.Room;
-import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
-import com.example.socialcook.roomListFrag.CustomAdapterRoom;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 public class RoomInfo extends Fragment {
@@ -59,6 +55,7 @@ public class RoomInfo extends Fragment {
         final MainPage mainPage = (MainPage)getActivity();
         Bundle extras = this.getArguments();
         final TextView recipeName = view.findViewById(R.id.nameOfRecipe);
+        final Button deleteRoomButton = view.findViewById(R.id.deleteRoomButton);
         logInfo = view.findViewById(R.id.logInfo);
         final TextView uidView = view.findViewById(R.id.uidNamesView);
         final String roomID = extras.get("roomID").toString();
@@ -252,6 +249,72 @@ public class RoomInfo extends Fragment {
             }
         });
         // Inflate the layout for this fragment
+        deleteRoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteRoom(myRef , roomID);
+            }
+        });
         return view;
     }
+    public void deleteRoom(final DatabaseReference myRef, final String roomID) {
+        final CharSequence[] options = { "Yes", "No"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Are you sure you want to delete the room?");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Yes"))
+                {
+                    myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String uid1 = dataSnapshot.child("uid1").getValue().toString();
+                            String uid2 = dataSnapshot.child("uid2").getValue().toString();
+                            Log.d("delete",uid1+"\n"+uid2);
+                            myRef.getParent().child("users").child(uid1).child("myRooms").child(roomID).removeValue();
+                            myRef.getParent().child("users").child(uid2).child("myRooms").child(roomID).removeValue();
+                            myRef.child(roomID).removeValue();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+                else if (options[item].equals("No")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+/*
+    public void deleteRoom() {
+        final CharSequence[] options = { "Yes", "No"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Are you sure you want to delete the room?");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Yes"))
+                {
+
+                }
+                else if (options[item].equals("No")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+ */
 }
