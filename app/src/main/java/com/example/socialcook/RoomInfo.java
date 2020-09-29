@@ -343,25 +343,4 @@ public class RoomInfo extends Fragment {
         inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
-/*
-    public void deleteRoom() {
-        final CharSequence[] options = { "Yes", "No"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Are you sure you want to delete the room?");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Yes"))
-                {
-
-                }
-                else if (options[item].equals("No")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-
- */
 }

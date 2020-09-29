@@ -38,6 +38,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
     MainPage mainPage;
     String roomID;
     String recipeName;
+    String recipeUid;
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
@@ -45,7 +46,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
         Button saveButton;
         TextView textInput;
         TextView typeSpecifier;
-        TextView maxAmount;
+        TextView leftOver;
         public MyViewHolder(View itemView) {
             super(itemView);
 
@@ -54,7 +55,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
             this.saveButton = (Button) itemView.findViewById(R.id.saveButton);
             this.textInput = (TextView) itemView.findViewById(R.id.itemValue);
             this.typeSpecifier = (TextView) itemView.findViewById(R.id.log);
-            this.maxAmount = (TextView) itemView.findViewById(R.id.leftOver); // this variable contains the value of the max amount of each item
+            this.leftOver = (TextView) itemView.findViewById(R.id.leftOver); // this variable contains the value of the left over of each item
         }
 
 
@@ -93,13 +94,13 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
         final TextView typeSpecifier = holder.typeSpecifier;
         final CardView cardView = holder.cardView;
         final Button buttonSave = holder.saveButton;
-        final TextView leftOver = holder.maxAmount;
+        final TextView leftOver = holder.leftOver;
         final FirebaseDatabase database = FireBase.getDataBase();
         final DatabaseReference recipeRef = database.getReference("recipes").child(recipeName);
         final DatabaseReference rootRef = database.getReference();
-        final DatabaseReference amountRef = database.getReference("rooms").child(roomID).child("recipeUid1").child("recipeAmount");
-        final DatabaseReference gramsRef = database.getReference("rooms").child(roomID).child("recipeUid1").child("recipeG");
-        final DatabaseReference mlRef = database.getReference("rooms").child(roomID).child("recipeUid1").child("recipeML");
+        final DatabaseReference amountRef = database.getReference("rooms").child(roomID).child("recipe").child("recipeAmount");
+        final DatabaseReference gramsRef = database.getReference("rooms").child(roomID).child("recipe").child("recipeG");
+        final DatabaseReference mlRef = database.getReference("rooms").child(roomID).child("recipe").child("recipeML");
         final DatabaseReference personalAmountRef = database.getReference("rooms").child(roomID).child(FireBase.getAuth().getUid()).child("recipe").child("recipeAmount");
         final DatabaseReference personalGramsRef = database.getReference("rooms").child(roomID).child("recipe").child("recipeG");
         final DatabaseReference personalMlRef = database.getReference("rooms").child(roomID).child("recipe").child("recipeML");
@@ -110,24 +111,27 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final Recipe recipe = dataSnapshot.getValue(Recipe.class);
                 String uid;
+
                 String key;
                 String value;
                 if(FireBase.getAuth().getUid() == dataSnapshot.child("uid1").getValue()) {
                     uid = dataSnapshot.child("uid1").getValue().toString();
+                    recipeUid = "recipeUid1";
                     key = (new ArrayList<>(dataSetUid1.keySet())).get(listPosition);
                     value = Objects.requireNonNull(dataSetUid1.get(key).toString());
                     textViewName.setText(key);
                     textInput.setText(value);
-                    draw(uid , key , value);
+                    draw(uid , key , value, recipeUid);
 
                 }
                 else {
                     uid = dataSnapshot.child("uid2").getValue().toString();
+                    recipeUid = "recipeUid2";
                     key = (new ArrayList<>(dataSetUid2.keySet())).get(listPosition);
                     value = Objects.requireNonNull(dataSetUid2.get(key).toString());
                     textViewName.setText(key);
                     textInput.setText(value);
-                    draw(uid , key , value);
+                    draw(uid , key , value, recipeUid);
                 }
             }
 
@@ -135,59 +139,38 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-            public void draw(String uid , final String key , String value) {
-                amountRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    /*
-                    This snapshot contains :
-                    1)datasnapshot1 -> here we fill all of the items of hashtable that contain Amounts
-                    2)datasnapshot2 -> recipeRef belongs to the original item quantities we use it in order to compare to the immidiate text in order to display if the amount is correct
-                     --------------------------------------------------------------------------------------------
-                     */
+            public void draw(String uid , final String key , String value, final String recipeUid) {
+                //ref for personal amount
+                rootRef.child("rooms").child(roomID).child(recipeUid).child("recipeAmount").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull final DataSnapshot dataSnapshot1) {
-                        if(dataSnapshot1.hasChild(key)) {
-                            typeSpecifier.setText("Amount");
-                            recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
-                                    final Recipe recipe = dataSnapshot2.getValue(Recipe.class);
-                                    Log.d("ROSH","Recipe amount from DB = "+recipe.getRecipeAmount().get(key)+"\nRecipe amount from text is "+textInput.getText().toString());
-                                    if(recipe.getRecipeAmount().containsKey(key)) {
-                                        Log.d("AfterMath" , recipe.getRecipeAmount().get(key).toString());
-                                        int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
-                                        int InputValue = 0;
-                                        if (!textInput.getText().toString().matches("")) {
-                                            InputValue = Integer.parseInt(textInput.getText().toString());
-                                        }
-                                        else {
-                                            InputValue = 0;
-                                        }
-                                leftOver.setText(recipe.getRecipeAmount().get(key).toString());;
-                                if(InputValue != recipeValue) {
-                                    leftOver.setTextColor(Color.RED);
-
-                                }
-                                else {
-                                    leftOver.setTextColor(Color.WHITE);
-                                }
-                                    }
-                                    Log.d("DIE KVAR" , ""+Integer.parseInt(dataSnapshot1.child(key).getValue().toString()));
-                                    textInput.addTextChangedListener(new TextWatcher() {
-                                        @Override
-                                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                                        }
-
-                                        @Override
-                                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    public void onDataChange(@NonNull final DataSnapshot dataSnapshotPersonal) {
+                        typeSpecifier.setText("Amount");
+                        //ref for shared amount
+                        rootRef.child("rooms").child(roomID).child("recipe").child("recipeAmount").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull final DataSnapshot dataSnapshotShared) {
+                                rootRef.child("recipes").child(recipeName).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshotRecipe) {
+                                        final Recipe recipe = dataSnapshotRecipe.getValue(Recipe.class);
+                                        if(recipe.getRecipeAmount().containsKey(key)) {
                                             int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
+                                            int sharedValue = Integer.parseInt(dataSnapshotShared.child(key).getValue().toString());
                                             int InputValue = 0;
                                             if (!textInput.getText().toString().matches("")) {
                                                 InputValue = Integer.parseInt(textInput.getText().toString());
                                             }
-                                            if(InputValue > recipeValue) {
-                                                Log.d("MIKE" , "YESSSS!!!!");
+                                            else {
+                                                InputValue = 0;
+                                            }
+                                            int leftOverValue = recipeValue - sharedValue;
+                                            Log.d("TEST", "leftOverValue"+leftOverValue+"sharedValue"+sharedValue+"InputValue"+InputValue);
+                                            leftOver.setText(""+leftOverValue);
+
+                                            if(InputValue > recipeValue - sharedValue) {//*****NEEDTOFIX********
                                                 buttonSave.setClickable(false);
                                                 buttonSave.setAlpha(0.5f);
+                                                leftOver.setText("0");
                                                 leftOver.setTextColor(Color.RED);
 
                                             }
@@ -196,40 +179,82 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                                                 buttonSave.setAlpha(1f);
                                                 leftOver.setTextColor(Color.WHITE);
                                             }
-                                            if (InputValue != recipeValue) {
-                                                leftOver.setTextColor(Color.RED);
-                                            }
-                                            else {
-                                                leftOver.setTextColor(Color.WHITE);
-                                            }
-                                        }
+                                            textInput.addTextChangedListener(new TextWatcher() {
+                                                int intiateInput = Integer.parseInt(dataSnapshotShared.child(key).getValue().toString());
+                                                @Override
+                                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                                }
 
-                                        @Override
-                                        public void afterTextChanged(Editable s) {
+                                                @Override
+                                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                                    int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
+                                                    int sharedValue = Integer.parseInt(dataSnapshotShared.child(key).getValue().toString());
+                                                    int InputValue = 0;
+                                                    int leftOverValue = 0;
+                                                    if (!textInput.getText().toString().matches("")) {
+                                                        InputValue = Integer.parseInt(textInput.getText().toString());
+                                                        if (InputValue - intiateInput > 0) {
+                                                            leftOverValue = recipeValue - sharedValue - (InputValue - intiateInput);
+                                                        }
+                                                        else if (InputValue - intiateInput < 0) {
+                                                            leftOverValue = recipeValue - sharedValue + (InputValue - intiateInput);
+                                                        }
+                                                        else
+                                                        {
+                                                            leftOverValue = recipeValue - sharedValue;
+                                                        }
+                                                        leftOver.setText(""+leftOverValue);
 
+                                                    }
+                                                    else {
+                                                        InputValue = 0;
+                                                        leftOver.setText(""+(recipeValue-sharedValue));
+                                                    }
+
+                                                    Log.d("TEST", "leftOverValue="+leftOverValue+"recipevalue"+recipeValue+"-sharedValue"+sharedValue+"-(InputValue"+InputValue +"-intiateInput"+intiateInput+")");
+
+                                                    if(InputValue > recipeValue - sharedValue) {//*****NEEDTOFIX********
+                                                        buttonSave.setClickable(false);
+                                                        buttonSave.setAlpha(0.5f);
+                                                        leftOver.setText("0");
+                                                        leftOver.setTextColor(Color.RED);
+
+                                                    }
+                                                    else {
+                                                        buttonSave.setClickable(true);
+                                                        buttonSave.setAlpha(1f);
+                                                        leftOver.setTextColor(Color.WHITE);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void afterTextChanged(Editable s) {
+
+                                                }
+                                            });
                                         }
-                                    });
-                                    int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
-                                    int roomValue = Integer.parseInt(dataSnapshot1.child(key).getValue().toString());
-                                    if(recipeValue == roomValue) {
-                                        //enter here...........................................................
                                     }
 
-                                }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    }
+                                });
+                            }
 
-                                }
-                            });
-                        }
-                    }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
+                                    }
 
-                    }
-                });
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
         /*
             This snapshot contains :
             1)datasnapshot3 -> gramsRef refers to the current quantity of hashtable grams that was stored in the room database
@@ -419,19 +444,51 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
             @Override
             public void onClick(View v) {
                 try {
-                    amountRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    //ref to shared value
+                    Log.d("WHATISTHEKEY", ""+key);
+                    rootRef.child("rooms").child(roomID).child("recipe").child("recipeAmount").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                             if(dataSnapshot.hasChild(key)) {
-                                int diff = Integer.parseInt(dataSnapshot.child(key).getValue().toString()) - Integer.parseInt(textInput.getText().toString());
-                                if(diff < 0) {
-                                    amountRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" added "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
+                                if (!textInput.getText().toString().matches("")) {
+                                    int diff = Integer.parseInt(dataSnapshot.child(key).getValue().toString()) - Integer.parseInt(textInput.getText().toString());
+                                    if(diff < 0) {
+                                        rootRef.child("rooms").child(roomID).child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" added "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
+                                    }
+                                    else if(diff > 0) {
+                                        rootRef.child("rooms").child(roomID).child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" removed "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
+                                    }
                                 }
-                                else if(diff > 0) {
-                                    amountRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" removed "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
-                                }
-                                Log.d("DIFF" , "diff = "+diff+"\nDb = "+textInput.getText().toString());///////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                amountRef.child(key).setValue(Integer.parseInt(textInput.getText().toString()));
+                                rootRef.child("rooms").child(roomID).child(recipeUid).child("recipeAmount").child(key).setValue(Integer.parseInt(textInput.getText().toString()));
+
+                                rootRef.child("rooms").child(roomID).child("recipeUid1").child("recipeAmount").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull final DataSnapshot dataSnapshotUid1) {
+                                        Log.d("do i even", "do i even");
+                                        rootRef.child("rooms").child(roomID).child("recipeUid2").child("recipeAmount").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshotUid2) {
+                                                int uid1Value;
+                                                int uid2Value;
+                                                uid1Value = Integer.parseInt(dataSnapshotUid1.getValue().toString());
+                                                uid2Value = Integer.parseInt(dataSnapshotUid2.getValue().toString());
+                                                rootRef.child("rooms").child(roomID).child("recipe").child("recipeAmount").child(key).setValue(uid1Value + uid2Value);
+                                                Log.d("check!!!", "uid1: "+uid1Value+" uid2: "+uid2Value+" sharedValue"+dataSnapshot.child(key).getValue().toString());
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
 
                             }
                         }
@@ -454,6 +511,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                                 }
                                 Log.d("DIFF" , "diff = "+diff+"\nDb = "+textInput.getText().toString());
                                 gramsRef.child(key).setValue(Integer.parseInt(textInput.getText().toString()));
+
                             }
                         }
 

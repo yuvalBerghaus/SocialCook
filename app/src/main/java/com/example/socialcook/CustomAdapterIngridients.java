@@ -41,7 +41,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         CardView cardView;
         TextView textViewName;
         Button saveButton;
-        TextView textInput;
+        TextView sharedText;
         TextView typeSpecifier;
         TextView maxAmount;
         public MyViewHolder(View itemView) {
@@ -50,9 +50,9 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             this.cardView = (CardView) itemView.findViewById(R.id.cardView);
             this.textViewName = (TextView) itemView.findViewById(R.id.itemName);
             this.saveButton = (Button) itemView.findViewById(R.id.saveButton);
-            this.textInput = (TextView) itemView.findViewById(R.id.itemValue);
+            this.sharedText = (TextView) itemView.findViewById(R.id.sharedText);
             this.typeSpecifier = (TextView) itemView.findViewById(R.id.log);
-            this.maxAmount = (TextView) itemView.findViewById(R.id.leftOver); // this variable contains the value of the max amount of each item
+            this.maxAmount = (TextView) itemView.findViewById(R.id.maxAmount); // this variable contains the value of the max amount of each item
         }
 
 
@@ -84,7 +84,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         String value = Objects.requireNonNull(dataSet.get(key).toString());
         final DatabaseReference myRef = FireBase.getDataBase().getReference("recipes");
         TextView textViewName = holder.textViewName;
-        final TextView textInput = holder.textInput;
+        final TextView sharedText = holder.sharedText;
         final TextView typeSpecifier = holder.typeSpecifier;
         final CardView cardView = holder.cardView;
         final Button buttonSave = holder.saveButton;
@@ -95,7 +95,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         final DatabaseReference gramsRef = database.getReference("rooms").child(roomID).child("recipe").child("recipeG");
         final DatabaseReference mlRef = database.getReference("rooms").child(roomID).child("recipe").child("recipeML");
         textViewName.setText(key);
-        textInput.setText(value);
+        //ref to shared amount
         amountRef.addListenerForSingleValueEvent(new ValueEventListener() {
             /*
             This snapshot contains :
@@ -106,68 +106,27 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot1) {
                 if(dataSnapshot1.hasChild(key)) {
                     typeSpecifier.setText("Amount");
+                    //ref to recipe amount
                     recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
                             final Recipe recipe = dataSnapshot2.getValue(Recipe.class);
-                            Log.d("ROSH","Recipe amount from DB = "+recipe.getRecipeAmount().get(key)+"\nRecipe amount from text is "+textInput.getText().toString());
+                            final Recipe recipeShared = dataSnapshot1.getValue(Recipe.class);
+                            Log.d("ROSH","Recipe amount from DB = "+recipe.getRecipeAmount().get(key)+"\nRecipe amount from text is "+sharedText.getText().toString());
                             if(recipe.getRecipeAmount().containsKey(key)) {
                                 Log.d("AfterMath" , recipe.getRecipeAmount().get(key).toString());
                                 maxAmount.setText(recipe.getRecipeAmount().get(key).toString());
+                                sharedText.setText(dataSnapshot1.child(key).getValue().toString());
                                 int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
-                                int InputValue = 0;
-                                if (!textInput.getText().toString().matches("")) {
-                                    InputValue = Integer.parseInt(textInput.getText().toString());
-                                }
-                                else {
-                                    InputValue = 0;
-                                }
-                                if(InputValue != recipeValue) {
-                                    maxAmount.setTextColor(Color.RED);
+                                int sharedValue = Integer.parseInt(dataSnapshot1.child(key).getValue().toString());
 
+                                if(sharedValue != recipeValue) {
+                                    sharedText.setTextColor(Color.RED);
                                 }
                                 else {
-                                    maxAmount.setTextColor(Color.WHITE);
+                                    sharedText.setTextColor(Color.WHITE);
                                 }
                             }
-                            Log.d("DIE KVAR" , ""+Integer.parseInt(dataSnapshot1.child(key).getValue().toString()));
-                            textInput.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
-                                    int InputValue = 0;
-                                    if (!textInput.getText().toString().matches("")) {
-                                        InputValue = Integer.parseInt(textInput.getText().toString());
-                                    }
-                                    if(InputValue > recipeValue) {
-                                        Log.d("MIKE" , "YESSSS!!!!");
-                                        buttonSave.setClickable(false);
-                                        buttonSave.setAlpha(0.5f);
-                                        maxAmount.setTextColor(Color.RED);
-
-                                    }
-                                    else {
-                                        buttonSave.setClickable(true);
-                                        buttonSave.setAlpha(1f);
-                                        maxAmount.setTextColor(Color.WHITE);
-                                    }
-                                    if (InputValue != recipeValue) {
-                                        maxAmount.setTextColor(Color.RED);
-                                    }
-                                    else {
-                                        maxAmount.setTextColor(Color.WHITE);
-                                    }
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
                             int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
                             int roomValue = Integer.parseInt(dataSnapshot1.child(key).getValue().toString());
                             if(recipeValue == roomValue) {
@@ -187,261 +146,6 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-        /*
-            This snapshot contains :
-            1)datasnapshot3 -> gramsRef refers to the current quantity of hashtable grams that was stored in the room database
-         */
-        gramsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot3) {
-                if(dataSnapshot3.hasChild(key)) {
-                    typeSpecifier.setText("Grams");
-                    recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            final Recipe recipe = dataSnapshot.getValue(Recipe.class);
-                            Log.d("GUY",key);
-                            Log.d("YUVAL" , recipe.getRecipeName());
-                            if(recipe.getRecipeG().containsKey(key)) {
-                                Log.d("AfterMath" , recipe.getRecipeG().get(key).toString());
-                                maxAmount.setText(recipe.getRecipeG().get(key).toString());
-                                //if(recipe.getRecipeG().get(key) == )
-                                int recipeValue = Integer.parseInt(recipe.getRecipeG().get(key).toString());
-                                int InputValue = 0;
-                                if (!textInput.getText().toString().matches("")) {
-                                    InputValue = Integer.parseInt(textInput.getText().toString());
-                                }
-                                else {
-                                    InputValue = 0;
-                                }
-                                if(InputValue != recipeValue) {
-                                    maxAmount.setTextColor(Color.RED);
-
-                                }
-                                else {
-                                    maxAmount.setTextColor(Color.WHITE);
-                                }
-                            }
-                            textInput.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    int recipeValue = Integer.parseInt(recipe.getRecipeG().get(key).toString());
-                                    int InputValue = 0;
-                                    if (!textInput.getText().toString().matches("")) {
-                                        InputValue = Integer.parseInt(textInput.getText().toString());
-                                    }
-                                    if(InputValue > recipeValue) {
-                                        Log.d("MIKE" , "YESSSS!!!!");
-                                        buttonSave.setClickable(false);
-                                        buttonSave.setAlpha(0.5f);
-                                        maxAmount.setTextColor(Color.RED);
-
-                                    }
-                                    else {
-                                        buttonSave.setClickable(true);
-                                        buttonSave.setAlpha(1f);
-                                        maxAmount.setTextColor(Color.WHITE);
-                                    }
-                                    if (InputValue != recipeValue) {
-                                        maxAmount.setTextColor(Color.RED);
-                                    }
-                                    else {
-                                        maxAmount.setTextColor(Color.WHITE);
-                                    }
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        /*
-            This snapshot contains :
-            1)datasnapshot4 -> mlRef refers to the current quantity of hashtable ML that was stored in the room database
-         */
-        mlRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot4) {
-                if(dataSnapshot4.hasChild(key)) {
-                    typeSpecifier.setText("ML");
-                    recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            final Recipe recipe = dataSnapshot.getValue(Recipe.class);
-                            Log.d("GUY",key);
-                            Log.d("YUVAL" , recipe.getRecipeName());
-                            if(recipe.getRecipeML().containsKey(key)) {
-                                Log.d("AfterMath" , recipe.getRecipeML().get(key).toString());
-                                maxAmount.setText(recipe.getRecipeML().get(key).toString());
-
-                                int recipeValue = Integer.parseInt(recipe.getRecipeML().get(key).toString());
-                                int InputValue = 0;
-                                if (!textInput.getText().toString().matches("")) {
-                                    InputValue = Integer.parseInt(textInput.getText().toString());
-                                }
-                                else {
-                                    InputValue = 0;
-                                }
-                                if(InputValue != recipeValue) {
-                                    maxAmount.setTextColor(Color.RED);
-
-                                }
-                                else {
-                                    maxAmount.setTextColor(Color.WHITE);
-                                }
-                            }
-                            textInput.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    int recipeValue = Integer.parseInt(recipe.getRecipeML().get(key).toString());
-                                    int InputValue = 0;
-                                    if (!textInput.getText().toString().matches("")) {
-                                        InputValue = Integer.parseInt(textInput.getText().toString());
-                                    }
-                                    if(InputValue > recipeValue) {
-                                        Log.d("MIKE" , "YESSSS!!!!");
-                                        buttonSave.setClickable(false);
-                                        buttonSave.setAlpha(0.5f);
-                                        maxAmount.setTextColor(Color.RED);
-
-                                    }
-                                    else {
-                                        buttonSave.setClickable(true);
-                                        buttonSave.setAlpha(1f);
-                                        maxAmount.setTextColor(Color.WHITE);
-                                    }
-                                    if (InputValue != recipeValue) {
-                                        maxAmount.setTextColor(Color.RED);
-                                    }
-                                    else {
-                                        maxAmount.setTextColor(Color.WHITE);
-                                    }
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        // Once we click on the save button of each row this function will be executed
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    amountRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.hasChild(key)) {
-                                int diff = Integer.parseInt(dataSnapshot.child(key).getValue().toString()) - Integer.parseInt(textInput.getText().toString());
-                                if(diff < 0) {
-                                    amountRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" added "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
-                                }
-                                else if(diff > 0) {
-                                    amountRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" removed "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
-                                }
-                                Log.d("DIFF" , "diff = "+diff+"\nDb = "+textInput.getText().toString());///////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                amountRef.child(key).setValue(Integer.parseInt(textInput.getText().toString()));
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    gramsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.hasChild(key)) {
-                                int diff = Integer.parseInt(dataSnapshot.child(key).getValue().toString()) - Integer.parseInt(textInput.getText().toString());
-                                if(diff < 0) {
-                                    gramsRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" added "+Math.abs(diff)+" grams of "+dataSnapshot.child(key).getKey());
-                                }
-                                else if(diff > 0) {
-                                    gramsRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" removed "+Math.abs(diff)+" grams of "+dataSnapshot.child(key).getKey());
-                                }
-                                Log.d("DIFF" , "diff = "+diff+"\nDb = "+textInput.getText().toString());
-                                gramsRef.child(key).setValue(Integer.parseInt(textInput.getText().toString()));
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    mlRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.hasChild(key)) {
-                                int diff = Integer.parseInt(dataSnapshot.child(key).getValue().toString()) - Integer.parseInt(textInput.getText().toString());
-                                if(diff < 0) {
-                                    mlRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" added "+Math.abs(diff)+" ml of "+dataSnapshot.child(key).getKey());
-                                }
-                                else if(diff > 0) {
-                                    mlRef.getParent().getParent().child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" removed "+Math.abs(diff)+" ml of "+dataSnapshot.child(key).getKey());
-                                }
-                                Log.d("DIFF" , "diff = "+diff+"\nDb = "+textInput.getText().toString());
-                                mlRef.child(key).setValue(Integer.parseInt(textInput.getText().toString()));
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-                catch (Exception NullPointerException) {
-                    System.out.println("du hello");
-                }
             }
         });
     }
