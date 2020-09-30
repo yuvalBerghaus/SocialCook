@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_img4"
     android:orientation="vertical"
     tools:context=".ReceiveNotificationActivity">
 
@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:background="@drawable/button_design"
             android:text="accept"
-            android:textColor="@color/colorOrange"
+            android:textColor="@color/colorGrey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline23"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:background="@drawable/button_design"
             android:text="reject"
-            android:textColor="@color/colorOrange"
+            android:textColor="@color/colorGrey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline1"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +77,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text="@string/recipe_request"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
             <TextView
@@ -86,7 +87,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text=""
-                android:textColor="@color/common_google_signin_btn_text_light_focused"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
             <TextView
@@ -95,6 +96,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text="@string/recipe_typee"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
             <TextView
@@ -104,7 +106,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text=""
-                android:textColor="@color/common_google_signin_btn_text_light_focused"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
             <TextView
@@ -113,6 +115,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text="@string/recipe_ingridients"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
             <TextView
@@ -122,7 +125,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text=""
-                android:textColor="@color/common_google_signin_btn_text_light_focused"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
             <TextView
@@ -131,6 +134,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text="@string/recipe_methodd"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
             <TextView
@@ -140,7 +144,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text=""
-                android:textColor="@color/common_google_signin_btn_text_light_focused"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
         </LinearLayout>

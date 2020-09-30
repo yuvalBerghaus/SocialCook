@@ -144,16 +144,18 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                 rootRef.child("rooms").child(roomID).child(recipeUid).child("recipeAmount").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull final DataSnapshot dataSnapshotPersonal) {
-                        typeSpecifier.setText("Amount");
+
                         //ref for shared amount
                         rootRef.child("rooms").child(roomID).child("recipe").child("recipeAmount").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull final DataSnapshot dataSnapshotShared) {
+
                                 rootRef.child("recipes").child(recipeName).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshotRecipe) {
                                         final Recipe recipe = dataSnapshotRecipe.getValue(Recipe.class);
                                         if(recipe.getRecipeAmount().containsKey(key)) {
+                                            typeSpecifier.setText("Units");
                                             int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
                                             int sharedValue = Integer.parseInt(dataSnapshotShared.child(key).getValue().toString());
                                             int InputValue = 0;
@@ -167,7 +169,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                                             Log.d("TEST", "leftOverValue"+leftOverValue+"sharedValue"+sharedValue+"InputValue"+InputValue);
                                             leftOver.setText(""+leftOverValue);
 
-                                            if(InputValue > recipeValue - sharedValue) {//*****NEEDTOFIX********
+                                            if(InputValue > recipeValue - (sharedValue - InputValue)) {
                                                 buttonSave.setClickable(false);
                                                 buttonSave.setAlpha(0.5f);
                                                 leftOver.setText("0");
@@ -197,7 +199,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                                                             leftOverValue = recipeValue - sharedValue - (InputValue - intiateInput);
                                                         }
                                                         else if (InputValue - intiateInput < 0) {
-                                                            leftOverValue = recipeValue - sharedValue + (InputValue - intiateInput);
+                                                            leftOverValue = recipeValue - sharedValue - (InputValue - intiateInput);
                                                         }
                                                         else
                                                         {
@@ -213,7 +215,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
 
                                                     Log.d("TEST", "leftOverValue="+leftOverValue+"recipevalue"+recipeValue+"-sharedValue"+sharedValue+"-(InputValue"+InputValue +"-intiateInput"+intiateInput+")");
 
-                                                    if(InputValue > recipeValue - sharedValue) {//*****NEEDTOFIX********
+                                                    if(InputValue > recipeValue - (sharedValue - intiateInput)) {
                                                         buttonSave.setClickable(false);
                                                         buttonSave.setAlpha(0.5f);
                                                         leftOver.setText("0");
@@ -254,12 +256,247 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
 
                                     }
                                 });
+                //ref for personal grams
+                rootRef.child("rooms").child(roomID).child(recipeUid).child("recipeG").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull final DataSnapshot dataSnapshotPersonal) {
+
+                        //ref for shared grams
+                        rootRef.child("rooms").child(roomID).child("recipe").child("recipeG").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull final DataSnapshot dataSnapshotShared) {
+
+                                rootRef.child("recipes").child(recipeName).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshotRecipe) {
+
+                                        final Recipe recipe = dataSnapshotRecipe.getValue(Recipe.class);
+                                        if(recipe.getRecipeG().containsKey(key)) {
+                                            typeSpecifier.setText("Grams");
+                                            int recipeValue = Integer.parseInt(recipe.getRecipeG().get(key).toString());
+                                            int sharedValue = Integer.parseInt(dataSnapshotShared.child(key).getValue().toString());
+                                            int InputValue = 0;
+                                            if (!textInput.getText().toString().matches("")) {
+                                                InputValue = Integer.parseInt(textInput.getText().toString());
+                                            }
+                                            else {
+                                                InputValue = 0;
+                                            }
+                                            int leftOverValue = recipeValue - sharedValue;
+                                            Log.d("TEST", "leftOverValue"+leftOverValue+"sharedValue"+sharedValue+"InputValue"+InputValue);
+                                            leftOver.setText(""+leftOverValue);
+
+                                            if(InputValue > recipeValue - (sharedValue - InputValue)) {
+                                                buttonSave.setClickable(false);
+                                                buttonSave.setAlpha(0.5f);
+                                                leftOver.setText("0");
+                                                leftOver.setTextColor(Color.RED);
+
+                                            }
+                                            else {
+                                                buttonSave.setClickable(true);
+                                                buttonSave.setAlpha(1f);
+                                                leftOver.setTextColor(Color.WHITE);
+                                            }
+                                            textInput.addTextChangedListener(new TextWatcher() {
+                                                int intiateInput = Integer.parseInt(dataSnapshotShared.child(key).getValue().toString());
+                                                @Override
+                                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                                }
+
+                                                @Override
+                                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                                    int recipeValue = Integer.parseInt(recipe.getRecipeG().get(key).toString());
+                                                    int sharedValue = Integer.parseInt(dataSnapshotShared.child(key).getValue().toString());
+                                                    int InputValue = 0;
+                                                    int leftOverValue = 0;
+                                                    if (!textInput.getText().toString().matches("")) {
+                                                        InputValue = Integer.parseInt(textInput.getText().toString());
+                                                        if (InputValue - intiateInput > 0) {
+                                                            leftOverValue = recipeValue - sharedValue - (InputValue - intiateInput);
+                                                        }
+                                                        else if (InputValue - intiateInput < 0) {
+                                                            leftOverValue = recipeValue - sharedValue - (InputValue - intiateInput);
+                                                        }
+                                                        else
+                                                        {
+                                                            leftOverValue = recipeValue - sharedValue;
+                                                        }
+                                                        leftOver.setText(""+leftOverValue);
+
+                                                    }
+                                                    else {
+                                                        InputValue = 0;
+                                                        leftOver.setText(""+(recipeValue-sharedValue));
+                                                    }
+
+                                                    Log.d("TEST", "leftOverValue="+leftOverValue+"recipevalue"+recipeValue+"-sharedValue"+sharedValue+"-(InputValue"+InputValue +"-intiateInput"+intiateInput+")");
+
+                                                    if(InputValue > recipeValue - (sharedValue - intiateInput)) {
+                                                        buttonSave.setClickable(false);
+                                                        buttonSave.setAlpha(0.5f);
+                                                        leftOver.setText("0");
+                                                        leftOver.setTextColor(Color.RED);
+
+                                                    }
+                                                    else {
+                                                        buttonSave.setClickable(true);
+                                                        buttonSave.setAlpha(1f);
+                                                        leftOver.setTextColor(Color.WHITE);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void afterTextChanged(Editable s) {
+
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                //ref for personal mili-liters
+                rootRef.child("rooms").child(roomID).child(recipeUid).child("recipeML").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull final DataSnapshot dataSnapshotPersonal) {
+
+                        //ref for shared mili-liters
+                        rootRef.child("rooms").child(roomID).child("recipe").child("recipeML").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull final DataSnapshot dataSnapshotShared) {
+
+                                rootRef.child("recipes").child(recipeName).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshotRecipe) {
+
+                                        final Recipe recipe = dataSnapshotRecipe.getValue(Recipe.class);
+                                        if(recipe.getRecipeML().containsKey(key)) {
+                                            typeSpecifier.setText("ML");
+                                            int recipeValue = Integer.parseInt(recipe.getRecipeML().get(key).toString());
+                                            int sharedValue = Integer.parseInt(dataSnapshotShared.child(key).getValue().toString());
+                                            int InputValue = 0;
+                                            if (!textInput.getText().toString().matches("")) {
+                                                InputValue = Integer.parseInt(textInput.getText().toString());
+                                            }
+                                            else {
+                                                InputValue = 0;
+                                            }
+                                            int leftOverValue = recipeValue - sharedValue;
+                                            Log.d("TEST", "leftOverValue"+leftOverValue+"sharedValue"+sharedValue+"InputValue"+InputValue);
+                                            leftOver.setText(""+leftOverValue);
+
+                                            if(InputValue > recipeValue - (sharedValue - InputValue)) {
+                                                buttonSave.setClickable(false);
+                                                buttonSave.setAlpha(0.5f);
+                                                leftOver.setText("0");
+                                                leftOver.setTextColor(Color.RED);
+
+                                            }
+                                            else {
+                                                buttonSave.setClickable(true);
+                                                buttonSave.setAlpha(1f);
+                                                leftOver.setTextColor(Color.WHITE);
+                                            }
+                                            textInput.addTextChangedListener(new TextWatcher() {
+                                                int intiateInput = Integer.parseInt(dataSnapshotShared.child(key).getValue().toString());
+                                                @Override
+                                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                                }
+
+                                                @Override
+                                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                                    int recipeValue = Integer.parseInt(recipe.getRecipeML().get(key).toString());
+                                                    int sharedValue = Integer.parseInt(dataSnapshotShared.child(key).getValue().toString());
+                                                    int InputValue = 0;
+                                                    int leftOverValue = 0;
+                                                    if (!textInput.getText().toString().matches("")) {
+                                                        InputValue = Integer.parseInt(textInput.getText().toString());
+                                                        if (InputValue - intiateInput > 0) {
+                                                            leftOverValue = recipeValue - sharedValue - (InputValue - intiateInput);
+                                                        }
+                                                        else if (InputValue - intiateInput < 0) {
+                                                            leftOverValue = recipeValue - sharedValue - (InputValue - intiateInput);
+                                                        }
+                                                        else
+                                                        {
+                                                            leftOverValue = recipeValue - sharedValue;
+                                                        }
+                                                        leftOver.setText(""+leftOverValue);
+
+                                                    }
+                                                    else {
+                                                        InputValue = 0;
+                                                        leftOver.setText(""+(recipeValue-sharedValue));
+                                                    }
+
+                                                    Log.d("TEST", "leftOverValue="+leftOverValue+"recipevalue"+recipeValue+"-sharedValue"+sharedValue+"-(InputValue"+InputValue +"-intiateInput"+intiateInput+")");
+
+                                                    if(InputValue > recipeValue - (sharedValue - intiateInput)) {
+                                                        buttonSave.setClickable(false);
+                                                        buttonSave.setAlpha(0.5f);
+                                                        leftOver.setText("0");
+                                                        leftOver.setTextColor(Color.RED);
+
+                                                    }
+                                                    else {
+                                                        buttonSave.setClickable(true);
+                                                        buttonSave.setAlpha(1f);
+                                                        leftOver.setTextColor(Color.WHITE);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void afterTextChanged(Editable s) {
+
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
         /*
             This snapshot contains :
             1)datasnapshot3 -> gramsRef refers to the current quantity of hashtable grams that was stored in the room database
          */
-                gramsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                /*gramsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot3) {
                         if(dataSnapshot3.hasChild(key)) {
@@ -346,7 +583,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
             This snapshot contains :
             1)datasnapshot4 -> mlRef refers to the current quantity of hashtable ML that was stored in the room database
          */
-                mlRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                /*mlRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot4) {
                         if(dataSnapshot4.hasChild(key)) {
@@ -428,23 +665,16 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });
+                });*/
             }
         });
 
-
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         // Once we click on the save button of each row this function will be executed
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    //ref to shared value
+                    //ref to shared amount
                     Log.d("WHATISTHEKEY", ""+key);
                     rootRef.child("rooms").child(roomID).child("recipe").child("recipeAmount").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -498,7 +728,115 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
 
                         }
                     });
-                    gramsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    //ref to shared grams
+                    rootRef.child("rooms").child(roomID).child("recipe").child("recipeG").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.hasChild(key)) {
+                                if (!textInput.getText().toString().matches("")) {
+                                    int diff = Integer.parseInt(dataSnapshot.child(key).getValue().toString()) - Integer.parseInt(textInput.getText().toString());
+                                    if(diff < 0) {
+                                        rootRef.child("rooms").child(roomID).child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" added "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
+                                    }
+                                    else if(diff > 0) {
+                                        rootRef.child("rooms").child(roomID).child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" removed "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
+                                    }
+                                }
+                                rootRef.child("rooms").child(roomID).child(recipeUid).child("recipeG").child(key).setValue(Integer.parseInt(textInput.getText().toString()));
+
+                                rootRef.child("rooms").child(roomID).child("recipeUid1").child("recipeG").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull final DataSnapshot dataSnapshotUid1) {
+                                        Log.d("do i even", "do i even");
+                                        rootRef.child("rooms").child(roomID).child("recipeUid2").child("recipeG").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshotUid2) {
+                                                int uid1Value;
+                                                int uid2Value;
+                                                uid1Value = Integer.parseInt(dataSnapshotUid1.getValue().toString());
+                                                uid2Value = Integer.parseInt(dataSnapshotUid2.getValue().toString());
+                                                rootRef.child("rooms").child(roomID).child("recipe").child("recipeG").child(key).setValue(uid1Value + uid2Value);
+                                                Log.d("check!!!", "uid1: "+uid1Value+" uid2: "+uid2Value+" sharedValue"+dataSnapshot.child(key).getValue().toString());
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    //ref to shared mili-liters
+                    rootRef.child("rooms").child(roomID).child("recipe").child("recipeML").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.hasChild(key)) {
+                                if (!textInput.getText().toString().matches("")) {
+                                    int diff = Integer.parseInt(dataSnapshot.child(key).getValue().toString()) - Integer.parseInt(textInput.getText().toString());
+                                    if(diff < 0) {
+                                        rootRef.child("rooms").child(roomID).child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" added "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
+                                    }
+                                    else if(diff > 0) {
+                                        rootRef.child("rooms").child(roomID).child("logs").push().setValue(FireBase.getAuth().getCurrentUser().getDisplayName()+" removed "+Math.abs(diff)+" "+dataSnapshot.child(key).getKey());
+                                    }
+                                }
+                                rootRef.child("rooms").child(roomID).child(recipeUid).child("recipeML").child(key).setValue(Integer.parseInt(textInput.getText().toString()));
+
+                                rootRef.child("rooms").child(roomID).child("recipeUid1").child("recipeML").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull final DataSnapshot dataSnapshotUid1) {
+                                        Log.d("do i even", "do i even");
+                                        rootRef.child("rooms").child(roomID).child("recipeUid2").child("recipeML").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshotUid2) {
+                                                int uid1Value;
+                                                int uid2Value;
+                                                uid1Value = Integer.parseInt(dataSnapshotUid1.getValue().toString());
+                                                uid2Value = Integer.parseInt(dataSnapshotUid2.getValue().toString());
+                                                rootRef.child("rooms").child(roomID).child("recipe").child("recipeML").child(key).setValue(uid1Value + uid2Value);
+                                                Log.d("check!!!", "uid1: "+uid1Value+" uid2: "+uid2Value+" sharedValue"+dataSnapshot.child(key).getValue().toString());
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    /*gramsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.hasChild(key)) {
@@ -540,7 +878,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
-                    });
+                    });*/
                 }
                 catch (Exception NullPointerException) {
                     System.out.println("du hello");

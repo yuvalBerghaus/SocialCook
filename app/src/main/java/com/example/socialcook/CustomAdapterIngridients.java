@@ -105,7 +105,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot1) {
                 if(dataSnapshot1.hasChild(key)) {
-                    typeSpecifier.setText("Amount");
+                    typeSpecifier.setText("Units");
                     //ref to recipe amount
                     recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -128,6 +128,112 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                                 }
                             }
                             int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
+                            int roomValue = Integer.parseInt(dataSnapshot1.child(key).getValue().toString());
+                            if(recipeValue == roomValue) {
+                                //enter here...........................................................
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        gramsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            /*
+            This snapshot contains :
+            1)datasnapshot1 -> here we fill all of the items of hashtable that contain Grams
+            2)datasnapshot2 -> recipeRef belongs to the original item quantities we use it in order to compare to the immidiate text in order to display if the amount is correct
+             */
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot1) {
+                if(dataSnapshot1.hasChild(key)) {
+                    typeSpecifier.setText("Grams");
+                    //ref to recipe grams
+                    recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                            final Recipe recipe = dataSnapshot2.getValue(Recipe.class);
+                            final Recipe recipeShared = dataSnapshot1.getValue(Recipe.class);
+                            Log.d("ROSH","Recipe grams from DB = "+recipe.getRecipeG().get(key)+"\nRecipe grams from text is "+sharedText.getText().toString());
+                            if(recipe.getRecipeG().containsKey(key)) {
+                                Log.d("AfterMath" , recipe.getRecipeG().get(key).toString());
+                                maxAmount.setText(recipe.getRecipeG().get(key).toString());
+                                sharedText.setText(dataSnapshot1.child(key).getValue().toString());
+                                int recipeValue = Integer.parseInt(recipe.getRecipeG().get(key).toString());
+                                int sharedValue = Integer.parseInt(dataSnapshot1.child(key).getValue().toString());
+
+                                if(sharedValue != recipeValue) {
+                                    sharedText.setTextColor(Color.RED);
+                                }
+                                else {
+                                    sharedText.setTextColor(Color.WHITE);
+                                }
+                            }
+                            int recipeValue = Integer.parseInt(recipe.getRecipeG().get(key).toString());
+                            int roomValue = Integer.parseInt(dataSnapshot1.child(key).getValue().toString());
+                            if(recipeValue == roomValue) {
+                                //enter here...........................................................
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        mlRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            /*
+            This snapshot contains :
+            1)datasnapshot1 -> here we fill all of the items of hashtable that contain Mili-Liters
+            2)datasnapshot2 -> recipeRef belongs to the original item quantities we use it in order to compare to the immidiate text in order to display if the amount is correct
+             */
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot1) {
+                if(dataSnapshot1.hasChild(key)) {
+                    typeSpecifier.setText("ML");
+                    //ref to recipe mili-liters
+                    recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                            final Recipe recipe = dataSnapshot2.getValue(Recipe.class);
+                            final Recipe recipeShared = dataSnapshot1.getValue(Recipe.class);
+                            Log.d("ROSH","Recipe mili-liters from DB = "+recipe.getRecipeML().get(key)+"\nRecipe mili-liters from text is "+sharedText.getText().toString());
+                            if(recipe.getRecipeML().containsKey(key)) {
+                                Log.d("AfterMath" , recipe.getRecipeML().get(key).toString());
+                                maxAmount.setText(recipe.getRecipeML().get(key).toString());
+                                sharedText.setText(dataSnapshot1.child(key).getValue().toString());
+                                int recipeValue = Integer.parseInt(recipe.getRecipeML().get(key).toString());
+                                int sharedValue = Integer.parseInt(dataSnapshot1.child(key).getValue().toString());
+
+                                if(sharedValue != recipeValue) {
+                                    sharedText.setTextColor(Color.RED);
+                                }
+                                else {
+                                    sharedText.setTextColor(Color.WHITE);
+                                }
+                            }
+                            int recipeValue = Integer.parseInt(recipe.getRecipeML().get(key).toString());
                             int roomValue = Integer.parseInt(dataSnapshot1.child(key).getValue().toString());
                             if(recipeValue == roomValue) {
                                 //enter here...........................................................

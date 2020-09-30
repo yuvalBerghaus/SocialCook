@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_imgg"
+    android:background="@drawable/background_img2"
     android:orientation="vertical"
     tools:context=".RoomInfo">
 
@@ -139,6 +139,35 @@
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
 
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/chango"
+                android:gravity="center"
+                android:text="Personal Ingrediants"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerPersonal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/chango"
+                android:gravity="center"
+                android:text="Shared Ingrediants"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewRoomInfo"
                 android:layout_width="match_parent"
@@ -160,26 +189,23 @@
                 android:id="@+id/Next"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_design"
                 android:text="Create Event"
-                android:textColor="@color/colorOrange"
-                android:textSize="16sp" />
+                android:textColor="@color/colorGrey"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/deleteRoomButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
-                android:text="delete room" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerPersonal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                android:background="@drawable/button_design"
+                android:text="delete room"
+                android:textColor="@color/colorRed"
+                android:textSize="18sp" />
 
         </LinearLayout>
     </ScrollView>

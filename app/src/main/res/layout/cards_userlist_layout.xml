@@ -84,7 +84,7 @@
                     android:background="@drawable/button_design"
                     android:gravity="center"
                     android:text="Send"
-                    android:textColor="@color/colorOrange"
+                    android:textColor="@color/colorGrey"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

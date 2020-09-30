@@ -306,7 +306,7 @@ public class RoomInfo extends Fragment {
     public void deleteRoom(final DatabaseReference myRef, final String roomID) {
         final CharSequence[] options = { "Yes", "No"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Are you sure you want to delete the room?");
+        builder.setTitle("Are you sure you want to delete this room?");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {

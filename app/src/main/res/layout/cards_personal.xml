@@ -76,7 +76,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
                     android:text="save"
-                    android:textColor="@color/colorOrange" />
+                    android:textColor="@color/colorGrey" />
 
             </LinearLayout>
 
