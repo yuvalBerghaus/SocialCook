@@ -1,6 +1,7 @@
 package com.example.socialcook.afterlogin.userListFrag;
 
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Callback;
@@ -78,70 +81,73 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
-// Load the image using Glide
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         TextView textViewName = holder.textViewName;
-       final ImageView profilePhoto = holder.imageView;
-       final ProgressBar progressBar = holder.progressBar;
-       String imagePath = dataSet.get(listPosition).getImagePath();
-       if (imagePath != null)
-       {
-           FireBase.storageRef.child(imagePath).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-               @Override
-               public void onSuccess(Uri uri) {
-                   // Got the download URL for 'users/me/profile.png'
-                   Glide
-                           .with(holder.cardView.getContext())
-                           .load(uri)
-                           .centerCrop()
-                           .placeholder(progressBar.getProgressDrawable())
-                           .into(profilePhoto);
-                   /*
-                   try {
-                       System.out.println(uri);
-                       Picasso.get().load(uri).into(profilePhoto, new Callback() {
-                           @Override
-                           public void onSuccess() {
-                               progressBar.setVisibility(View.GONE);
-                           }
+        final ImageView profilePhoto = holder.imageView;
+        final ProgressBar progressBar = holder.progressBar;
 
-                           @Override
-                           public void onError(Exception e) {
+        if(dataSet.get(listPosition).getUID() != user.getUid()) {
 
-                           }
-                       });
-                   }
-                   catch (IllegalArgumentException error) {
-                       System.out.println("FUCK");
-                   }
+            String imagePath = dataSet.get(listPosition).getImagePath();
+            if (imagePath != null)
+            {
+                FireBase.storageRef.child(imagePath).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'users/me/profile.png'
+                        // Load the image using Glide
+                        Glide
+                                .with(holder.cardView.getContext())
+                                .load(uri)
+                                .centerCrop()
+                                .placeholder(progressBar.getProgressDrawable())
+                                .into(profilePhoto);
+                    /*
+                    try {
+                         System.out.println(uri);
+                        Picasso.get().load(uri).into(profilePhoto, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                            progressBar.setVisibility(View.GONE);
+                            }
 
-                    */
-               }
-           }).addOnFailureListener(new OnFailureListener() {
-               @Override
-               public void onFailure(@NonNull Exception exception) {
-                   // Handle any errors
-               }
-           });
-       }
-        CardView cardView = holder.cardView;
-        final Button buttonInfo = holder.infoButton;
-        textViewName.setText(dataSet.get(listPosition).getName());
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println(dataSet.get(listPosition).getName());
+                            @Override
+                            public void onError(Exception e) {
+
+                            }
+                        });
+                    }
+                    catch (IllegalArgumentException error) {
+                        System.out.println("FUCK");
+                    }*/
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
             }
-        });
+            CardView cardView = holder.cardView;
+            final Button buttonInfo = holder.infoButton;
+            textViewName.setText(dataSet.get(listPosition).getName());
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println(dataSet.get(listPosition).getName());
+                }
+            });
 
-        buttonInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //mainPage.sendNotification(dataSet.get(listPosition).getName());
-                buttonInfo.setClickable(false);
-                buttonInfo.setAlpha(0.5f);
-                mainPage.sendNotificationUID(FireBase.getAuth().getCurrentUser().getDisplayName(), dataSet.get(listPosition).getUID() , chosenRecipe , FireBase.getAuth().getCurrentUser().getUid());
-            }
-        });
+            buttonInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //mainPage.sendNotification(dataSet.get(listPosition).getName());
+                    buttonInfo.setClickable(false);
+                    buttonInfo.setAlpha(0.5f);
+                    mainPage.sendNotificationUID(FireBase.getAuth().getCurrentUser().getDisplayName(), dataSet.get(listPosition).getUID() , chosenRecipe , FireBase.getAuth().getCurrentUser().getUid());
+                }
+            });
+        }
     }
     @Override
     public int getItemCount() {

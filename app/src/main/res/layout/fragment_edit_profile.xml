@@ -1,206 +1,359 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_img2"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".afterlogin.adminFrag.AdminPage">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        app:layout_constraintGuide_percent="0.10" />
 
-        <TextView
-            android:id="@+id/editName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/chango"
-            android:gravity="center"
-            android:text="Name"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/nameInput"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/chango"
-            android:inputType="textPersonName"
-            android:text="Name"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/nameSave"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_design"
-            android:text="@string/save"
-            android:textColor="@color/colorGrey"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        app:layout_constraintGuide_percent="0.18" />
 
-        <TextView
-            android:id="@+id/editAddress"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/chango"
-            android:gravity="center"
-            android:text="Address"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/addressInput"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/chango"
-            android:inputType="textPostalAddress"
-            android:text="Address"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/addressSave"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_design"
-            android:text="@string/save"
-            android:textColor="@color/colorGrey"
-            android:textSize="20sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        app:layout_constraintGuide_percent="0.20" />
 
-        <TextView
-            android:id="@+id/editBirthday"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/chango"
-            android:gravity="center"
-            android:text="Birthday"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/birthdayInput"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/chango"
-            android:inputType="numberDecimal"
-            android:text="Birthday"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/birthdaySave"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_design"
-            android:text="@string/save"
-            android:textColor="@color/colorGrey"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        app:layout_constraintGuide_percent="0.28" />
 
-        <TextView
-            android:id="@+id/editCountry"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/chango"
-            android:gravity="center"
-            android:text="Country"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <Spinner
-            android:id="@+id/editCountrySpinner"
-            android:fontFamily="@font/chango"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/countrySave"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_design"
-            android:text="@string/save"
-            android:textColor="@color/colorGrey"
-            android:textSize="20sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        app:layout_constraintGuide_percent="0.30" />
 
-        <Button
-            android:id="@+id/editPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_design"
-            android:text="photo"
-            android:textColor="@color/colorGrey"
-            android:textSize="20sp" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.38" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/editPhotoImage"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_baseline_photo_camera_24" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.40" />
 
-        <Button
-            android:id="@+id/savePhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_design"
-            android:text="@string/save"
-            android:textColor="@color/colorGrey"
-            android:textSize="20sp" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.48" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
 
-    </LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.52" />
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.60" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.62" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.30" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.73" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.98" />
+
+    <TextView
+        android:id="@+id/editName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/chango"
+        android:gravity="center"
+        android:text="Name"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline26"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical8"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical7"
+        app:layout_constraintTop_toTopOf="@+id/guideline25" />
+
+    <EditText
+        android:id="@+id/nameInput"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/chango"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline26"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical10"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical9"
+        app:layout_constraintTop_toTopOf="@+id/guideline25" />
+
+    <Button
+        android:id="@+id/nameSave"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_design"
+        android:text="@string/save"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline26"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical12"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical11"
+        app:layout_constraintTop_toTopOf="@+id/guideline25" />
+
+    <TextView
+        android:id="@+id/editAddress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/chango"
+        android:gravity="center"
+        android:text="Address"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline28"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical8"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical7"
+        app:layout_constraintTop_toTopOf="@+id/guideline27" />
+
+    <EditText
+        android:id="@+id/addressInput"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/chango"
+        android:inputType="textPostalAddress"
+        android:text="Address"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline28"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical10"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical9"
+        app:layout_constraintTop_toTopOf="@+id/guideline27" />
+
+    <Button
+        android:id="@+id/addressSave"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_design"
+        android:text="@string/save"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline28"
+        app:layout_constraintEnd_toStartOf="@id/guidelineVertical12"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical11"
+        app:layout_constraintTop_toTopOf="@+id/guideline27" />
+
+    <TextView
+        android:id="@+id/editBirthday"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/chango"
+        android:gravity="center"
+        android:text="Birthday"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline30"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical8"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical7"
+        app:layout_constraintTop_toTopOf="@+id/guideline29" />
+
+    <EditText
+        android:id="@+id/birthdayInput"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/chango"
+        android:inputType="numberDecimal"
+        android:text="Birthday"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline30"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical10"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical9"
+        app:layout_constraintTop_toTopOf="@+id/guideline29" />
+
+    <Button
+        android:id="@+id/birthdaySave"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_design"
+        android:text="@string/save"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline30"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical12"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical11"
+        app:layout_constraintTop_toTopOf="@+id/guideline29" />
+
+    <TextView
+        android:id="@+id/editCountry"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/chango"
+        android:gravity="center"
+        android:text="Country"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline32"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical8"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical7"
+        app:layout_constraintTop_toTopOf="@+id/guideline31" />
+
+    <Spinner
+        android:id="@+id/editCountrySpinner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/chango"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline32"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical10"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical9"
+        app:layout_constraintTop_toTopOf="@+id/guideline31" />
+
+    <Button
+        android:id="@+id/countrySave"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_design"
+        android:text="@string/save"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline32"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical12"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical11"
+        app:layout_constraintTop_toTopOf="@+id/guideline31" />
+
+    <Button
+        android:id="@+id/editPhoto"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_design"
+        android:text="photo"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline35"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical8"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical7"
+        app:layout_constraintTop_toTopOf="@id/guideline34" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0"
+        app:layout_constraintBottom_toBottomOf="@id/guideline36"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical10"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical9"
+        app:layout_constraintTop_toTopOf="@+id/guideline33" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/editPhotoImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_baseline_photo_camera_24"
+        app:layout_constraintBottom_toBottomOf="@id/guideline36"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical10"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical9"
+        app:layout_constraintTop_toTopOf="@+id/guideline33" />
+
+    <Button
+        android:id="@+id/savePhoto"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_design"
+        android:text="@string/save"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline35"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical12"
+        app:layout_constraintStart_toStartOf="@id/guidelineVertical11"
+        app:layout_constraintTop_toTopOf="@id/guideline34" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
