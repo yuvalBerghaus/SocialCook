@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_img2"
+    android:orientation="vertical"
+    tools:context=".afterlogin.adminFrag.AdminPage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/editName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/chango"
+            android:gravity="center"
+            android:text="Name"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/chango"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/nameSave"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_design"
+            android:text="@string/save"
+            android:textColor="@color/colorGrey"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/editAddress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/chango"
+            android:gravity="center"
+            android:text="Address"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/addressInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/chango"
+            android:inputType="textPostalAddress"
+            android:text="Address"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/addressSave"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_design"
+            android:text="@string/save"
+            android:textColor="@color/colorGrey"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/editBirthday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/chango"
+            android:gravity="center"
+            android:text="Birthday"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/birthdayInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/chango"
+            android:inputType="numberDecimal"
+            android:text="Birthday"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/birthdaySave"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_design"
+            android:text="@string/save"
+            android:textColor="@color/colorGrey"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/editCountry"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/chango"
+            android:gravity="center"
+            android:text="Country"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/editCountrySpinner"
+            android:fontFamily="@font/chango"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/countrySave"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_design"
+            android:text="@string/save"
+            android:textColor="@color/colorGrey"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/editPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/button_design"
+            android:text="photo"
+            android:textColor="@color/colorGrey"
+            android:textSize="20sp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/editPhotoImage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:src="@drawable/ic_baseline_photo_camera_24" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
