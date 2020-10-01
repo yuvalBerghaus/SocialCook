@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -72,6 +73,7 @@ public class EditProfilePage extends Fragment {
         Button savePhotoButton = view.findViewById(R.id.savePhoto);
         final ImageView editPhotoImage = view.findViewById(R.id.editPhotoImage);
         final Spinner editCountrySpinner = view.findViewById(R.id.editCountrySpinner);
+        final ProgressBar progressBar = view.findViewById(R.id.progressBar3);
 
         Locale[] locales = Locale.getAvailableLocales();
         final ArrayList<String> countries = new ArrayList<String>();
@@ -107,7 +109,7 @@ public class EditProfilePage extends Fragment {
                                     .with(getContext())
                                     .load(uri)
                                     .centerCrop()
-                                    //.placeholder(progressBar.getProgressDrawable())
+                                    .placeholder(progressBar.getProgressDrawable())
                                     .into(editPhotoImage);
                         }
                     }).addOnFailureListener(new OnFailureListener() {

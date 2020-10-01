@@ -336,7 +336,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:src="@drawable/ic_baseline_photo_camera_24"
         app:layout_constraintBottom_toBottomOf="@id/guideline36"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical10"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical9"
