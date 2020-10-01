@@ -12,6 +12,7 @@ public class User {
     public String birthday;
     public String country;
     public String uid;
+    public String description;
 
     public String token;
     public String getUID() {
@@ -42,6 +43,7 @@ public class User {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+    public void setDescription(String description) { this.description = description; }
     public String getName() {
         return this.name;
     }
@@ -55,5 +57,6 @@ public class User {
     public String getImagePath() {
         return imagePath;
     }
+    public String getDescription() { return description; }
 
 }

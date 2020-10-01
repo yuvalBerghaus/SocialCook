@@ -64,6 +64,7 @@ public class EditProfilePage extends Fragment {
         final EditText nameInput = view.findViewById(R.id.nameInput);
         final EditText addressInput = view.findViewById(R.id.addressInput);
         final EditText birthdayInput = view.findViewById(R.id.birthdayInput);
+        final EditText descriptionInput = view.findViewById(R.id.descriptionInput);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         Button nameButton = view.findViewById(R.id.nameSave);
         Button addressButton = view.findViewById(R.id.addressSave);
@@ -71,6 +72,7 @@ public class EditProfilePage extends Fragment {
         Button countryButton = view.findViewById(R.id.countrySave);
         Button editPhotoButton = view.findViewById(R.id.editPhoto);
         Button savePhotoButton = view.findViewById(R.id.savePhoto);
+        Button descriptionButton = view.findViewById(R.id.saveDescription);
         final ImageView editPhotoImage = view.findViewById(R.id.editPhotoImage);
         final Spinner editCountrySpinner = view.findViewById(R.id.editCountrySpinner);
         final ProgressBar progressBar = view.findViewById(R.id.progressBar3);
@@ -168,10 +170,23 @@ public class EditProfilePage extends Fragment {
 
         userRef.child("country").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {//NO COUNTRY?????
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final String country = dataSnapshot.getValue(String.class);
                 int spinnerPosition = countries.indexOf(country);
                 editCountrySpinner.setSelection(spinnerPosition);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        userRef.child("description").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final String description = dataSnapshot.getValue(String.class);
+                descriptionInput.setText(description);
             }
 
             @Override
@@ -205,6 +220,13 @@ public class EditProfilePage extends Fragment {
             @Override
             public void onClick(View v) {
                 userRef.child("country").setValue(editCountrySpinner.getSelectedItem().toString());
+            }
+        });
+
+        descriptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userRef.child("description").setValue(descriptionInput.getText().toString());
             }
         });
 
