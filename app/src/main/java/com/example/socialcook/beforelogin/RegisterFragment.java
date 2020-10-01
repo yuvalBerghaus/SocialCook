@@ -30,6 +30,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.socialcook.R;
@@ -53,6 +54,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Locale;
 import java.util.UUID;
 
 public class RegisterFragment extends Fragment implements FireBase.IRegister, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -79,19 +83,30 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
         final DatabaseReference myRef = database.getReference("users");
         final EditText nameSignUp = view.findViewById(R.id.nameReg);
         final EditText emailSignUp = view.findViewById(R.id.emailReg);
-        // Get a reference to the AutoCompleteTextView in the layout
-        AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.autocomplete_country);
-// Get the string array
-        String[] countries = getResources().getStringArray(R.array.countries_array);
-// Create the adapter and set it to the AutoCompleteTextView
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, countries);
-        textView.setAdapter(adapter);
-
         final TextView passwordSignUp = view.findViewById(R.id.passwordReg);
         final EditText addressSignUp = view.findViewById(R.id.addressReg);
         final EditText birthdaySignUp = view.findViewById(R.id.birthdayReg);
+        final Spinner countrySignUp = view.findViewById(R.id.countrySpinner);
         final User userSignUp = new User();
+
+        Locale[] locales = Locale.getAvailableLocales();
+        final ArrayList<String> countries = new ArrayList<String>();
+
+        for (Locale locale : locales) {
+            String country = locale.getDisplayCountry();
+            if (country.trim().length() > 0 && !countries.contains(country)) {
+                countries.add(country);
+            }
+        }
+
+        Collections.sort(countries);
+        countries.add(0, "Choose Country");
+        /*for (String country : countries) {
+            System.out.println(country);
+        }*/
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, countries);
+        countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        countrySignUp.setAdapter(countryAdapter);
 
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +166,13 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                     userSignUp.setEmail(emailSignUp.getText().toString());
                     userSignUp.setName(nameSignUp.getText().toString());
                     userSignUp.setBirthday(birthdaySignUp.getText().toString());
+                    if (countrySignUp.getSelectedItem().toString() == "Choose Country") {
+                        userSignUp.setCountry("Afghanistan");
+                    }
+                    else {
+                        userSignUp.setCountry(countrySignUp.getSelectedItem().toString());
+                    }
+
                     Log.d("waaaaaaaaaaaaaaa", "image_uri = "+image_uri.getPath()+" imagesRef="+imagesRef.getPath());
                     register(emailSignUp , passwordSignUp , myRef, userSignUp , imagesRef , image_uri);
                 }

@@ -148,6 +148,13 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.60" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
+
     <ImageView
         android:id="@+id/label"
         android:layout_width="0dp"
@@ -172,6 +179,8 @@
         android:hint="@string/enter_your_name"
         android:inputType="textPersonName"
         android:padding="10dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/fadeWhite"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
@@ -190,6 +199,8 @@
         android:hint="@string/enter_email"
         android:inputType="textEmailAddress"
         android:padding="10dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/fadeWhite"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
@@ -208,6 +219,8 @@
         android:hint="@string/enter_password"
         android:inputType="textPassword"
         android:padding="10dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/fadeWhite"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
@@ -226,6 +239,8 @@
         android:hint="@string/enter_address"
         android:inputType="textPostalAddress"
         android:padding="10dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/fadeWhite"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
@@ -244,24 +259,41 @@
         android:hint="@string/enter_birthday"
         android:inputType="date"
         android:padding="10dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/fadeWhite"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
         app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
-    <AutoCompleteTextView
-        android:id="@+id/autocomplete_country"
+    <TextView
+        android:id="@+id/countryBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:background="@drawable/edit_text_design"
-        android:drawableStart="@drawable/ic_baseline_public_24"
-        android:drawableLeft="@drawable/ic_baseline_public_24"
-        android:hint="@string/enter_country_here"
-        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline13"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
+        app:layout_constraintTop_toTopOf="@+id/guideline12" />
+
+    <ImageView
+        android:id="@+id/countryImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_baseline_public_24"
+        app:layout_constraintBottom_toTopOf="@+id/guideline13"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical4"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical1"
+        app:layout_constraintTop_toTopOf="@+id/guideline12" />
+
+    <Spinner
+        android:id="@+id/countrySpinner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline13"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical2"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical4"
         app:layout_constraintTop_toTopOf="@+id/guideline12" />
 
     <Button
