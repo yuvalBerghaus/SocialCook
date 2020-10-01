@@ -95,13 +95,13 @@
             android:id="@+id/welcome"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="12"
+            android:layout_weight="8"
             android:gravity="center|top"
-            android:text="Welcome Back"
             android:shadowColor="@color/colorBlack"
             android:shadowDx="5"
             android:shadowDy="5"
             android:shadowRadius="0.01"
+            android:text="Welcome Back"
             android:textColor="@color/colorWhite"
             android:textSize="20sp" />
 
@@ -110,7 +110,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical" >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/editProfileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@drawable/button_design"
+            android:text="@string/edit_profile"
+            android:textColor="@color/colorGrey" />
         <!--ListView
             android:id="@+id/listviewmain"
             android:layout_width="match_parent"

@@ -9,6 +9,7 @@
     <color name="colorYellow">#F3FF00</color>
     <color name="colorOrange">#ff5500</color>
     <color name="colorRed">#FF0000</color>
+    <color name="fadeWhite">#9AFFFFFF</color>
 
     <color name="login_form_details">#CCFFFFFF</color>
     <color name="login_form_details_light">#1AFFFFFF</color>

@@ -108,6 +108,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
             //////////////////////////////////////////////////
             TextView welcome = view.findViewById(R.id.welcome);
             Button signOut = view.findViewById(R.id.signOutButton);
+            Button editProfile = view.findViewById(R.id.editProfileButton);
             signOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -126,6 +127,12 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                 @Override
                 public void onClick(View v) {
                     mainPage.loadRoomPage();
+                }
+            });
+            editProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainPage.loadeditProfilePage();
                 }
             });
         }
