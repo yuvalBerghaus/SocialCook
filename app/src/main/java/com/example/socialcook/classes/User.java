@@ -1,10 +1,11 @@
 package com.example.socialcook.classes;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Serializable {
     public String name;
     public String email;
     public String imagePath;
@@ -50,13 +51,11 @@ public class User {
     public String getEmail() {
         return this.email;
     }
-    public String getAddress() {
-        return this.address;
-    }
+    public String getAddress() { return this.address; }
+    public String getBirthday() { return birthday; }
     public String getCountry() { return country; }
     public String getImagePath() {
         return imagePath;
     }
     public String getDescription() { return description; }
-
 }

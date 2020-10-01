@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.socialcook.R;
 import com.example.socialcook.RoomInfo;
 import com.example.socialcook.afterlogin.editProfilePage.EditProfilePage;
+import com.example.socialcook.afterlogin.userListFrag.userInfoFrag;
 import com.example.socialcook.classes.User;
 import com.example.socialcook.roomListFrag.RoomsListFrag;
 import com.example.socialcook.afterlogin.adminFrag.AdminPage;
@@ -42,6 +43,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -183,6 +185,17 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     }
     public void loadeditProfilePage() {
         Fragment newFragment = new EditProfilePage();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_mainPage, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void loadUserInfoPage(User user) {
+        Fragment newFragment = new userInfoFrag();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user" , user);
+        newFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_mainPage, newFragment);
         transaction.addToBackStack(null);

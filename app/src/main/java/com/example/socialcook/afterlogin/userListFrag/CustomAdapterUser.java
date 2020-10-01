@@ -138,6 +138,13 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
                 }
             });
 
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainPage.loadUserInfoPage(dataSet.get(listPosition));
+                }
+            });
+
             buttonInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
