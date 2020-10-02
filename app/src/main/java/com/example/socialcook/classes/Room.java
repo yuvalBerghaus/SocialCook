@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Room implements Serializable {
     private String roomID;
-
     public String getRoomID() {
         return roomID;
     }

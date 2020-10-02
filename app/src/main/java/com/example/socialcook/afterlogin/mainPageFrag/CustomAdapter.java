@@ -72,20 +72,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 .centerCrop()
                 .placeholder(progressBar.getProgressDrawable())
                 .into(image);
-        /*
-        Picasso.get().load(dataSet.get(listPosition).getImageUrl()).into(image, new Callback() {
-            @Override
-            public void onSuccess() {
-                progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-        });
-
-         */
         textViewName.setText(dataSet.get(listPosition).getRecipeName());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override

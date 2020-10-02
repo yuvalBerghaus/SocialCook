@@ -42,10 +42,10 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ReceiveNotificationActivity" />
-        <activity android:name=".beforelogin.MainActivity" />
-        <activity android:name=".afterlogin.activities.MainPage" />
-        <activity android:name=".SplashScreen">
+        <activity android:name=".ReceiveNotificationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".beforelogin.MainActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".afterlogin.activities.MainPage" android:screenOrientation="portrait"/>
+        <activity android:name=".SplashScreen" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
