@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,7 +37,6 @@ import java.util.Map;
 
 public class RoomInfo extends Fragment {
     private static ArrayList<Map<String,Integer>> data;
-
     Recipe recipe;
     private static CustomAdapterIngridients adapter;
     private static CustomAdapterPersonal adapter2;
@@ -70,12 +70,12 @@ public class RoomInfo extends Fragment {
         recyclerView2 = view.findViewById(R.id.recyclerPersonal);
         recyclerView.setHasFixedSize(true);
         recyclerView2.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(view.getContext());
         recyclerView2.setLayoutManager(layoutManager2);
         recyclerView.setLayoutManager(layoutManager);
-        Recipe recipeALL;
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        Recipe recipeALL;
         nextButton = view.findViewById(R.id.Next);
        //// final DatabaseReference refLogs = myRef.child(roomID).child("recipe").;
         myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {

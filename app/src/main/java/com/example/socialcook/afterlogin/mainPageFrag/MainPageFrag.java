@@ -55,7 +55,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
             final DatabaseReference myRef = database.getReference().child("recipes");
             recyclerView = view.findViewById(R.id.recyclerView);
             recyclerView.setHasFixedSize(true);
-            layoutManager = new LinearLayoutManager(getActivity());
+            layoutManager = new LinearLayoutManager(view.getContext());
             recyclerView.setLayoutManager(layoutManager);
 
             recyclerView.setItemAnimator(new DefaultItemAnimator());
