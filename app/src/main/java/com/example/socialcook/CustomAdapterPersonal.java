@@ -114,7 +114,8 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
 
                 String key;
                 String value;
-                if(FireBase.getAuth().getUid() == dataSnapshot.child("uid1").getValue()) {
+                Log.d("TAGTAG",dataSnapshot.child("uid1").getValue().toString());
+                if(FireBase.getAuth().getUid().toString().equals(dataSnapshot.child("uid1").getValue().toString())) {
                     uid = dataSnapshot.child("uid1").getValue().toString();
                     recipeUid = "recipeUid1";
                     key = (new ArrayList<>(dataSetUid1.keySet())).get(listPosition);
