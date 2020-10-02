@@ -111,7 +111,6 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                             final Recipe recipe = dataSnapshot2.getValue(Recipe.class);
                             final Recipe recipeShared = dataSnapshot1.getValue(Recipe.class);
                             if(recipe.getRecipeAmount().containsKey(key)) {
-                                Log.d("AfterMath" , recipe.getRecipeAmount().get(key).toString());
                                 maxAmount.setText(recipe.getRecipeAmount().get(key).toString());
                                 sharedText.setText(dataSnapshot1.child(key).getValue().toString());
                                 int recipeValue = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
@@ -163,9 +162,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
                             final Recipe recipe = dataSnapshot2.getValue(Recipe.class);
                             final Recipe recipeShared = dataSnapshot1.getValue(Recipe.class);
-                            Log.d("ROSH","Recipe grams from DB = "+recipe.getRecipeG().get(key)+"\nRecipe grams from text is "+sharedText.getText().toString());
                             if(recipe.getRecipeG().containsKey(key)) {
-                                Log.d("AfterMath" , recipe.getRecipeG().get(key).toString());
                                 maxAmount.setText(recipe.getRecipeG().get(key).toString());
                                 sharedText.setText(dataSnapshot1.child(key).getValue().toString());
                                 int recipeValue = Integer.parseInt(recipe.getRecipeG().get(key).toString());
@@ -216,9 +213,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
                             final Recipe recipe = dataSnapshot2.getValue(Recipe.class);
                             final Recipe recipeShared = dataSnapshot1.getValue(Recipe.class);
-                            Log.d("ROSH","Recipe mili-liters from DB = "+recipe.getRecipeML().get(key)+"\nRecipe mili-liters from text is "+sharedText.getText().toString());
                             if(recipe.getRecipeML().containsKey(key)) {
-                                Log.d("AfterMath" , recipe.getRecipeML().get(key).toString());
                                 maxAmount.setText(recipe.getRecipeML().get(key).toString());
                                 sharedText.setText(dataSnapshot1.child(key).getValue().toString());
                                 int recipeValue = Integer.parseInt(recipe.getRecipeML().get(key).toString());
