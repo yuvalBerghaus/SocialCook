@@ -20,6 +20,8 @@ import com.example.socialcook.firebase.FireBase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.Calendar;
+
 public class userInfoFrag extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,16 +36,17 @@ public class userInfoFrag extends Fragment {
         final ProgressBar progressBar = view.findViewById(R.id.progressBar4);
         userName.setText(currentUser.getName());
         userAddress.setText(currentUser.getAddress());
-        String last;
+        int last;
+        int year = Calendar.getInstance().get(Calendar.YEAR);
         if(currentUser.getBirthday().contains("/")) {
-            last = currentUser.getBirthday().substring(currentUser.getBirthday().lastIndexOf("/")+1);
+            last = year - (Integer.parseInt(currentUser.getBirthday().substring(currentUser.getBirthday().lastIndexOf("/")+1)));
             System.out.println(last);
-            userAge.setText(last);
+            userAge.setText(last+"");
         }
         else if(currentUser.getBirthday().contains(".")) {
-            last = currentUser.getBirthday().substring(currentUser.getBirthday().lastIndexOf(".")+1);
+            last = year - (Integer.parseInt(currentUser.getBirthday().substring(currentUser.getBirthday().lastIndexOf(".")+1)));
             System.out.println(last);
-            userAge.setText(last);
+            userAge.setText(last+"");
         }
    //     userAge.setText(currentUser.getBirthday()); // NEED TO FORMAT INTO AGE
         userDescription.setText(currentUser.getDescription());
