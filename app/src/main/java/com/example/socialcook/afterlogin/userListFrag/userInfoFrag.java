@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.socialcook.R;
+import com.example.socialcook.classes.Log;
 import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,7 +24,6 @@ public class userInfoFrag extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_info, container, false);
-
         Bundle extras = this.getArguments();
         final User currentUser = (User) extras.getSerializable("user");
         TextView userName = view.findViewById(R.id.nameText);
@@ -34,7 +34,18 @@ public class userInfoFrag extends Fragment {
         final ProgressBar progressBar = view.findViewById(R.id.progressBar4);
         userName.setText(currentUser.getName());
         userAddress.setText(currentUser.getAddress());
-        userAge.setText(currentUser.getBirthday()); // NEED TO FORMAT INTO AGE
+        String last;
+        if(currentUser.getBirthday().contains("/")) {
+            last = currentUser.getBirthday().substring(currentUser.getBirthday().lastIndexOf("/")+1);
+            System.out.println(last);
+            userAge.setText(last);
+        }
+        else if(currentUser.getBirthday().contains(".")) {
+            last = currentUser.getBirthday().substring(currentUser.getBirthday().lastIndexOf(".")+1);
+            System.out.println(last);
+            userAge.setText(last);
+        }
+   //     userAge.setText(currentUser.getBirthday()); // NEED TO FORMAT INTO AGE
         userDescription.setText(currentUser.getDescription());
         String imagePath = currentUser.getImagePath();
         if (imagePath != null)
