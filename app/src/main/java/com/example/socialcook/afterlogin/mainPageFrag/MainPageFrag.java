@@ -69,6 +69,8 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                     Log.d("TESTING", "onChildAdded: data size = "+data.size());
                     adapter = new CustomAdapter(data , (MainPage) getActivity());
                     recyclerView.setAdapter(adapter);
+
+             //       adapter.notifyDataSetChanged();
                 }
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

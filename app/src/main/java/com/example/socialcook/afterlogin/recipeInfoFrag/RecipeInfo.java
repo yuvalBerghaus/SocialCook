@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.OnSwipeTouchListener;
@@ -35,7 +36,13 @@ public class RecipeInfo extends Fragment {
             final Recipe currentRecipe= (Recipe) extras.getSerializable("recipe");
             TextView recipeInfoView = view.findViewById(R.id.recipeInfo);
             ImageView recipeImage = view.findViewById(R.id.recipeInfoImage);
-            Picasso.get().load(currentRecipe.getImageUrl()).into(recipeImage);
+            Glide
+                    .with(getContext())
+                    .load(currentRecipe.getImageUrl())
+                    .centerCrop()
+                //    .placeholder(progressBar.getProgressDrawable())
+                    .into(recipeImage);
+//            Picasso.get().load(currentRecipe.getImageUrl()).into(recipeImage);
             //TextView recipeIngrediantsView = view.findViewById(R.id.recipeIngrediants);
             recipeInfoView.setText("Recipe name : "+currentRecipe.getRecipeName() + "\n\nRecipe type : " + currentRecipe.getRecipeType() + "\n\nRequirements\n"+currentRecipe.convertRecipeAmountIteration()+""+currentRecipe.convertRecipeMLIteration()+""+currentRecipe.convertRecipeGIteration()+"\nDescription\n"+currentRecipe.getRecipeDescription());
             //System.out.println(currentRecipe.convertRecipeMLIteration());

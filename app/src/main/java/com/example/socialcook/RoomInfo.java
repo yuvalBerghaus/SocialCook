@@ -77,7 +77,7 @@ public class RoomInfo extends Fragment {
         Recipe recipeALL;
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         nextButton = view.findViewById(R.id.Next);
-       // final DatabaseReference refLogs = myRef.child(roomID).child("recipe").;
+       //// final DatabaseReference refLogs = myRef.child(roomID).child("recipe").;
         myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
             /*
             In this block we are comparing database realtime info to the original

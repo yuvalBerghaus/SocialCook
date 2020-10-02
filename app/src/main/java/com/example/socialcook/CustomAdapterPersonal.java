@@ -891,4 +891,9 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
         return dataSet.size();
     }
 
+    @Override
+    public void registerAdapterDataObserver(@NonNull RecyclerView.AdapterDataObserver observer) {
+        super.registerAdapterDataObserver(observer);
+    }
+
 }

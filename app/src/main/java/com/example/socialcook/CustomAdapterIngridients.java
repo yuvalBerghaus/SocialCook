@@ -30,14 +30,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapterIngridients.MyViewHolder>{
-
     RoomInfo recipeInfoPage;
     private Map<String , Integer> dataSet;
     MainPage mainPage;
     String roomID;
     String recipeName;
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-
         CardView cardView;
         TextView textViewName;
         Button saveButton;
@@ -46,7 +44,6 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         TextView maxAmount;
         public MyViewHolder(View itemView) {
             super(itemView);
-
             this.cardView = (CardView) itemView.findViewById(R.id.cardView);
             this.textViewName = (TextView) itemView.findViewById(R.id.itemName);
             this.saveButton = (Button) itemView.findViewById(R.id.saveButton);
@@ -63,6 +60,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         this.mainPage = mainPage;
         this.roomID = roomID;
         this.recipeName = recipeName;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -112,7 +110,6 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
                             final Recipe recipe = dataSnapshot2.getValue(Recipe.class);
                             final Recipe recipeShared = dataSnapshot1.getValue(Recipe.class);
-                            Log.d("ROSH","Recipe amount from DB = "+recipe.getRecipeAmount().get(key)+"\nRecipe amount from text is "+sharedText.getText().toString());
                             if(recipe.getRecipeAmount().containsKey(key)) {
                                 Log.d("AfterMath" , recipe.getRecipeAmount().get(key).toString());
                                 maxAmount.setText(recipe.getRecipeAmount().get(key).toString());
@@ -141,6 +138,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                         }
                     });
                 }
+                notifyDataSetChanged();
             }
 
             @Override
