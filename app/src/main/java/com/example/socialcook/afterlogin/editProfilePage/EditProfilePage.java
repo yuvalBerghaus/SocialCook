@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -199,6 +200,7 @@ public class EditProfilePage extends Fragment {
             @Override
             public void onClick(View v) {
                 userRef.child("name").setValue(nameInput.getText().toString());
+                Toast.makeText(getContext(), "Name has been updated!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -206,6 +208,7 @@ public class EditProfilePage extends Fragment {
             @Override
             public void onClick(View v) {
                 userRef.child("address").setValue(addressInput.getText().toString());
+                Toast.makeText(getContext(), "Address has been updated!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -213,6 +216,7 @@ public class EditProfilePage extends Fragment {
             @Override
             public void onClick(View v) {
                 userRef.child("birthday").setValue(birthdayInput.getText().toString());
+                Toast.makeText(getContext(), "Birthday has been updated!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -220,6 +224,7 @@ public class EditProfilePage extends Fragment {
             @Override
             public void onClick(View v) {
                 userRef.child("country").setValue(editCountrySpinner.getSelectedItem().toString());
+                Toast.makeText(getContext(), "Country has been updated!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -227,6 +232,7 @@ public class EditProfilePage extends Fragment {
             @Override
             public void onClick(View v) {
                 userRef.child("description").setValue(descriptionInput.getText().toString());
+                Toast.makeText(getContext(), "Description has been updated!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -247,27 +253,30 @@ public class EditProfilePage extends Fragment {
                         final User user = dataSnapshot.getValue(User.class);
                         final StorageReference imagesRef = mStorageRef.child(user.getImagePath());
                         Log.d("getimagepath", ""+user.getImagePath());
-                        imagesRef.putFile(image_uri)
-                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot2) {
-                                        // Get a URL to the uploaded content
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception exception) {
-                                        // Handle unsuccessful uploads
-                                        // ...
-                                    }
-                                })
-                                .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                        String downloadUrl = task.getResult().getStorage().getDownloadUrl().toString();
-                                        Log.d("downloadUrl", ""+downloadUrl);
-                                    }
-                                });
+                        if (image_uri != null) {
+                            imagesRef.putFile(image_uri)
+                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot2) {
+                                            // Get a URL to the uploaded content
+                                            Toast.makeText(getContext(), "Photo has been updated!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                            // Handle unsuccessful uploads
+                                            // ...
+                                        }
+                                    })
+                                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                            String downloadUrl = task.getResult().getStorage().getDownloadUrl().toString();
+                                            Log.d("downloadUrl", ""+downloadUrl);
+                                        }
+                                    });
+                        }
                     }
 
                     @Override
