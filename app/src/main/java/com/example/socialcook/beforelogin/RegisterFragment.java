@@ -167,7 +167,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                         userSignUp.setCountry(countrySignUp.getSelectedItem().toString());
                     }
                     if (image_uri == null) {
-                            FireBase.storageRef.child("images/defaultUserImage").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            FireBase.storageRef.child("images/defaultUserImage.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     image_uri = uri;
@@ -282,7 +282,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                                         });
                             }
                             else {
-                                userSignUp.setImagePath("images/defaultUserImage");
+                                userSignUp.setImagePath("images/defaultUserImage.jpg");
                             }
 
                             // Sign in success, update UI with the signed-in user's information

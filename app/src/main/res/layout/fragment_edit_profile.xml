@@ -348,8 +348,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/editPhotoImage"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="70dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline34"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical10"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical9"
