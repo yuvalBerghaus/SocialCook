@@ -50,7 +50,7 @@ public class FireBase {
         void signOut();
     }
     public interface IRegister {
-        void register(TextView email , TextView password, DatabaseReference myRef , User newUser, StorageReference riversRef , Uri image_Uri);
+        void register(TextView email , TextView password, DatabaseReference myRef , User newUser, StorageReference riversRef , Uri image_Uri, boolean isDefault);
     }
     public interface ILogin {
         void login(TextView email , TextView password);

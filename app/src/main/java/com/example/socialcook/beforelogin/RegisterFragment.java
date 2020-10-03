@@ -154,6 +154,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
             @Override
             public void onClick(View v) {
                 try {
+                    boolean isDefault = false;
                     userSignUp.setAddress(addressSignUp.getText().toString());
                     userSignUp.setEmail(emailSignUp.getText().toString());
                     userSignUp.setName(nameSignUp.getText().toString());
@@ -165,13 +166,19 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                     else {
                         userSignUp.setCountry(countrySignUp.getSelectedItem().toString());
                     }
-
-                    Log.d("waaaaaaaaaaaaaaa", "image_uri = "+image_uri.getPath()+" imagesRef="+imagesRef.getPath());
-                    register(emailSignUp , passwordSignUp , myRef, userSignUp , imagesRef , image_uri);
+                    if (image_uri == null) {
+                            FireBase.storageRef.child("images/defaultUserImage").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    image_uri = uri;
+                                }
+                            });
+                            isDefault = true;
+                    }
+                    register(emailSignUp , passwordSignUp , myRef, userSignUp , imagesRef , image_uri, isDefault);
                 }
                 catch (Exception NullPointerException) {
                     Toast.makeText(getContext(), "you need to fill everything!", Toast.LENGTH_SHORT).show();
-                    Log.d("naaaaaaaaaaaaaaaaaaaaaa", image_uri.getPath());
                     return;
                 }
             }
@@ -243,7 +250,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
     }
 
     @Override
-    public void register(TextView email , TextView password , final DatabaseReference myRef, final User userSignUp , final StorageReference imagesRef , final Uri image_uri) {
+    public void register(TextView email , TextView password , final DatabaseReference myRef, final User userSignUp , final StorageReference imagesRef , final Uri image_uri, final boolean isDefault) {
         final MainActivity main = (MainActivity)getActivity();
         userSignUp.setImagePath("images/"+randomKey);
         FireBase.getAuth().createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
@@ -251,7 +258,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                     @Override
                     public void onComplete(@NonNull final Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            if (image_uri != null) {
+                            if (!isDefault) {
                                 imagesRef.putFile(image_uri)
                                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                             @Override
