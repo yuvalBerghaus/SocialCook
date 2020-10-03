@@ -316,6 +316,7 @@ public class RoomInfo extends Fragment {
         });
         return view;
     }
+
     public void deleteRoom(final DatabaseReference myRef, final String roomID) {
         final CharSequence[] options = { "Yes", "No"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

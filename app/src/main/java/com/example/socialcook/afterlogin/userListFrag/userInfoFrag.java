@@ -1,6 +1,7 @@
 package com.example.socialcook.afterlogin.userListFrag;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +23,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class userInfoFrag extends Fragment {
 
@@ -54,12 +57,13 @@ public class userInfoFrag extends Fragment {
         if (imagePath != null)
         {
             FireBase.storageRef.child(imagePath).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     // Load the image using Glide
                     Glide
-                            .with(getContext())
+                            .with(Objects.requireNonNull(getContext()))
                             .load(uri)
                             .centerCrop()
                             .placeholder(progressBar.getProgressDrawable())
