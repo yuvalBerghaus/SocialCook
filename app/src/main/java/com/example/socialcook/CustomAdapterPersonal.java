@@ -569,9 +569,9 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
             @Override
             public void onClick(View v) {
                 try {
-                    //ref to shared amount
+                    //ref to personal amount
                     Log.d("WHATISTHEKEY", ""+key);
-                    rootRef.child("rooms").child(roomID).child("recipe").child("recipeAmount").addListenerForSingleValueEvent(new ValueEventListener() {
+                    rootRef.child("rooms").child(roomID).child(recipeUid).child("recipeAmount").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                             if(dataSnapshot.hasChild(key)) {
@@ -625,8 +625,8 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                         }
                     });
 
-                    //ref to shared grams
-                    rootRef.child("rooms").child(roomID).child("recipe").child("recipeG").addListenerForSingleValueEvent(new ValueEventListener() {
+                    //ref to personal grams
+                    rootRef.child("rooms").child(roomID).child(recipeUid).child("recipeG").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                             if(dataSnapshot.hasChild(key)) {
@@ -680,8 +680,8 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                         }
                     });
 
-                    //ref to shared mili-liters
-                    rootRef.child("rooms").child(roomID).child("recipe").child("recipeML").addListenerForSingleValueEvent(new ValueEventListener() {
+                    //ref to personal mili-liters
+                    rootRef.child("rooms").child(roomID).child(recipeUid).child("recipeML").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                             if(dataSnapshot.hasChild(key)) {
