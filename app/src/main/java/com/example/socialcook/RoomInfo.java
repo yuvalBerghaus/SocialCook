@@ -182,17 +182,30 @@ public class RoomInfo extends Fragment {
                                                 nextButton.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
-                                                        Map<String , Integer>user1 = new HashMap<>();
-                                                        Map<String , Integer>user2 = new HashMap<>();
-                                                        Intent intent = new Intent(Intent.ACTION_INSERT);
-                                                        intent.setData(CalendarContract.Events.CONTENT_URI);
-                                                        intent.putExtra(CalendarContract.Events.TITLE , "Lets make "+recipeName.getText().toString()+"!!!");
-                                                        intent.putExtra(CalendarContract.Events.DESCRIPTION, "WELCOME TO "+nameUid1.toUpperCase()+" and "+nameUid2.toUpperCase()+"'S ROOM.\nPlease FILL IN ALL THE DETAILS AND PRESS THE SAVE BUTTON");
-                                                        intent.putExtra(CalendarContract.Events.ALL_DAY, false);
-                                                        intent.putExtra(Intent.EXTRA_EMAIL, email1+","+email2);
-                                                        if(intent.resolveActivity(mainPage.getPackageManager()) != null){
-                                                            startActivity(intent);
-                                                        }
+                                                        myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot5) {
+                                                                Recipe recipeUid1 = dataSnapshot5.child("recipeUid1").getValue(Recipe.class);
+                                                                Recipe recipeUid2 = dataSnapshot5.child("recipeUid2").getValue(Recipe.class);
+
+                                                                Map<String , Integer>user1 = new HashMap<>();
+                                                                Map<String , Integer>user2 = new HashMap<>();
+                                                                Intent intent = new Intent(Intent.ACTION_INSERT);
+                                                                intent.setData(CalendarContract.Events.CONTENT_URI);
+                                                                intent.putExtra(CalendarContract.Events.TITLE , "Lets make "+recipeName.getText().toString()+"!!!");
+                                                                intent.putExtra(CalendarContract.Events.DESCRIPTION, nameUid1+" is going to bring "+recipeUid1.convertRecipeAmountIteration()+recipeUid1.convertRecipeGIteration()+recipeUid1.convertRecipeMLIteration()+"\nAnd "+nameUid2+" is going to bring "+recipeUid2.convertRecipeAmountIteration()+recipeUid2.convertRecipeGIteration()+recipeUid2.convertRecipeMLIteration());
+                                                                intent.putExtra(CalendarContract.Events.ALL_DAY, false);
+                                                                intent.putExtra(Intent.EXTRA_EMAIL, email1+","+email2);
+                                                                if(intent.resolveActivity(mainPage.getPackageManager()) != null){
+                                                                    startActivity(intent);
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                            }
+                                                        });
                                                     }
                                                 });
                                             }
