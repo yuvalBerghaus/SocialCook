@@ -145,7 +145,7 @@
             android:id="@+id/keyAmount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:ems="10"
             android:fontFamily="@font/chango"
             android:hint="@string/type_item_here"
@@ -171,7 +171,7 @@
             android:id="@+id/buttonAddAmount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:background="@drawable/button_design"
             android:text="@string/add"
             android:textColor="@color/colorGrey"
@@ -186,55 +186,10 @@
         android:padding="5dp">
 
         <EditText
-            android:id="@+id/keyMl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:fontFamily="@font/chango"
-            android:hint="@string/type_item_here"
-            android:inputType="textPersonName"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/fadeWhite"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/valueMl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:fontFamily="@font/chango"
-            android:hint="@string/type_ml_here"
-            android:inputType="numberDecimal"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/fadeWhite"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/buttonAddMl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_design"
-            android:text="Add"
-            android:textColor="@color/colorGrey"
-            android:textSize="20sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <EditText
             android:id="@+id/keyMg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:ems="10"
             android:fontFamily="@font/chango"
             android:hint="@string/type_item_here"
@@ -260,11 +215,56 @@
             android:id="@+id/buttonAddMg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:background="@drawable/button_design"
             android:text="@string/add"
             android:textColor="@color/colorGrey"
             android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/keyMl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.1"
+            android:ems="10"
+            android:fontFamily="@font/chango"
+            android:hint="@string/type_item_here"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/fadeWhite"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/valueMl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:fontFamily="@font/chango"
+            android:hint="@string/type_ml_here"
+            android:inputType="numberDecimal"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/fadeWhite"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/buttonAddMl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:background="@drawable/button_design"
+            android:text="Add"
+            android:textColor="@color/colorGrey"
+            android:textSize="20sp" />
+
     </LinearLayout>
 
     <LinearLayout
