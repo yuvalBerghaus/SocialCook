@@ -115,7 +115,7 @@ public class AdminPage extends Fragment {//:)
                 try {
                     recipe.setName(recipeName.getText().toString());
                     recipe.setType(recipeType.getText().toString());
-                    if(recipeImage.getText().toString().matches("")) {
+                    if(recipeImage.getText().toString().matches("") || recipeName.getText().toString().matches("") || recipeType.getText().toString().matches("")) {
                         throw new NullPointerException();
                     }
                     recipe.setImageUrl(recipeImage.getText().toString());
