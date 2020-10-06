@@ -1,7 +1,9 @@
 package com.example.socialcook.afterlogin.recipeInfoFrag;
 
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -17,6 +19,9 @@ import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.OnSwipeTouchListener;
 import com.example.socialcook.classes.Recipe;
+import com.example.socialcook.firebase.FireBase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -35,7 +40,33 @@ public class RecipeInfo extends Fragment {
             Bundle extras = this.getArguments();
             final Recipe currentRecipe= (Recipe) extras.getSerializable("recipe");
             TextView recipeInfoView = view.findViewById(R.id.recipeInfo);
-            ImageView recipeImage = view.findViewById(R.id.recipeInfoImage);
+            final ImageView recipeImage = view.findViewById(R.id.recipeInfoImage);
+            if (currentRecipe.getImageUrl().startsWith("images/")) {
+                FireBase.storageRef.child(currentRecipe.getImageUrl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide
+                                .with(getContext())
+                                .load(uri)
+                                .centerCrop()
+                                //    .placeholder(progressBar.getProgressDrawable())
+                                .into(recipeImage);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
+            else {
+                Glide
+                        .with(getContext())
+                        .load(currentRecipe.getImageUrl())
+                        .centerCrop()
+                        //    .placeholder(progressBar.getProgressDrawable())
+                        .into(recipeImage);
+            }
             Glide
                     .with(getContext())
                     .load(currentRecipe.getImageUrl())

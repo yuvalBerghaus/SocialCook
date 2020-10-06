@@ -1,11 +1,15 @@
 package com.example.socialcook.afterlogin.mainPageFrag;
 
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +17,9 @@ import com.bumptech.glide.Glide;
 import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.Recipe;
+import com.example.socialcook.firebase.FireBase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -61,24 +68,52 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
 
-        TextView textViewName = holder.textViewName;
-        CardView cardView = holder.cardView;
-        ImageView image = holder.imageURL;
+        final TextView textViewName = holder.textViewName;
+        final CardView cardView = holder.cardView;
+        final ImageView image = holder.imageURL;
         final ProgressBar progressBar = holder.progressBar;
         String url =holder.url;
-        Glide
-                .with(cardView.getContext())
-                .load(dataSet.get(listPosition).getImageUrl())
-                .centerCrop()
-                .placeholder(progressBar.getProgressDrawable())
-                .into(image);
-        textViewName.setText(dataSet.get(listPosition).getRecipeName());
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainPage.loadRecipePage(dataSet.get(listPosition));
-            }
-        });
+        if (dataSet.get(listPosition).getImageUrl().startsWith("images/")) {
+            FireBase.storageRef.child(dataSet.get(listPosition).getImageUrl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+
+                    Glide
+                            .with(cardView.getContext())
+                            .load(uri)
+                            .centerCrop()
+                            .placeholder(progressBar.getProgressDrawable())
+                            .into(image);
+                    textViewName.setText(dataSet.get(listPosition).getRecipeName());
+                    cardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mainPage.loadRecipePage(dataSet.get(listPosition));
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+        else {
+            Glide
+                    .with(cardView.getContext())
+                    .load(dataSet.get(listPosition).getImageUrl())
+                    .centerCrop()
+                    .placeholder(progressBar.getProgressDrawable())
+                    .into(image);
+            textViewName.setText(dataSet.get(listPosition).getRecipeName());
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainPage.loadRecipePage(dataSet.get(listPosition));
+                }
+            });
+        }
     }
     @Override
     public int getItemCount() {
