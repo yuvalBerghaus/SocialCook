@@ -1,6 +1,7 @@
 package com.example.socialcook.afterlogin.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +50,7 @@ import java.util.Map;
 
 public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
     private static final String TAG = "checkIfrecieved";
+    static final int REQUEST_CODE = 123;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private NotificationManagerCompat notificationManager;
@@ -107,6 +109,20 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
                     Toast.LENGTH_SHORT).show();
         }
     }   //:)
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE) {
+            if((grantResults.length>0) && grantResults[0] + grantResults[1] + grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
     public void loadAdminPage() {
         // Create fragment and give it an argument specifying the article it should show
         Fragment newFragment = new AdminPage();

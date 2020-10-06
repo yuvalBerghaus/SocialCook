@@ -1,11 +1,13 @@
 package com.example.socialcook.afterlogin.editProfilePage;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,6 +29,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -57,6 +61,7 @@ public class EditProfilePage extends Fragment {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     StorageReference mStorageRef;
     Uri image_uri;
+    static final int REQUEST_CODE = 123;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         final FirebaseDatabase database = FireBase.getDataBase();
@@ -239,8 +244,50 @@ public class EditProfilePage extends Fragment {
         editPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+                if (ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.CAMERA) +
+                        ContextCompat.checkSelfPermission(getActivity(),
+                                Manifest.permission.READ_EXTERNAL_STORAGE) +
+                        ContextCompat.checkSelfPermission(getActivity(),
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_DENIED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA) ||
+                            ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) ||
+                            ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme);
+                        builder.setTitle("Please grant permissions:");
+                        builder.setMessage("Camera, Read Storage, Write Storage");
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(getActivity(),
+                                        new String[] {
+                                                Manifest.permission.CAMERA,
+                                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                        }, REQUEST_CODE);
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+                    }
+                    else {
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[] {
+                                        Manifest.permission.CAMERA,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                }, REQUEST_CODE);
+                        selectImage();
+                    }
+                }
+                else {
+                    Toast.makeText(getContext(), "Permission already granted", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
