@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,10 +23,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.classes.Room;
 import com.example.socialcook.firebase.FireBase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -207,7 +211,32 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                         String recipeTYpe = datas.child("recipeType").getValue().toString();
                         String recipeMethod = datas.child("recipeDescription").getValue().toString();
                         String imageUrl = datas.child("imageUrl").getValue().toString();
-                        Picasso.get().load(imageUrl).into(recipeImageView);
+                        if (imageUrl.startsWith("images/")) {
+                            FireBase.storageRef.child(imageUrl).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Glide
+                                            .with(ReceiveNotificationActivity.this)
+                                            .load(uri)
+                                            .centerCrop()
+                                            //.placeholder(progressBar.getProgressDrawable())
+                                            .into(recipeImageView);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            });
+                        }
+                        else {
+                            Glide
+                                    .with(ReceiveNotificationActivity.this)
+                                    .load(imageUrl)
+                                    .centerCrop()
+                                    //    .placeholder(progressBar.getProgressDrawable())
+                                    .into(recipeImageView);
+                        }
                         recipeNameView.setText(recipeNAme);
                         recipeTypeView.setText(recipeTYpe);
                         recipeDescription.setText(recipeMethod);

@@ -161,7 +161,7 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                     userSignUp.setBirthday(birthdaySignUp.getText().toString());
                     userSignUp.setDescription("");
                     if (countrySignUp.getSelectedItem().toString() == "Choose Country") {
-                        userSignUp.setCountry("Afghanistan");
+                        throw new NullPointerException();
                     }
                     else {
                         userSignUp.setCountry(countrySignUp.getSelectedItem().toString());
