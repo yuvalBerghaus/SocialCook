@@ -253,7 +253,7 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical7"
         app:layout_constraintTop_toTopOf="@+id/guideline29" />
 
-    <EditText
+    <TextView
         android:id="@+id/birthdayInput"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -263,6 +263,7 @@
         android:text="Birthday"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
+        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="@+id/guideline30"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical10"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical9"

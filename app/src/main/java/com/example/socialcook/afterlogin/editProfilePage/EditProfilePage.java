@@ -3,6 +3,7 @@ package com.example.socialcook.afterlogin.editProfilePage;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,10 +25,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,6 +59,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
 
@@ -62,6 +68,7 @@ public class EditProfilePage extends Fragment {
     StorageReference mStorageRef;
     Uri image_uri;
     static final int REQUEST_CODE = 123;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         final FirebaseDatabase database = FireBase.getDataBase();
@@ -69,7 +76,7 @@ public class EditProfilePage extends Fragment {
         final DatabaseReference userRef = database.getReference().child("users").child(user.getUid());
         final EditText nameInput = view.findViewById(R.id.nameInput);
         final EditText addressInput = view.findViewById(R.id.addressInput);
-        final EditText birthdayInput = view.findViewById(R.id.birthdayInput);
+        final TextView birthdayInput = view.findViewById(R.id.birthdayInput);
         final EditText descriptionInput = view.findViewById(R.id.descriptionInput);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         Button nameButton = view.findViewById(R.id.nameSave);
@@ -201,6 +208,33 @@ public class EditProfilePage extends Fragment {
             }
         });
 
+        birthdayInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        getContext(),
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                String date = month + "/" + day + "/" + year;
+                birthdayInput.setText(date);
+            }
+        };
+
         nameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,8 +254,15 @@ public class EditProfilePage extends Fragment {
         birthdayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userRef.child("birthday").setValue(birthdayInput.getText().toString());
-                Toast.makeText(getContext(), "Birthday has been updated!", Toast.LENGTH_SHORT).show();
+                if(Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(birthdayInput.getText().toString().substring(birthdayInput.getText().toString().lastIndexOf("/")+1)) >= 18 &&
+                        Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(birthdayInput.getText().toString().substring(birthdayInput.getText().toString().lastIndexOf("/")+1)) <= 120) {
+                    userRef.child("birthday").setValue(birthdayInput.getText().toString());
+                    Toast.makeText(getContext(), "Birthday has been updated!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getContext(), "The age must be between 18 to 120!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
 
