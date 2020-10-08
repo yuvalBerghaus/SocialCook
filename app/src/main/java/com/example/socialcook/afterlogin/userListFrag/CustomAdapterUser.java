@@ -110,10 +110,8 @@ public class CustomAdapterUser extends RecyclerView.Adapter<CustomAdapterUser.My
                             public void onSuccess() {
                             progressBar.setVisibility(View.GONE);
                             }
-
                             @Override
                             public void onError(Exception e) {
-
                             }
                         });
                     }

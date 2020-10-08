@@ -21,6 +21,7 @@ import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.classes.User;
 import com.example.socialcook.beforelogin.MainActivity;
 import com.example.socialcook.firebase.FireBase;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -28,12 +29,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class UsersListFrag extends Fragment implements FireBase.IMainPage {
     private static final String TAG = "userlistRecipe";
     FirebaseUser user = FireBase.getAuth().getCurrentUser();
+    final DatabaseReference userRef = FireBase.getDataBase().getReference().child("users").child(user.getUid());
+    String myCountry;
     FirebaseAuth userAuth = FireBase.getAuth();
     private static RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -53,6 +57,17 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
             final FirebaseDatabase database = FireBase.getDataBase();
             final DatabaseReference myRef = database.getReference().child("users");
             Bundle extras = this.getArguments();
+            userRef.child("country").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    myCountry = dataSnapshot.getValue().toString();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
             recyclerView = view.findViewById(R.id.recyclerViewUser);
             recyclerView.setHasFixedSize(true);
             layoutManager = new LinearLayoutManager(getActivity());
@@ -64,9 +79,11 @@ public class UsersListFrag extends Fragment implements FireBase.IMainPage {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     User userIteration = dataSnapshot.getValue(User.class);
-                    data.add(userIteration);
-                    adapter = new CustomAdapterUser(data , mainPage , chosenRecipe);
-                    recyclerView.setAdapter(adapter);
+                    if(!userIteration.getUID().matches(user.getUid()) && userIteration.getCountry().matches(myCountry)) {
+                        data.add(userIteration);
+                        adapter = new CustomAdapterUser(data , mainPage , chosenRecipe);
+                        recyclerView.setAdapter(adapter);
+                    }
                 }
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

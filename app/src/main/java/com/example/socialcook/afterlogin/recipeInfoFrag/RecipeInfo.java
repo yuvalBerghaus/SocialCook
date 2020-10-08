@@ -1,9 +1,11 @@
 package com.example.socialcook.afterlogin.recipeInfoFrag;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -26,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class RecipeInfo extends Fragment {
     private static final String TAG = "<<< TESTING >>>";
     private FirebaseAuth mAuth;
@@ -43,10 +47,11 @@ public class RecipeInfo extends Fragment {
             final ImageView recipeImage = view.findViewById(R.id.recipeInfoImage);
             if (currentRecipe.getImageUrl().startsWith("images/")) {
                 FireBase.storageRef.child(currentRecipe.getImageUrl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onSuccess(Uri uri) {
                         Glide
-                                .with(getContext())
+                                .with(Objects.requireNonNull(getContext()))
                                 .load(uri)
                                 .centerCrop()
                                 //    .placeholder(progressBar.getProgressDrawable())
