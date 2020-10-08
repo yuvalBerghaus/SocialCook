@@ -46,6 +46,11 @@ public class userInfoFrag extends Fragment {
             System.out.println(last);
             userAge.setText(last+"");
         }
+        if(currentUser.getBirthday().contains("-")) {
+            last = year - (Integer.parseInt(currentUser.getBirthday().substring(currentUser.getBirthday().lastIndexOf("-")+1)));
+            System.out.println(last);
+            userAge.setText(last+"");
+        }
         else if(currentUser.getBirthday().contains(".")) {
             last = year - (Integer.parseInt(currentUser.getBirthday().substring(currentUser.getBirthday().lastIndexOf(".")+1)));
             System.out.println(last);

@@ -17,7 +17,7 @@
     <string name="enter_your_name">Enter your name</string>
     <string name="enter_email">Enter email</string>
     <string name="enter_password">Enter password</string>
-    <string name="enter_address">Enter Address</string>
+    <string name="enter_address">Enter City</string>
     <string name="enter_birthday">Enter Birthday</string>
     <string name="enter_country_here">Enter country here</string>
     <string name="sign_up">Sign up</string>

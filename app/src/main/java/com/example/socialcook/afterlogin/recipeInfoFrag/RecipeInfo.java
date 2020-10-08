@@ -51,7 +51,7 @@ public class RecipeInfo extends Fragment {
                     @Override
                     public void onSuccess(Uri uri) {
                         Glide
-                                .with(Objects.requireNonNull(getContext()))
+                                .with(getContext())
                                 .load(uri)
                                 .centerCrop()
                                 //    .placeholder(progressBar.getProgressDrawable())

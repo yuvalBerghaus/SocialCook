@@ -2,6 +2,7 @@ package com.example.socialcook.beforelogin;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.AlertDialog;
@@ -26,11 +29,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.socialcook.R;
 import com.example.socialcook.classes.User;
 import com.example.socialcook.firebase.FireBase;
@@ -46,7 +51,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.UUID;
@@ -54,6 +62,8 @@ import java.util.UUID;
 public class RegisterFragment extends Fragment implements FireBase.IRegister, ActivityCompat.OnRequestPermissionsResultCallback {
 
     static final int REQUEST_CODE = 123;
+    private TextView mDisplayDate;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
     Uri image_uri;
     StorageReference mStorageRef;
     String randomKey = UUID.randomUUID().toString();
@@ -77,10 +87,40 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
         final EditText emailSignUp = view.findViewById(R.id.emailReg);
         final TextView passwordSignUp = view.findViewById(R.id.passwordReg);
         final EditText addressSignUp = view.findViewById(R.id.addressReg);
-        final EditText birthdaySignUp = view.findViewById(R.id.birthdayReg);
+        //final EditText birthdaySignUp = view.findViewById(R.id.birthdayReg);
+        final TextView birthdaySignUp = view.findViewById(R.id.birthdayReg);
         final Spinner countrySignUp = view.findViewById(R.id.countrySpinner);
         final User userSignUp = new User();
+        mDisplayDate = (TextView) view.findViewById(R.id.birthdayReg);
 
+        mDisplayDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        getContext(),
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                Log.d("what the hell", "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
+
+                String date = month + "/" + day + "/" + year;
+                mDisplayDate.setText(date);
+            }
+        };
         Locale[] locales = Locale.getAvailableLocales();
         final ArrayList<String> countries = new ArrayList<String>();
 
@@ -90,16 +130,21 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                 countries.add(country);
             }
         }
-
         Collections.sort(countries);
         countries.add(0, "Choose Country");
-        /*for (String country : countries) {
-            System.out.println(country);
-        }*/
+        /*
+        birthdaySignUp.setKeyListener(null);
+        birthdaySignUp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                datePicker(getContext() ,birthdaySignUp, "dd-MM-yy");
+            }
+        });
+
+         */
         ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, countries);
         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         countrySignUp.setAdapter(countryAdapter);
-
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,9 +228,26 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                 }
             }
         });
+
         return view;
     }
+    public void datePicker(final Context context, final EditText editText, final String type) {
+        Calendar calendar = Calendar.getInstance();
+        final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.UK);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
 
+            public void onDateSet(android.widget.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                newDate.set(year, monthOfYear, dayOfMonth);
+                editText.setText(dateFormatter.format(newDate.getTime()));
+
+            }
+
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+//        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
