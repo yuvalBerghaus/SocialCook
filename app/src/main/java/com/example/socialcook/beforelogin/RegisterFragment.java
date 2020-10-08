@@ -56,6 +56,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -199,19 +200,21 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
             @Override
             public void onClick(View v) {
                 try {
-                    boolean isDefault = false;
-                    userSignUp.setAddress(addressSignUp.getText().toString());
-                    userSignUp.setEmail(emailSignUp.getText().toString());
-                    userSignUp.setName(nameSignUp.getText().toString());
-                    userSignUp.setBirthday(birthdaySignUp.getText().toString());
-                    userSignUp.setDescription("");
-                    if (countrySignUp.getSelectedItem().toString() == "Choose Country") {
-                        throw new NullPointerException();
-                    }
-                    else {
-                        userSignUp.setCountry(countrySignUp.getSelectedItem().toString());
-                    }
-                    if (image_uri == null) {
+                    if(Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(birthdaySignUp.getText().toString().substring(birthdaySignUp.getText().toString().lastIndexOf("/")+1)) >= 18 &&
+                            Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(birthdaySignUp.getText().toString().substring(birthdaySignUp.getText().toString().lastIndexOf("/")+1)) <= 120) {
+                        boolean isDefault = false;
+                        userSignUp.setAddress(addressSignUp.getText().toString());
+                        userSignUp.setEmail(emailSignUp.getText().toString());
+                        userSignUp.setName(nameSignUp.getText().toString());
+                        userSignUp.setBirthday(birthdaySignUp.getText().toString());
+                        userSignUp.setDescription("");
+                        if (countrySignUp.getSelectedItem().toString() == "Choose Country") {
+                            throw new NullPointerException();
+                        }
+                        else {
+                            userSignUp.setCountry(countrySignUp.getSelectedItem().toString());
+                        }
+                        if (image_uri == null) {
                             FireBase.storageRef.child("images/defaultUserImage.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -219,8 +222,13 @@ public class RegisterFragment extends Fragment implements FireBase.IRegister, Ac
                                 }
                             });
                             isDefault = true;
+                        }
+                        register(emailSignUp , passwordSignUp , myRef, userSignUp , imagesRef , image_uri, isDefault);
                     }
-                    register(emailSignUp , passwordSignUp , myRef, userSignUp , imagesRef , image_uri, isDefault);
+                    else {
+                        Toast.makeText(getContext(), "The age must be between 18 to 120!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
                 catch (Exception NullPointerException) {
                     Toast.makeText(getContext(), "you need to fill everything!", Toast.LENGTH_SHORT).show();
