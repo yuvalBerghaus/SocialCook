@@ -50,7 +50,6 @@ public class RoomInfo extends Fragment {
     private static final String TAG = "my time has come";
     private static RecyclerView recyclerView;
     private static RecyclerView recyclerView2;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,7 +77,8 @@ public class RoomInfo extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         Recipe recipeALL;
         nextButton = view.findViewById(R.id.Next);
-       //// final DatabaseReference refLogs = myRef.child(roomID).child("recipe").;
+       //// final DatabaseReference refLogs = myRef.child(roomID).child("recipe").
+        ValueEventListener valueChangeRoomID;
         myRef.child(roomID).addListenerForSingleValueEvent(new ValueEventListener() {
             /*
             In this block we are comparing database realtime info to the original
@@ -88,7 +88,7 @@ public class RoomInfo extends Fragment {
             +
             contains all the UI presentation -> recipe name ,
             */
-            
+
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 final Room room = dataSnapshot.getValue(Room.class);
@@ -141,7 +141,7 @@ public class RoomInfo extends Fragment {
 
                     }
                 });
-                logRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                ValueEventListener valueChangeLog = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String str = "";
@@ -151,12 +151,12 @@ public class RoomInfo extends Fragment {
                         Log.d("Kol hayom",str);
                         logInfo.setText(str);
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });
+                };
+                logRef.addValueEventListener(valueChangeLog);
                 /*
                 This function block collects the user's email in order to put it in the event creator
                  */
