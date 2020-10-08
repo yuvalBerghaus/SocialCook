@@ -72,12 +72,6 @@ public class RecipeInfo extends Fragment {
                         //    .placeholder(progressBar.getProgressDrawable())
                         .into(recipeImage);
             }
-            Glide
-                    .with(getContext())
-                    .load(currentRecipe.getImageUrl())
-                    .centerCrop()
-                //    .placeholder(progressBar.getProgressDrawable())
-                    .into(recipeImage);
 //            Picasso.get().load(currentRecipe.getImageUrl()).into(recipeImage);
             //TextView recipeIngrediantsView = view.findViewById(R.id.recipeIngrediants);
             recipeInfoView.setText("Recipe name : "+currentRecipe.getRecipeName() + "\n\nRecipe type : " + currentRecipe.getRecipeType() + "\n\nRequirements\n"+currentRecipe.convertRecipeAmountIteration()+""+currentRecipe.convertRecipeMLIteration()+""+currentRecipe.convertRecipeGIteration()+"\nDescription\n"+currentRecipe.getRecipeDescription());
