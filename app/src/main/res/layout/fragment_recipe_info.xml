@@ -30,25 +30,9 @@
             app:layout_constraintGuide_percent="0.40" />
 
         <Button
-            android:id="@+id/deleteRecipeButton"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center|end"
-            android:layout_weight="15"
-            android:background="@drawable/button_design"
-            android:fontFamily="@font/bree_serif"
-            android:text="Delete recipe"
-            android:textColor="@color/colorRed"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineVertical6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
             android:id="@+id/nextButton"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="111dp"
+            android:layout_height="41dp"
             android:layout_gravity="center|end"
             android:layout_weight="15"
             android:background="@drawable/button_design"
@@ -58,7 +42,7 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guidelineVertical5"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
