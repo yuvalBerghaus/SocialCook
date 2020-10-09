@@ -60,7 +60,6 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         this.mainPage = mainPage;
         this.roomID = roomID;
         this.recipeName = recipeName;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -94,7 +93,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
         final DatabaseReference mlRef = database.getReference("rooms").child(roomID).child("recipe").child("recipeML");
         textViewName.setText(key);
         //ref to shared amount
-        amountRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        ValueEventListener valueChangeUnits = new ValueEventListener() {
             /*
             This snapshot contains :
             1)datasnapshot1 -> here we fill all of the items of hashtable that contain Amounts
@@ -137,16 +136,15 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
                         }
                     });
                 }
-                notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
-
-        gramsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        };
+        amountRef.addValueEventListener(valueChangeUnits);
+        ValueEventListener valueChangeGrams = new ValueEventListener() {
             /*
             This snapshot contains :
             1)datasnapshot1 -> here we fill all of the items of hashtable that contain Grams
@@ -195,9 +193,10 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
 
-        mlRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        gramsRef.addValueEventListener(valueChangeGrams);
+        ValueEventListener valueChangeML = new ValueEventListener() {
             /*
             This snapshot contains :
             1)datasnapshot1 -> here we fill all of the items of hashtable that contain Mili-Liters
@@ -246,7 +245,9 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+
+        mlRef.addListenerForSingleValueEvent(valueChangeML);
     }
     @Override
     public int getItemCount() {

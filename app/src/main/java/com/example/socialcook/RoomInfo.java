@@ -124,6 +124,29 @@ public class RoomInfo extends Fragment {
                                 }
                             }
                         }
+                        ValueEventListener valueChangeButton = new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Recipe recipeShared = dataSnapshot.getValue(Recipe.class);
+                                Log.d("recipeShared ", ""+recipe.convertRecipeAmountIteration().matches(recipeShared.convertRecipeAmountIteration()));
+                                if(recipe.convertRecipeAmountIteration().matches(recipeShared.convertRecipeAmountIteration()) && recipe.convertRecipeGIteration().matches(recipeShared.convertRecipeGIteration()) && recipe.convertRecipeMLIteration().matches(recipeShared.convertRecipeMLIteration()) ) {
+                                    nextButton.setClickable(true);
+                                    nextButton.setEnabled(true);
+                                    nextButton.setAlpha(1f);
+                                }
+                                else {
+                                    nextButton.setClickable(false);
+                                    nextButton.setEnabled(false);
+                                    nextButton.setAlpha(0.5f);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        };
+                        myRef.child(roomID).child("recipe").addValueEventListener(valueChangeButton);
                         if (amountFull && gramsFull && mlFull) {
                             nextButton.setClickable(true);
                             nextButton.setEnabled(true);
