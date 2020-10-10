@@ -247,7 +247,7 @@ public class CustomAdapterIngridients extends RecyclerView.Adapter<CustomAdapter
             }
         };
 
-        mlRef.addListenerForSingleValueEvent(valueChangeML);
+        mlRef.addValueEventListener(valueChangeML);
     }
     @Override
     public int getItemCount() {
