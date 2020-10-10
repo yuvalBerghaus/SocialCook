@@ -36,7 +36,7 @@
     <string name="todo">TODO</string>
     <string name="admin_page">Add recipe</string>
     <string name="sign_out">Sign out</string>
-    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_profile">Profile</string>
     <string name="login">Login</string>
     <string name="register_page">Register</string>
     <string name="title_activity_recieve_notification">RecieveNotificationActivity</string>
