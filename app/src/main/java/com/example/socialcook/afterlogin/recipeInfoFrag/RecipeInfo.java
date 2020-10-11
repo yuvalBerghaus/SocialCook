@@ -50,6 +50,9 @@ public class RecipeInfo extends Fragment {
                     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onSuccess(Uri uri) {
+                        if (getActivity() == null) {
+                            return;
+                        }
                         Glide
                                 .with(getContext())
                                 .load(uri)

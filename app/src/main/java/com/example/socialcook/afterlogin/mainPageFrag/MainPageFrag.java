@@ -54,7 +54,6 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
             Button roomsButton = view.findViewById(R.id.myRoomButton);
             final FirebaseDatabase database = FireBase.getDataBase();
             final DatabaseReference myRef = database.getReference().child("recipes");
-            /*
             recyclerView = view.findViewById(R.id.recyclerView);
             recyclerView.setHasFixedSize(true);
             layoutManager = new LinearLayoutManager(view.getContext());
@@ -66,6 +65,9 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     Recipe recipeIteration = dataSnapshot.getValue(Recipe.class);
+                    if (getActivity() == null) {
+                        return;
+                    }
                     Log.d("<<< TESTING >>>", "onChildAdded: "+recipeIteration.getRecipeName());
                     data.add(recipeIteration);
                     Log.d("TESTING", "onChildAdded: data size = "+data.size());
@@ -97,7 +99,6 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
 
                 // ...
             });
-            */
             MainPage currentActivity = (MainPage)getActivity();
             // Name, email address, and profile photo Url
             String name = user.getDisplayName();
@@ -150,7 +151,7 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
         }
         return view;
     }
-
+/*
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -197,6 +198,8 @@ public class MainPageFrag extends Fragment implements FireBase.IMainPage {
             // ...
         });
     }
+
+ */
 
     @Override
     public void signOut() {
