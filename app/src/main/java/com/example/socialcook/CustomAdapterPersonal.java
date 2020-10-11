@@ -159,7 +159,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                     ValueEventListener valueChangeRecipeAmount = new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Recipe recipe = dataSnapshot.child("recipes").child(recipeName).getValue(Recipe.class);
+                            final Recipe recipe = dataSnapshot.child("recipes").child(recipeName).getValue(Recipe.class);
                             if(recipe.getRecipeAmount().containsKey(key)) {
                                 typeSpecifier.setText("Units");
                                 initiateInputAmount = Integer.parseInt(dataSnapshot.child("rooms").child(roomID).child(recipeUid).child("recipeAmount").child(key).getValue().toString());
@@ -196,7 +196,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
 
                                     @Override
                                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                                        recipeValueAmount = Integer.parseInt(recipe.getRecipeAmount().get(key).toString());
                                         int leftOverValue = 0;
                                         if (!textInput.getText().toString().matches("")) {
                                             InputValueAmount = Integer.parseInt(textInput.getText().toString());
@@ -252,7 +252,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                     ValueEventListener valueChangeRecipeGrams = new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Recipe recipe = dataSnapshot.child("recipes").child(recipeName).getValue(Recipe.class);
+                            final Recipe recipe = dataSnapshot.child("recipes").child(recipeName).getValue(Recipe.class);
                             if(recipe.getRecipeG().containsKey(key)) {
                                 typeSpecifier.setText("Grams");
                                 initiateInputGrams = Integer.parseInt(dataSnapshot.child("rooms").child(roomID).child(recipeUid).child("recipeG").child(key).getValue().toString());
@@ -289,7 +289,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
 
                                     @Override
                                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                                        recipeValueGrams = Integer.parseInt(recipe.getRecipeG().get(key).toString());
                                         int leftOverValue = 0;
                                         if (!textInput.getText().toString().matches("")) {
                                             InputValueGrams = Integer.parseInt(textInput.getText().toString());
@@ -346,7 +346,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                     ValueEventListener valueChangeRecipeML = new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Recipe recipe = dataSnapshot.child("recipes").child(recipeName).getValue(Recipe.class);
+                            final Recipe recipe = dataSnapshot.child("recipes").child(recipeName).getValue(Recipe.class);
                             if(recipe.getRecipeML().containsKey(key)) {
                                 typeSpecifier.setText("ML");
                                 initiateInputML = Integer.parseInt(dataSnapshot.child("rooms").child(roomID).child(recipeUid).child("recipeML").child(key).getValue().toString());
@@ -383,7 +383,7 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
 
                                     @Override
                                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                                        recipeValueML = Integer.parseInt(recipe.getRecipeML().get(key).toString());
                                         int leftOverValue = 0;
                                         if (!textInput.getText().toString().matches("")) {
                                             InputValueML = Integer.parseInt(textInput.getText().toString());
@@ -436,9 +436,10 @@ public class CustomAdapterPersonal extends RecyclerView.Adapter<CustomAdapterPer
                     };
                     rootRef.addValueEventListener(valueChangeRecipeML);
                 }
-                catch(NullPointerException d) {
+                catch (NullPointerException e){
                     return;
                 }
+
             }
         });
 

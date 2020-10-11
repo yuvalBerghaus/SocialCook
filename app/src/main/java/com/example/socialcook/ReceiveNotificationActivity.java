@@ -206,6 +206,7 @@ public class ReceiveNotificationActivity extends AppCompatActivity {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                     for(DataSnapshot datas: dataSnapshot.getChildren()){
                         String recipeNAme=datas.child("recipeName").getValue().toString();
                         String recipeTYpe = datas.child("recipeType").getValue().toString();
