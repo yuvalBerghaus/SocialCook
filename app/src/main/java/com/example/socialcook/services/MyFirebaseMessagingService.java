@@ -1,8 +1,5 @@
 package com.example.socialcook.services;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,10 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_1_ID;
 import static com.example.socialcook.afterlogin.adminFrag.NotificationApp.CHANNEL_2_ID;
 import static com.example.socialcook.firebase.FireBase.refreshedToken;
-import static com.example.socialcook.firebase.FireBase.usersDir;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -23,16 +18,14 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.socialcook.R;
-import com.example.socialcook.ReceiveNotificationActivity;
-import com.example.socialcook.afterlogin.adminFrag.NotificationApp;
-import com.example.socialcook.classes.Recipe;
+import com.example.socialcook.recievenotification.ReceiveNotificationActivity;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
-import java.util.Objects;
+
 //yes
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "checking remote message";

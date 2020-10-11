@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_img4"
     android:orientation="vertical"
-    tools:context=".ReceiveNotificationActivity">
+    tools:context=".recievenotification.ReceiveNotificationActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

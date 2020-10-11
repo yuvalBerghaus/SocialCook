@@ -22,11 +22,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.socialcook.R;
-import com.example.socialcook.RoomInfo;
+import com.example.socialcook.afterlogin.roominfo.RoomInfo;
 import com.example.socialcook.afterlogin.editProfilePage.EditProfilePage;
 import com.example.socialcook.afterlogin.userListFrag.userInfoFrag;
 import com.example.socialcook.classes.User;
-import com.example.socialcook.roomListFrag.RoomsListFrag;
+import com.example.socialcook.afterlogin.roomListFrag.RoomsListFrag;
 import com.example.socialcook.afterlogin.adminFrag.AdminPage;
 import com.example.socialcook.afterlogin.mainPageFrag.MainPageFrag;
 import com.example.socialcook.afterlogin.recipeInfoFrag.RecipeInfo;
@@ -44,7 +44,6 @@ import com.google.firebase.iid.InstanceIdResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 

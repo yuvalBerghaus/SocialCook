@@ -1,4 +1,4 @@
-package com.example.socialcook.roomListFrag;
+package com.example.socialcook.afterlogin.roomListFrag;
 
 import android.util.Log;
 import android.view.LayoutInflater;

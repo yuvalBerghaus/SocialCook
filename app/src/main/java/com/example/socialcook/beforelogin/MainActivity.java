@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialcook.R;
-import com.example.socialcook.ReceiveNotificationActivity;
+import com.example.socialcook.recievenotification.ReceiveNotificationActivity;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.firebase.FireBase;
 import com.google.firebase.auth.FirebaseAuth;

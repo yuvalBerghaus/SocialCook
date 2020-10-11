@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialcook.beforelogin.MainActivity;
+import com.example.socialcook.recievenotification.ReceiveNotificationActivity;
 
 public class SplashScreen extends AppCompatActivity {
     @Override

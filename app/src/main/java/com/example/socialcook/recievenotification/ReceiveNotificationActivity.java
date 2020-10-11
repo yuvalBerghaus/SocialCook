@@ -1,4 +1,4 @@
-package com.example.socialcook;
+package com.example.socialcook.recievenotification;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -24,7 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.example.socialcook.afterlogin.activities.MainPage;
+import com.example.socialcook.R;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.classes.Room;
 import com.example.socialcook.firebase.FireBase;
@@ -34,7 +34,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +41,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
 
 public class ReceiveNotificationActivity extends AppCompatActivity {
 

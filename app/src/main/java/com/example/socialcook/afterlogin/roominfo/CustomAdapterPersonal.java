@@ -1,4 +1,4 @@
-package com.example.socialcook;
+package com.example.socialcook.afterlogin.roominfo;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.socialcook.R;
 import com.example.socialcook.afterlogin.activities.MainPage;
 import com.example.socialcook.classes.Recipe;
 import com.example.socialcook.firebase.FireBase;

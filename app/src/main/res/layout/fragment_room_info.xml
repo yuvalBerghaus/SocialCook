@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_img2"
     android:orientation="vertical"
-    tools:context=".RoomInfo">
+    tools:context=".afterlogin.roominfo.RoomInfo">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
