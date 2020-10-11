@@ -100,7 +100,7 @@ public class MainPage extends AppCompatActivity implements FireBase.IMainPage {
                 FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        FireBase.usersDir.child(FireBase.getAuth().getUid()).child("token").setValue(task.getResult().getToken());
+                     //   FireBase.usersDir.child(FireBase.getAuth().getUid()).child("token").setValue(task.getResult().getToken());
                     }
                 });
             }
